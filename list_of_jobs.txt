@@ -1,0 +1,465 @@
+All Occupations
+Management Occupations
+Chief Executives
+General and Operations Managers
+Advertising and Promotions Managers
+Marketing Managers
+Sales Managers
+Public Relations and Fundraising Managers
+Administrative Services Managers
+Computer and Information Systems Managers
+Financial Managers
+Industrial Production Managers
+Purchasing Managers
+"Transportation, Storage, and Distribution Managers"
+Human Resources Managers
+Training and Development Managers
+Construction Managers
+"Education Administrators, Preschool and Childcare Center/Program"
+"Education Administrators, Elementary and Secondary School"
+"Education Administrators, Postsecondary"
+"Education Administrators, All Other"
+Architectural and Engineering Managers
+Food Service Managers
+Lodging Managers
+Medical and Health Services Managers
+Natural Sciences Managers
+"Property, Real Estate, and Community Association Managers"
+Social and Community Service Managers
+Emergency Management Directors
+"Managers, All Other"
+Business and Financial Operations Occupations
+"Wholesale and Retail Buyers, Except Farm Products"
+"Purchasing Agents, Except Wholesale, Retail, and Farm Products"
+"Claims Adjusters, Examiners, and Investigators"
+Compliance Officers
+Cost Estimators
+Human Resources Specialists
+Labor Relations Specialists
+Logisticians
+Management Analysts
+"Meeting, Convention, and Event Planners"
+Fundraisers
+"Compensation, Benefits, and Job Analysis Specialists"
+Training and Development Specialists
+Market Research Analysts and Marketing Specialists
+"Business Operations Specialists, All Other"
+Accountants and Auditors
+Appraisers and Assessors of Real Estate
+Budget Analysts
+Financial Analysts
+Personal Financial Advisors
+Insurance Underwriters
+Financial Examiners
+Loan Officers
+"Tax Examiners and Collectors, and Revenue Agents"
+Tax Preparers
+"Financial Specialists, All Other"
+Computer and Mathematical Occupations
+Computer Systems Analysts
+Information Security Analysts
+Computer Programmers
+"Software Developers, Applications"
+"Software Developers, Systems Software"
+Web Developers
+Database Administrators
+Network and Computer Systems Administrators
+Computer Network Architects
+Computer User Support Specialists
+Computer Network Support Specialists
+"Computer Occupations, All Other"
+Operations Research Analysts
+Architecture and Engineering Occupations
+"Architects, Except Landscape and Naval"
+Cartographers and Photogrammetrists
+Surveyors
+Chemical Engineers
+Civil Engineers
+Computer Hardware Engineers
+Electrical Engineers
+"Electronics Engineers, Except Computer"
+Environmental Engineers
+"Health and Safety Engineers, Except Mining Safety Engineers and Inspectors"
+Industrial Engineers
+Mechanical Engineers
+"Mining and Geological Engineers, Including Mining Safety Engineers"
+Petroleum Engineers
+"Engineers, All Other"
+Architectural and Civil Drafters
+Electrical and Electronics Drafters
+"Drafters, All Other"
+Civil Engineering Technicians
+Electrical and Electronics Engineering Technicians
+Environmental Engineering Technicians
+Mechanical Engineering Technicians
+"Engineering Technicians, Except Drafters, All Other"
+Surveying and Mapping Technicians
+"Life, Physical, and Social Science Occupations"
+Zoologists and Wildlife Biologists
+"Biological Scientists, All Other"
+Conservation Scientists
+"Life Scientists, All Other"
+Atmospheric and Space Scientists
+Chemists
+"Environmental Scientists and Specialists, Including Health"
+"Geoscientists, Except Hydrologists and Geographers"
+Hydrologists
+"Physical Scientists, All Other"
+"Clinical, Counseling, and School Psychologists"
+"Psychologists, All Other"
+Urban and Regional Planners
+Anthropologists and Archeologists
+"Social Scientists and Related Workers, All Other"
+Biological Technicians
+Geological and Petroleum Technicians
+"Environmental Science and Protection Technicians, Including Health"
+Forest and Conservation Technicians
+"Life, Physical, and Social Science Technicians, All Other"
+Community and Social Service Occupations
+Substance Abuse and Behavioral Disorder Counselors
+"Educational, Guidance, School, and Vocational Counselors"
+Mental Health Counselors
+Rehabilitation Counselors
+"Counselors, All Other"
+"Child, Family, and School Social Workers"
+Healthcare Social Workers
+Mental Health and Substance Abuse Social Workers
+"Social Workers, All Other"
+Health Educators
+Probation Officers and Correctional Treatment Specialists
+Social and Human Service Assistants
+Community Health Workers
+"Community and Social Service Specialists, All Other"
+Clergy
+Legal Occupations
+Lawyers
+Paralegals and Legal Assistants
+"Title Examiners, Abstractors, and Searchers"
+"Education, Training, and Library Occupations"
+"Business Teachers, Postsecondary"
+"Criminal Justice and Law Enforcement Teachers, Postsecondary"
+"Vocational Education Teachers, Postsecondary"
+"Postsecondary Teachers, All Other"
+"Preschool Teachers, Except Special Education"
+"Elementary School Teachers, Except Special Education"
+"Secondary School Teachers, Except Special and Career/Technical Education"
+"Special Education Teachers, Preschool"
+"Special Education Teachers, Kindergarten and Elementary School"
+Adult Basic and Secondary Education and Literacy Teachers and Instructors
+Self-Enrichment Education Teachers
+"Teachers and Instructors, All Other, Except Substitute Teachers"
+Substitute Teachers
+Librarians
+Library Technicians
+Instructional Coordinators
+Teacher Assistants
+"Arts, Design, Entertainment, Sports, and Media Occupations"
+Floral Designers
+Graphic Designers
+Interior Designers
+Merchandise Displayers and Window Trimmers
+Producers and Directors
+Coaches and Scouts
+"Umpires, Referees, and Other Sports Officials"
+Radio and Television Announcers
+Reporters and Correspondents
+Public Relations Specialists
+Editors
+Technical Writers
+Writers and Authors
+Interpreters and Translators
+"Media and Communication Workers, All Other"
+Audio and Video Equipment Technicians
+Broadcast Technicians
+Photographers
+Film and Video Editors
+"Media and Communication Equipment Workers, All Other"
+Healthcare Practitioners and Technical Occupations
+Chiropractors
+"Dentists, General"
+Dietitians and Nutritionists
+Optometrists
+Pharmacists
+Family and General Practitioners
+"Internists, General"
+Obstetricians and Gynecologists
+Surgeons
+"Physicians and Surgeons, All Other"
+Physician Assistants
+Occupational Therapists
+Physical Therapists
+Respiratory Therapists
+Speech-Language Pathologists
+Veterinarians
+Registered Nurses
+Nurse Practitioners
+"Health Diagnosing and Treating Practitioners, All Other"
+Medical and Clinical Laboratory Technologists
+Medical and Clinical Laboratory Technicians
+Dental Hygienists
+Cardiovascular Technologists and Technicians
+Diagnostic Medical Sonographers
+Nuclear Medicine Technologists
+Radiologic Technologists
+Magnetic Resonance Imaging Technologists
+Emergency Medical Technicians and Paramedics
+Pharmacy Technicians
+Psychiatric Technicians
+Surgical Technologists
+Veterinary Technologists and Technicians
+Licensed Practical and Licensed Vocational Nurses
+Medical Records and Health Information Technicians
+"Opticians, Dispensing"
+Occupational Health and Safety Specialists
+Occupational Health and Safety Technicians
+"Healthcare Practitioners and Technical Workers, All Other"
+Healthcare Support Occupations
+Home Health Aides
+Psychiatric Aides
+Nursing Assistants
+Physical Therapist Assistants
+Massage Therapists
+Dental Assistants
+Medical Assistants
+Medical Equipment Preparers
+Medical Transcriptionists
+Pharmacy Aides
+Veterinary Assistants and Laboratory Animal Caretakers
+Phlebotomists
+"Healthcare Support Workers, All Other"
+Protective Service Occupations
+First-Line Supervisors of Police and Detectives
+First-Line Supervisors of Fire Fighting and Prevention Workers
+"First-Line Supervisors of Protective Service Workers, All Other"
+Firefighters
+Detectives and Criminal Investigators
+Police and Sheriff's Patrol Officers
+Security Guards
+Crossing Guards
+"Lifeguards, Ski Patrol, and Other Recreational Protective Service Workers"
+Transportation Security Screeners
+"Protective Service Workers, All Other"
+Food Preparation and Serving Related Occupations
+Chefs and Head Cooks
+First-Line Supervisors of Food Preparation and Serving Workers
+"Cooks, Fast Food"
+"Cooks, Institution and Cafeteria"
+"Cooks, Restaurant"
+"Cooks, Short Order"
+"Cooks, All Other"
+Food Preparation Workers
+Bartenders
+"Combined Food Preparation and Serving Workers, Including Fast Food"
+"Counter Attendants, Cafeteria, Food Concession, and Coffee Shop"
+Waiters and Waitresses
+"Food Servers, Nonrestaurant"
+Dining Room and Cafeteria Attendants and Bartender Helpers
+Dishwashers
+"Hosts and Hostesses, Restaurant, Lounge, and Coffee Shop"
+"Food Preparation and Serving Related Workers, All Other"
+Building and Grounds Cleaning and Maintenance Occupations
+First-Line Supervisors of Housekeeping and Janitorial Workers
+"First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers"
+"Janitors and Cleaners, Except Maids and Housekeeping Cleaners"
+Maids and Housekeeping Cleaners
+Landscaping and Groundskeeping Workers
+"Grounds Maintenance Workers, All Other"
+Personal Care and Service Occupations
+First-Line Supervisors of Personal Service Workers
+Nonfarm Animal Caretakers
+Gaming and Sports Book Writers and Runners
+"Ushers, Lobby Attendants, and Ticket Takers"
+Amusement and Recreation Attendants
+"Locker Room, Coatroom, and Dressing Room Attendants"
+"Entertainment Attendants and Related Workers, All Other"
+"Hairdressers, Hairstylists, and Cosmetologists"
+Manicurists and Pedicurists
+Skincare Specialists
+Baggage Porters and Bellhops
+Concierges
+Tour Guides and Escorts
+Childcare Workers
+Personal Care Aides
+Fitness Trainers and Aerobics Instructors
+Recreation Workers
+Residential Advisors
+"Personal Care and Service Workers, All Other"
+Sales and Related Occupations
+First-Line Supervisors of Retail Sales Workers
+First-Line Supervisors of Non-Retail Sales Workers
+Cashiers
+Counter and Rental Clerks
+Parts Salespersons
+Retail Salespersons
+Advertising Sales Agents
+Insurance Sales Agents
+"Securities, Commodities, and Financial Services Sales Agents"
+Travel Agents
+"Sales Representatives, Services, All Other"
+"Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products"
+"Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products"
+Demonstrators and Product Promoters
+Real Estate Sales Agents
+Sales Engineers
+"Door-to-Door Sales Workers, News and Street Vendors, and Related Workers"
+"Sales and Related Workers, All Other"
+Office and Administrative Support Occupations
+First-Line Supervisors of Office and Administrative Support Workers
+"Switchboard Operators, Including Answering Service"
+Bill and Account Collectors
+Billing and Posting Clerks
+"Bookkeeping, Accounting, and Auditing Clerks"
+Payroll and Timekeeping Clerks
+Procurement Clerks
+Tellers
+"Financial Clerks, All Other"
+Brokerage Clerks
+"Court, Municipal, and License Clerks"
+"Credit Authorizers, Checkers, and Clerks"
+Customer Service Representatives
+"Eligibility Interviewers, Government Programs"
+File Clerks
+"Hotel, Motel, and Resort Desk Clerks"
+"Interviewers, Except Eligibility and Loan"
+"Library Assistants, Clerical"
+Loan Interviewers and Clerks
+Order Clerks
+"Human Resources Assistants, Except Payroll and Timekeeping"
+Receptionists and Information Clerks
+Reservation and Transportation Ticket Agents and Travel Clerks
+"Information and Record Clerks, All Other"
+Cargo and Freight Agents
+Couriers and Messengers
+"Police, Fire, and Ambulance Dispatchers"
+"Dispatchers, Except Police, Fire, and Ambulance"
+Postal Service Clerks
+Postal Service Mail Carriers
+"Postal Service Mail Sorters, Processors, and Processing Machine Operators"
+"Production, Planning, and Expediting Clerks"
+"Shipping, Receiving, and Traffic Clerks"
+Stock Clerks and Order Fillers
+"Weighers, Measurers, Checkers, and Samplers, Recordkeeping"
+Executive Secretaries and Executive Administrative Assistants
+Legal Secretaries
+Medical Secretaries
+"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive"
+Computer Operators
+Data Entry Keyers
+Word Processors and Typists
+Insurance Claims and Policy Processing Clerks
+"Mail Clerks and Mail Machine Operators, Except Postal Service"
+"Office Clerks, General"
+"Office Machine Operators, Except Computer"
+"Office and Administrative Support Workers, All Other"
+"Farming, Fishing, and Forestry Occupations"
+Construction and Extraction Occupations
+First-Line Supervisors of Construction Trades and Extraction Workers
+Carpenters
+Cement Masons and Concrete Finishers
+Construction Laborers
+Pile-Driver Operators
+Operating Engineers and Other Construction Equipment Operators
+Electricians
+Glaziers
+"Insulation Workers, Floor, Ceiling, and Wall"
+"Insulation Workers, Mechanical"
+"Painters, Construction and Maintenance"
+"Plumbers, Pipefitters, and Steamfitters"
+Roofers
+Sheet Metal Workers
+Structural Iron and Steel Workers
+Helpers--Carpenters
+Helpers--Electricians
+Construction and Building Inspectors
+Hazardous Materials Removal Workers
+"Construction and Related Workers, All Other"
+"Rotary Drill Operators, Oil and Gas"
+"Service Unit Operators, Oil, Gas, and Mining"
+"Earth Drillers, Except Oil and Gas"
+"Roustabouts, Oil and Gas"
+"Installation, Maintenance, and Repair Occupations"
+"First-Line Supervisors of Mechanics, Installers, and Repairers"
+"Computer, Automated Teller, and Office Machine Repairers"
+"Radio, Cellular, and Tower Equipment Installers and Repairers"
+"Telecommunications Equipment Installers and Repairers, Except Line Installers"
+Avionics Technicians
+"Electrical and Electronics Repairers, Commercial and Industrial Equipment"
+Security and Fire Alarm Systems Installers
+Aircraft Mechanics and Service Technicians
+Automotive Body and Related Repairers
+Automotive Service Technicians and Mechanics
+Bus and Truck Mechanics and Diesel Engine Specialists
+"Mobile Heavy Equipment Mechanics, Except Engines"
+Motorboat Mechanics and Service Technicians
+Motorcycle Mechanics
+Tire Repairers and Changers
+"Control and Valve Installers and Repairers, Except Mechanical Door"
+"Heating, Air Conditioning, and Refrigeration Mechanics and Installers"
+Home Appliance Repairers
+Industrial Machinery Mechanics
+"Maintenance Workers, Machinery"
+Electrical Power-Line Installers and Repairers
+Telecommunications Line Installers and Repairers
+Medical Equipment Repairers
+"Precision Instrument and Equipment Repairers, All Other"
+"Maintenance and Repair Workers, General"
+Riggers
+"Helpers--Installation, Maintenance, and Repair Workers"
+"Installation, Maintenance, and Repair Workers, All Other"
+Production Occupations
+First-Line Supervisors of Production and Operating Workers
+Team Assemblers
+"Assemblers and Fabricators, All Other"
+Bakers
+Butchers and Meat Cutters
+Food Batchmakers
+"Cutting, Punching, and Press Machine Setters, Operators, and Tenders, Metal and Plastic"
+Machinists
+"Welders, Cutters, Solderers, and Brazers"
+Printing Press Operators
+Print Binding and Finishing Workers
+Laundry and Dry-Cleaning Workers
+Cabinetmakers and Bench Carpenters
+Power Plant Operators
+Water and Wastewater Treatment Plant and System Operators
+Gas Plant Operators
+"Petroleum Pump System Operators, Refinery Operators, and Gaugers"
+"Plant and System Operators, All Other"
+"Separating, Filtering, Clarifying, Precipitating, and Still Machine Setters, Operators, and Tenders"
+"Mixing and Blending Machine Setters, Operators, and Tenders"
+"Inspectors, Testers, Sorters, Samplers, and Weighers"
+Dental Laboratory Technicians
+Packaging and Filling Machine Operators and Tenders
+Photographic Process Workers and Processing Machine Operators
+"Molders, Shapers, and Casters, Except Metal and Plastic"
+Helpers--Production Workers
+"Production Workers, All Other"
+Transportation and Material Moving Occupations
+Aircraft Cargo Handling Supervisors
+"First-Line Supervisors of Helpers, Laborers, and Material Movers, Hand"
+First-Line Supervisors of Transportation and Material-Moving Machine and Vehicle Operators
+"Airline Pilots, Copilots, and Flight Engineers"
+Commercial Pilots
+Air Traffic Controllers
+Airfield Operations Specialists
+Flight Attendants
+"Bus Drivers, Transit and Intercity"
+"Bus Drivers, School or Special Client"
+Driver/Sales Workers
+Heavy and Tractor-Trailer Truck Drivers
+Light Truck or Delivery Services Drivers
+Taxi Drivers and Chauffeurs
+"Motor Vehicle Operators, All Other"
+Sailors and Marine Oilers
+"Captains, Mates, and Pilots of Water Vessels"
+Ship Engineers
+Parking Lot Attendants
+Automotive and Watercraft Service Attendants
+Transportation Inspectors
+"Transportation Workers, All Other"
+Excavating and Loading Machine and Dragline Operators
+Industrial Truck and Tractor Operators
+Cleaners of Vehicles and Equipment
+"Laborers and Freight, Stock, and Material Movers, Hand"
+"Packers and Packagers, Hand"
+Refuse and Recyclable Material Collectors

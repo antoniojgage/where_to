@@ -1,0 +1,28 @@
+{
+  "name": "where_to",
+  "version": "1.0.0",
+  "description": "Find the perfect city for your occupation or compare stats between two cities.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antoniojgage/where_to.git"
+  },
+  "author": "Antonio Gage, Nora Mata, Michelle Castellanos, Kit Chan, Chris Sayles, Mary Sibilsky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antoniojgage/where_to/issues"
+  },
+  "homepage": "https://github.com/antoniojgage/where_to#readme",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "mysql": "^2.13.0",
+    "path": "^0.12.7",
+    "sequelize": "^3.30.2",
+    "sequelize-auto": "^0.4.21"
+  }
+}

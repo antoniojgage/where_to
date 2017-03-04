@@ -1,0 +1,98 @@
+.mySlides {
+	display: none;
+}
+
+.main img {
+	width: 100%;
+	z-index: 0;
+}
+
+.main {
+	text-align: center;
+	position: relative;
+}
+
+.main .btn-default {
+    position: absolute;
+    top: 30%;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#find-btn {
+	right: 52%;
+}
+
+.fa-bars {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	color: white;
+	font-size: 3em;
+}
+
+.main h1 {
+	color: white;
+	position: absolute;
+	top: 10px;
+	left: 20px;
+}
+
+.hamburger ul {
+	width: 120px;
+	background-color: white;
+	color: black;
+	position: absolute;
+	top: 16px;
+	right: 58px;
+	display: none;
+	padding: 20px 10px;
+	z-index: 2;
+}
+
+.hamburger a {
+	color: black;
+}
+
+#find-your-city {
+	display: none;
+	margin: 40px 0px 500px 0px;
+}
+
+#compare-cities {
+	display: none;
+	margin: 40px 0px 500px 0px;
+}
+
+#heatmap {
+	display: none;
+}
+
+#comparison {
+	display: none;
+}
+
+path:hover {
+    fill-opacity: .7;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 100px;
+    height: 45px;
+    padding: 10px;
+    font: 12px sans-serif;
+    background: red;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+body {
+    font: 11px sans-serif;
+}
+
+#comparison {
+	width: 100%;
+}

@@ -1,0 +1,650 @@
+$(document).ready(function() {
+
+    var slideIndex = 0;
+    carousel();
+    var burgerState = 0;
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > x.length) { slideIndex = 1 }
+        x[slideIndex - 1].style.display = "block";
+        setTimeout(carousel, 3000); // Change image every 2 seconds
+    }
+
+    $(".hamburger i").click(function() {
+        if (burgerState === 0) {
+            burgerState = 1;
+            $(".hamburger ul").css("display", "block");
+            $(".hamburger ul").mouseleave(function() {
+                burgerState = 0;
+                $(".hamburger ul").css("display", "none");
+            });
+        } else {
+            burgerState = 0;
+            $(".hamburger ul").css("display", "none");
+        }
+    });
+
+    $("#find-btn").click(function() {
+        $("#compare-cities").css("display", "none");
+        $("#heatmap").css("display", "none");
+        $("#comparison").css("display", "none");
+        $("#find-your-city").css("display", "block");
+        $('html, body').animate({
+            scrollTop: $("#find-your-city").offset().top
+        }, 2000);
+    });
+
+    $("#compare-btn").click(function() {
+        $("#find-your-city").css("display", "none");
+        $("#heatmap").css("display", "none");
+        $("#comparison").css("display", "none");
+        $("#compare-cities").css("display", "block");
+        $('html, body').animate({
+            scrollTop: $("#compare-cities").offset().top
+        }, 2000);
+    });
+
+    $(".scrollUp").click(function(e) {
+        e.preventDefault();
+        $('html, body').animate({
+            scrollTop: $(".main").offset().top
+        }, 2000);
+    });
+
+    $("#find-submit").click(function(e) {
+        e.preventDefault();
+        $("#heatmap").css("display", "block");
+        $('html, body').animate({
+            scrollTop: $("#heatmap").offset().top
+        }, 2000);
+    });
+
+    $("#compare-submit").click(function(e) {
+        e.preventDefault();
+        $("#comparison").css("display", "block");
+        $('html, body').animate({
+            scrollTop: $("#comparison").offset().top
+        }, 2000);
+    });
+    //D3 code beyond this point
+    /*  This visualization was made possible by modifying code provided by:
+
+        Scott Murray, Choropleth example from "Interactive Data Visualization for the Web" 
+        https://github.com/alignedleft/d3-book/blob/master/chapter_12/05_choropleth.html   
+        
+        Malcolm Maclean, tooltips example tutorial
+        http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
+
+        Mike Bostock, Pie Chart Legend
+        http://bl.ocks.org/mbostock/3888852      */
+
+
+    //Width and height of map
+    var w = 900;
+    var h = 600;
+
+    // D3 Projection
+    var projection = d3.geo.albersUsa()
+        .translate([w / 2, h / 2]) // translate to center of screen
+        .scale([1000]); // scale things down so see entire US
+
+
+    // Define path generator
+    var path = d3.geo.path() // path generator that will convert GeoJSON to SVG paths
+        .projection(projection); // tell path generator to use albersUsa projection
+
+
+    // Define linear scale for output
+    var color = d3.scale.linear()
+        .range(["rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)"]);
+
+    var coordinateColor = d3.scale.linear()
+        .domain([20, 47])
+        .range(["#6BFF33", "#FF3333"]);
+
+
+    var legendText = ["City Rank #1-50", "City Rank #51-100", "City Rank #101-250", "City Rank #251-500", "City Rank #501-1,000"];
+
+    //Create SVG element and append map to the SVG
+    var canvas = d3.select("#heatmap")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+
+
+    // Append Div for tooltip to SVG
+    var div = d3.select("#heatmap")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+    // Load in my states data!
+    d3.csv("/assets/geojson/stateslived.csv", function(data) {
+        color.domain([0, 1, 2, 3]); // setting the range of the input data
+
+        // Load GeoJSON data and merge with states data
+        d3.json("/assets/geojson/us-states.json", function(json) {
+
+            // Loop through each state data value in the .csv file
+            for (var i = 0; i < data.length; i++) {
+
+                // Grab State Name
+                var dataState = data[i].state;
+
+                // Grab data value 
+                var dataValue = data[i].visited;
+
+                // Find the corresponding state inside the GeoJSON
+                for (var j = 0; j < json.features.length; j++) {
+
+                    var jsonState = json.features[j].properties.name;
+
+                    if (dataState == jsonState) {
+
+                        // Copy the data value into the JSON
+                        json.features[j].properties.visited = dataValue;
+
+                        // Stop looking through the JSON
+                        break;
+                    }
+                }
+            }
+
+
+
+            // Bind the data to the canvas and create one path per GeoJSON feature
+            canvas.selectAll("path")
+                .data(json.features)
+                .enter()
+                .append("path")
+                .attr("d", path)
+                .style("stroke", "grey")
+                .style("stroke-width", "1")
+                .style("fill", function(d) {
+
+                    // Get data value
+                    var value = d.properties.visited;
+
+                    if (value) {
+                        //If value exists…
+                        return color(value);
+                    } else {
+                        //If value is undefined…
+                        return "rgb(213, 222, 217)";
+
+                    }
+                });
+
+
+            /********************************************************************
+
+
+
+            Instead of cities-cities lived.csv we can get our circles by saving them in a var
+            like this:
+
+            var cities;
+
+            $.get("/api/data", function(res){
+                cities = res;
+            });
+            
+            then se take out the d3.csv wrapper function and just start with 
+
+            canvas.selectAll("circle")
+                .data(cities)
+                .enter()
+                ...
+
+            ********************************************************************/
+            d3.csv("/assets/geojson/cities-lived.csv", function(data) {
+
+
+
+                canvas.selectAll("circle")
+                    .data(data)
+                    .enter()
+                    .append("circle")
+                    .attr("cx", function(d) {
+                        console.log(d)
+                        return projection([d.lon, d.lat])[0];
+                    })
+                    .attr("cy", function(d) {
+                        return projection([d.lon, d.lat])[1];
+                    })
+                    .attr("r", function(d) {
+                        return Math.sqrt(d.years) * 4;
+                    })
+                    .attr("fill", function(d) {
+                        return coordinateColor(d.lat);
+                    })
+                    // .style("opacity", 0.85)  
+
+
+
+                // Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
+                // http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
+                //STYLE CONTROLLED BY DIV.TOOLTIPS ABOVE
+                .on("mouseover", function(d) {
+                    div.transition()
+                        //when mouse over controls how fast blurb populates        
+                        .duration(200)
+                        //control blurb popup opacity  
+                        .style("opacity", 1);
+                    //writes information to the blurb
+                    div.html(d.place + "<br/>" + "Lat: " + d.lat + "<br/>" + "Lon: " + d.lon)
+                        //controls X placement of the blurb - left,right,center
+                        .style("left", (d3.event.pageX) + "px")
+                        //controls Y placement of the blurb - up,down
+                        .style("top", (d3.event.pageY - 28) + "px");
+                })
+
+                // fade out tooltip on mouse out               
+                .on("mouseout", function(d) {
+                    div.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
+
+
+            });
+
+            var arcInfo = {
+                type: "LineString",
+                coordinates: [
+                    [-74.0059413, 40.7127837],
+                    [-97.7430608, 30.267153]
+
+                ]
+            };
+
+            canvas.append("path")
+                .attr("d", function() {
+                    return path(arcInfo);
+                })
+                .attr("stroke-width", "2")
+                .attr("stroke", "black");
+
+
+            ////////////////////////////////////////////////////////////////////////////////
+            //CODE FOR THE ARC
+            ///////////////////////////////////////////////////////////////////////////////
+            // var curveData = [{ x: 150, y: 300 }, { x: 800, y: 800 }];
+
+            // var edge = d3.select("svg").append('g');
+            // var diagonal = d3.svg.diagonal()
+            //     .source(function(d) {
+            //         return {
+            //             "x": d[0].y,
+            //             "y": d[0].x
+            //         };
+            //     })
+            //     .target(function(d) {
+            //         return {
+            //             "x": d[1].y,
+            //             "y": d[1].x
+            //         };
+            //     })
+            //     .projection(function(d) {
+            //         console.log(d.y, d.x);
+            //         return [d.y, d.x];
+            //     });
+
+            // d3.select("g")
+            //     .datum(curveData)
+            //     .append("path")
+            //     .attr("class", "link")
+            //     .attr("d", diagonal)
+            //     .attr("stroke", "#444")
+            //     .attr("stroke-width", 2)
+            //     .attr("fill", "none");
+
+            // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
+            var legend = d3.select("#heatmap").append("svg")
+                .attr("class", "legend")
+                .attr("width", 140)
+                .attr("height", 200)
+                .selectAll("g")
+                .data(coordinateColor.domain().slice().reverse())
+                .enter()
+                .append("g")
+                .attr("transform", function(d, i) {
+                    return "translate(0," + i * 20 + ")";
+                });
+
+            legend.append("rect")
+                .attr("width", 18)
+                .attr("height", 18)
+                .style("fill", coordinateColor);
+
+            legend.append("text")
+                .data(legendText)
+                .attr("x", 24)
+                .attr("y", 9)
+                .attr("dy", ".35em")
+                .text(function(d) {
+                    return d;
+                });
+        });
+
+    });
+
+    /****************************************************************************
+        CODE FOR CHARTS
+
+    *******************************************************************************/
+    $(function() {
+
+        var donutData = genData([33, 54, 80, 45]);
+
+        var donuts = new DonutCharts();
+        donuts.create(donutData);
+
+        $('#refresh-btn').on('click', function refresh() {
+            donuts.update(genData([80, 33, 33, 25, 90]));
+        });
+
+    });
+    
+
+    function DonutCharts() {
+
+        var charts = d3.select('#comparison');
+        var chart_m,
+            chart_r,
+            color = d3.scale.category20();
+
+        var getCatNames = function(dataset) {
+            var catNames = new Array();
+
+            for (var i = 0; i < dataset[0].data.length; i++) {
+                catNames.push(dataset[0].data[i].cat);
+            }
+
+            return catNames;
+        }
+
+        var createLegend = function(catNames) {
+            var legends = charts.select('.legend')
+                            .selectAll('g')
+                                .data(catNames)
+                            .enter().append('g')
+                                .attr('transform', function(d, i) {
+                                    return 'translate(' + (i * 150 + 50) + ', 10)';
+                                });
+    
+            legends.append('circle')
+                .attr('class', 'legend-icon')
+                .attr('r', 6)
+                .style('fill', function(d, i) {
+                    return color(i);
+                });
+    
+            legends.append('text')
+                .attr('dx', '1em')
+                .attr('dy', '.3em')
+                .text(function(d) {
+                    return d;
+                });
+        }
+
+        var createCenter = function(pie) {
+
+            var eventObj = {
+                'mouseover': function(d, i) {
+                    d3.select(this)
+                        .transition()
+                        .attr("r", chart_r * 0.65);
+                },
+
+                'mouseout': function(d, i) {
+                    d3.select(this)
+                        .transition()
+                        .duration(500)
+                        .ease('bounce')
+                        .attr("r", chart_r * 0.6);
+                },
+
+                'click': function(d, i) {
+                    var paths = charts.selectAll('.clicked');
+                    pathAnim(paths, 0);
+                    paths.classed('clicked', false);
+                    resetAllCenterText();
+                }
+            }
+
+            var donuts = d3.selectAll('.donut');
+
+            // The circle displaying total data.
+            donuts.append("svg:circle")
+                .attr("r", chart_r * 0.6)
+                .style("fill", "#32CD32")
+                .on(eventObj);
+    
+            donuts.append('text')
+                    .attr('class', 'center-txt type')
+                    .attr('y', chart_r * -0.16)
+                    .attr('text-anchor', 'middle')
+                    .style('font-weight', 'bold')
+                    .text(function(d, i) {
+                        return d.type;
+                    });
+            donuts.append('text')
+                    .attr('class', 'center-txt value')
+                    .attr('text-anchor', 'middle');
+            donuts.append('text')
+                    .attr('class', 'center-txt percentage')
+                    .attr('y', chart_r * 0.16)
+                    .attr('text-anchor', 'middle')
+                    .style('fill', '#A2A2A2');
+        }
+
+        var setCenterText = function(thisDonut) {
+            var sum = d3.sum(thisDonut.selectAll('.clicked').data(), function(d) {
+                return d.data.val;
+            });
+
+            thisDonut.select('.value')
+                .text(function(d) {
+                    return (sum)? sum.toFixed(1) + d.unit
+                                : d.total.toFixed(1) + d.unit;
+                });
+            thisDonut.select('.percentage')
+                .text(function(d) {
+                    return (sum)
+                               
+                });
+        }
+
+        var resetAllCenterText = function() {
+            charts.selectAll('.value')
+                .text(function(d) {
+                    return d.total.toFixed(1) + d.unit;
+                });
+            charts.selectAll('.percentage')
+                .text('');
+        }
+
+        var pathAnim = function(path, dir) {
+            switch(dir) {
+                case 0:
+                    path.transition()
+                        .duration(500)
+                        .ease('bounce')
+                        .attr('d', d3.svg.arc()
+                            .innerRadius(chart_r * 0.7)
+                            .outerRadius(chart_r)
+                        );
+                    break;
+
+                case 1:
+                    path.transition()
+                        .attr('d', d3.svg.arc()
+                            .innerRadius(chart_r * 0.7)
+                            .outerRadius(chart_r * 1.08)
+                        );
+                    break;
+            }
+        }
+
+        var updateDonut = function() {
+
+            var eventObj = {
+
+                'mouseover': function(d, i, j) {
+                    pathAnim(d3.select(this), 1);
+
+                    var thisDonut = charts.select('.type' + j);
+                    thisDonut.select('.value').text(function(donut_d) {
+                        return d.data.val.toFixed(1) + donut_d.unit;
+                    });
+                    thisDonut.select('.percentage').text(function(donut_d) {
+                        return (d.data.val/donut_d.total*100).toFixed(2) + '%';
+                    });
+                },
+                
+                'mouseout': function(d, i, j) {
+                    var thisPath = d3.select(this);
+                    if (!thisPath.classed('clicked')) {
+                        pathAnim(thisPath, 0);
+                    }
+                    var thisDonut = charts.select('.type' + j);
+                    setCenterText(thisDonut);
+                },
+
+                'click': function(d, i, j) {
+                    var thisDonut = charts.select('.type' + j);
+
+                    if (0 === thisDonut.selectAll('.clicked')[0].length) {
+                        thisDonut.select('circle').on('click')();
+                    }
+
+                    var thisPath = d3.select(this);
+                    var clicked = thisPath.classed('clicked');
+                    pathAnim(thisPath, ~~(!clicked));
+                    thisPath.classed('clicked', !clicked);
+
+                    setCenterText(thisDonut);
+                }
+            };
+
+            var pie = d3.layout.pie()
+                            .sort(null)
+                            .value(function(d) {
+                                return d.val;
+                            });
+
+            var arc = d3.svg.arc()
+                            .innerRadius(chart_r * 0.7)
+                            .outerRadius(function() {
+                                return (d3.select(this).classed('clicked'))? chart_r * 1.08
+                                                                           : chart_r;
+                            });
+
+            // Start joining data with paths
+            var paths = charts.selectAll('.donut')
+                            .selectAll('path')
+                            .data(function(d, i) {
+                                return pie(d.data);
+                            });
+
+            paths
+                .transition()
+                .duration(1000)
+                .attr('d', arc);
+
+            paths.enter()
+                .append('svg:path')
+                    .attr('d', arc)
+                    .style('fill', function(d, i) {
+                        return color(i);
+                    })
+                    .style('stroke', '#FFFFFF')
+                    .on(eventObj)
+
+            paths.exit().remove();
+
+            resetAllCenterText();
+        }
+
+        this.create = function(dataset) {
+            var $charts = $('#comparison');
+            chart_m = $charts.innerWidth() / dataset.length / 2 * 0.14;
+            chart_r = $charts.innerWidth() / dataset.length / 2 * 0.85;
+
+            charts.append('svg')
+                .attr('class', 'legend')
+                .attr('width', '100%')
+                .attr('height', 50)
+                .attr('transform', 'translate(0, -100)');
+
+            var donut = charts.selectAll('.donut')
+                            .data(dataset)
+                        .enter().append('svg:svg')
+                            .attr('width', (chart_r + chart_m) * 2)
+                            .attr('height', (chart_r + chart_m) * 2)
+                        .append('svg:g')
+                            .attr('class', function(d, i) {
+                                return 'donut type' + i;
+                            })
+                            .attr('transform', 'translate(' + (chart_r+chart_m) + ',' + (chart_r+chart_m) + ')');
+
+            createLegend(getCatNames(dataset));
+            createCenter();
+
+            updateDonut();
+        }
+    
+        this.update = function(dataset) {
+            // Assume no new categ of data enter
+            var donut = charts.selectAll(".donut")
+                        .data(dataset);
+
+            updateDonut();
+        }
+    }
+
+
+    /*
+     * Returns a json-like object.
+     */
+    function genData(x) {
+        var type = ['Austin', 'New York'];
+        var unit = ['cpi', 'cpi'];
+        var cat = ['Latitude', 'Longitude', 'wut', 'hey'];
+        var arr = x;
+
+        var dataset = new Array();
+
+        for (var i = 0; i < type.length; i++) {
+            var data = new Array();
+            var total = 0;
+
+            for (var j = 0; j < cat.length; j++) {
+                var value = arr[j]
+                total += value;
+                data.push({
+                    "cat": cat[j],
+                    "val": value
+                });
+            }
+
+            dataset.push({
+                "type": type[i],
+                "unit": unit[i],
+                "data": data,
+                "total": total
+            });
+        }
+        console.log(dataset);
+        return dataset;
+    }
+
+});

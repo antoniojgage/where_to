@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>City Data</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <h1>Project Name/Logo</h1>
+        <div class="hamburger">
+            <i class="fa fa-bars"></i>
+            <ul>
+                <li><a href="#">About</a></li>
+                <hr />
+                <li><a href="#">Contact</a></li>
+                <hr />
+                <li><a href="#">What do I do once I get to my new city?</a></li>
+            </ul>
+        </div>
+        <img class="mySlides" src="http://cdn.wallpapersafari.com/42/63/m9kVew.jpg" />
+        <img class="mySlides" src="https://s-media-cache-ak0.pinimg.com/originals/8d/f6/ad/8df6ad8b80e57c403fb3c943afe52269.jpg" />
+        <img class="mySlides" src="http://st.gde-fon.com/wallpapers_original/617136_st-louis_missouri_usa_3456x2304_www.Gde-Fon.com.jpg" />
+        <img class="mySlides" src="https://stevencsobotka.files.wordpress.com/2016/11/nashvilleskyline_canstockphoto23302476.jpg" />
+        <img class="mySlides" src="https://s-media-cache-ak0.pinimg.com/originals/4c/77/fb/4c77fbf1504ac68458fc8e6c2681a765.jpg" />
+        <img class="mySlides" src="https://i.ytimg.com/vi/g_sYAVz5iXU/maxresdefault.jpg" />
+        <button class="btn btn-default" id="find-btn">Find Your City</button>
+        <button class="btn btn-default" id="compare-btn">Compare Cities</button>
+    </div>
+    <div class="container" id="find-your-city">
+	    <form action="#">
+	    	<h2 class="text-center">You are just a few clicks from your destiny.</h2>
+	        <div class="form-group">
+	            <label for="occupation">Occupation: </label>
+	            <select class="form-control">
+	                <option>1</option>
+	                <option>2</option>
+	                <option>3</option>
+	                <option>4</option>
+	                <option>5</option>
+	            </select>
+	        </div>
+	        <button id="find-submit" class="btn btn-default">Submit</button>
+            <button class="btn btn-primary scrollUp">Back to Top</button>
+	    </form>
+    </div>
+    <div class="container" id="compare-cities">
+        <form action="#">
+            <h2 class="text-center">Dare to compare. How does your city stack up?</h2>
+            <div class="form-group">
+                <label for="city1">City One: </label>
+                <input class="form-control" id="city1" placeholder="City #1">
+            </div>
+            <p>vs</p>
+            <div class="form-group">
+                <label for="city2">City Two: </label>
+                <input class="form-control" id="city2" placeholder="City #2">
+            </div>
+            <button id="compare-submit" class="btn btn-default">Submit</button>
+            <button class="btn btn-primary scrollUp">Back to Top</button>
+        </form>
+    </div>
+    <div id="heatmap">
+    <button class="btn btn-primary scrollUp">Start Over</button>
+    </div>
+    <div id="comparison">
+    <button class="btn btn-default" id="refresh-btn">Refresh Charts</button>
+    <button class="btn btn-primary scrollUp">Start Over</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="/assets/js/views.js"></script>
+</body>
+
+</html>
