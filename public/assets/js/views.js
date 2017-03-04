@@ -66,6 +66,13 @@ $(document).ready(function() {
     });
 
     $("#compare-submit").click(function(e) {
+        console.log($('#city1').val()); 
+        //attempting get requests:
+        var cities=$('#city1').val();
+            $.get("/api/data/" + cities, function(res){
+                console.log("get request finished after submit button");
+                console.log(res);
+            });
         e.preventDefault();
         $("#comparison").css("display", "block");
         $('html, body').animate({
@@ -183,27 +190,28 @@ $(document).ready(function() {
                 });
 
 
-            /********************************************************************
+            // /********************************************************************
 
 
 
-            Instead of cities-cities lived.csv we can get our circles by saving them in a var
-            like this:
+            // Instead of cities-cities lived.csv we can get our circles by saving them in a var
+            // like this:
 
-            var cities;
+            // var cities;
+            // $('#city1').val("new text message") 
+            // $.get("/api/data", function(res){
+            //     // cities = res;
 
-            $.get("/api/data", function(res){
-                cities = res;
-            });
+            // });
             
-            then se take out the d3.csv wrapper function and just start with 
+            // then se take out the d3.csv wrapper function and just start with 
 
-            canvas.selectAll("circle")
-                .data(cities)
-                .enter()
-                ...
+            // canvas.selectAll("circle")
+            //     .data(cities)
+            //     .enter()
+            //     ...
 
-            ********************************************************************/
+            // ********************************************************************/
             d3.csv("/assets/geojson/cities-lived.csv", function(data) {
 
 
@@ -213,7 +221,7 @@ $(document).ready(function() {
                     .enter()
                     .append("circle")
                     .attr("cx", function(d) {
-                        console.log(d)
+                        // console.log(d)
                         return projection([d.lon, d.lat])[0];
                     })
                     .attr("cy", function(d) {
