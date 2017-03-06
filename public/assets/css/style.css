@@ -74,22 +74,22 @@
 #find-your-city {
   display: none;
   position: absolute;
-  margin-bottom: 250px;
-  top: 850px;
+  top: 153%;
+  margin-bottom: 25%;
 }
 
 #compare-cities {
   display: none;
   position: absolute;
-  margin-bottom: 200px;
-  top: 900px;
+  margin-bottom: 25%;
+  top: 153%;
 }
 
 #heatmap {
 	display: none;
 	width: 80%;
 	position: absolute;
-	top: 1100px;
+	top: 205%;
 	margin-right: 10%;
 	margin-left: 10%;
 	margin-bottom: 20px;
@@ -98,10 +98,10 @@
 	display: none;
 	width: 60%;
 	position: absolute;
-	top: 1200px;
-	height: 700px;
+	top: 205%;
 	margin-right: 20%;
 	margin-left: 20%;
+  margin-bottom: 20px;
 }
 
 path:hover {
