@@ -50,7 +50,7 @@
   background: rgba(0, 0, 0, 0.75);
   color: white;
   position: absolute;
-  height: 200px;
+  height: 40%;
   text-align: center;
   z-index: 900;
   pointer-events: none;
