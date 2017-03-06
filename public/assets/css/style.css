@@ -87,7 +87,50 @@
 
 #heatmap {
 	display: none;
+	width: 80%;
+	position: absolute;
+	top: 1100px;
+	margin-right: 10%;
+	margin-left: 10%;
+	margin-bottom: 20px;
 }
 #comparison {
 	display: none;
+	width: 60%;
+	position: absolute;
+	top: 1200px;
+	height: 700px;
+	margin-right: 20%;
+	margin-left: 20%;
+}
+
+path:hover {
+    fill-opacity: .7;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 100px;
+    height: 45px;
+    padding: 10px;
+    font: 12px sans-serif;
+    background: red;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+    display: none;
+}
+
+body {
+    font: 11px sans-serif;
+}
+
+.legend {
+	margin-top: 100px;
+	overflow: show;
+}
+
+#refresh {
+	margin-right: 3px;
 }
