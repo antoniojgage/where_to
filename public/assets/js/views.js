@@ -1,36 +1,25 @@
 $(document).ready(function() {
 
-    var slideIndex = 0;
-    carousel();
-    var burgerState = 0;
+    $(".slider").slider({
+        transition: 2000,
+        interval: 4000,
+        indicators: false
+    });
 
-    function carousel() {
-        var i;
-        var x = document.getElementsByClassName("mySlides");
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-        }
-        slideIndex++;
-        if (slideIndex > x.length) { slideIndex = 1 }
-        x[slideIndex - 1].style.display = "block";
-        setTimeout(carousel, 3000); // Change image every 2 seconds
-    }
 
-    $(".hamburger i").click(function() {
-        if (burgerState === 0) {
-            burgerState = 1;
-            $(".hamburger ul").css("display", "block");
-            $(".hamburger ul").mouseleave(function() {
-                burgerState = 0;
-                $(".hamburger ul").css("display", "none");
-            });
-        } else {
-            burgerState = 0;
-            $(".hamburger ul").css("display", "none");
-        }
+    $(".dropdown-button").click(function(){
+        $("#dropdown1").css("display", "block");
+        $("#dropdown1").mouseleave(function(){
+            $("#dropdown1").css("display", "none");
+        });
+    });
+
+    $("#dropdown1").mouseleave(function(){
+        $("#dropdown1").css("display", "none");
     });
 
     $("#find-btn").click(function() {
+        $(".slider-adjustment").css("position", "absolute");
         $("#compare-cities").css("display", "none");
         $("#heatmap").css("display", "none");
         $("#comparison").css("display", "none");
@@ -41,6 +30,7 @@ $(document).ready(function() {
     });
 
     $("#compare-btn").click(function() {
+        $(".slider-adjustment").css("position", "absolute");
         $("#find-your-city").css("display", "none");
         $("#heatmap").css("display", "none");
         $("#comparison").css("display", "none");
@@ -50,11 +40,11 @@ $(document).ready(function() {
         }, 2000);
     });
 
-    $(".scrollUp").click(function(e) {
+    $(".scroll-up").click(function(e) {
         e.preventDefault();
         $('html, body').animate({
-            scrollTop: $(".main").offset().top
-        }, 2000);
+            scrollTop: $("body").offset().top
+        }, 1500);
     });
 
     $("#find-submit").click(function(e) {
@@ -62,23 +52,17 @@ $(document).ready(function() {
         $("#heatmap").css("display", "block");
         $('html, body').animate({
             scrollTop: $("#heatmap").offset().top
-        }, 2000);
+        }, 1500);
     });
 
     $("#compare-submit").click(function(e) {
-        console.log($('#city1').val()); 
-        //attempting get requests:
-        var cities=$('#city1').val();
-            $.get("/api/data/" + cities, function(res){
-                console.log("get request finished after submit button");
-                console.log(res);
-            });
         e.preventDefault();
         $("#comparison").css("display", "block");
         $('html, body').animate({
             scrollTop: $("#comparison").offset().top
         }, 2000);
     });
+
     //D3 code beyond this point
     /*  This visualization was made possible by modifying code provided by:
 

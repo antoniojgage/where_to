@@ -1,98 +1,93 @@
-.mySlides {
-	display: none;
+.body {
+  font-family: Roboto, Arial;
+  position: relative;
 }
 
-.main img {
-	width: 100%;
-	z-index: 0;
+.nav-wrapper {
+  background-color: white;
+  z-index: 997;
+  border-bottom: 1px solid #e6e6e6;
 }
 
-.main {
-	text-align: center;
-	position: relative;
+.slider-adjustment {
+  position: fixed;
+  top: 64px;
+  /* as nav bar has height of 64px */
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
 }
 
-.main .btn-default {
-    position: absolute;
-    top: 30%;
-    font-size: 1.5em;
-    font-weight: bold;
+.slider .slides li img {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
 }
 
-#find-btn {
-	right: 52%;
+.whereto-logo {
+  width: 175px;
+  padding: 10px 0px 0px 30px;
 }
 
-.fa-bars {
-	position: absolute;
-	top: 10px;
-	right: 20px;
-	color: white;
-	font-size: 3em;
+.dropdown-content li a {
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
 }
 
-.main h1 {
-	color: white;
-	position: absolute;
-	top: 10px;
-	left: 20px;
+.dropdown-button {
+  color: #7DCED5;
+  font-size: 40px;
 }
 
-.hamburger ul {
-	width: 120px;
-	background-color: white;
-	color: black;
-	position: absolute;
-	top: 16px;
-	right: 58px;
-	display: none;
-	padding: 20px 10px;
-	z-index: 2;
+#menu-icon {
+  font-size: 40px;
 }
 
-.hamburger a {
-	color: black;
+.section {
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  position: absolute;
+  height: 200px;
+  text-align: center;
+  z-index: 900;
+  pointer-events: none;
+  width: 70%;
+}
+
+.section a {
+  pointer-events: auto;
+}
+
+.mg-rg {
+  margin-right: 15%;
+  margin-left: 15%;
+  margin-top: 5rem;
+}
+
+.section h5 {
+  font-family: Roboto, Arial;
 }
 
 #find-your-city {
-	display: none;
-	margin: 40px 0px 500px 0px;
+  display: none;
+  position: absolute;
+  margin-bottom: 250px;
+  top: 850px;
 }
 
 #compare-cities {
-	display: none;
-	margin: 40px 0px 500px 0px;
+  display: none;
+  position: absolute;
+  margin-bottom: 200px;
+  top: 900px;
 }
 
 #heatmap {
 	display: none;
 }
-
 #comparison {
 	display: none;
-}
-
-path:hover {
-    fill-opacity: .7;
-}
-
-div.tooltip {
-    position: absolute;
-    text-align: center;
-    width: 100px;
-    height: 45px;
-    padding: 10px;
-    font: 12px sans-serif;
-    background: red;
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
-}
-
-body {
-    font: 11px sans-serif;
-}
-
-#comparison {
-	width: 100%;
 }

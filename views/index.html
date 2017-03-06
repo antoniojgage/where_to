@@ -2,80 +2,138 @@
 <html>
 
 <head>
-    <title>City Data</title>
+    <title>where to?</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Meyer Reset-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
-    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 </head>
 
 <body>
-    <div class="main">
-        <h1>Project Name/Logo</h1>
-        <div class="hamburger">
-            <i class="fa fa-bars"></i>
-            <ul>
-                <li><a href="#">About</a></li>
-                <hr />
-                <li><a href="#">Contact</a></li>
-                <hr />
-                <li><a href="#">What do I do once I get to my new city?</a></li>
+    <!--NAV BAR-->
+    <ul id="dropdown1" class="dropdown-content">
+        <li><a href="about.html">About</a></li>
+        <li class="divider"></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="divider"></li>
+        <li><a href="#!">I'm here! Now what?</a></li>
+    </ul>
+    <div class="navbar-fixed">
+        <nav class="z-depth-0">
+            <div class="nav-wrapper white">
+                <a id="logo-container" href="#" class="brand-logo"><img class="whereto-logo" src="assets/images/wheretologo-small.png"></a>
+                <ul class="right hide-on-med-and-down">
+                    <!-- Dropdown Trigger -->
+                    <li><a class="dropdown-button" data-activates="dropdown1"><i id="menu-icon" class="material-icons">menu</i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!--FULL SCREEN SLIDER-->
+    <div class="slider-adjustment">
+        <div class="slider fullscreen">
+            <!--APP INFO **** this is the transparent box. Cant figure out how to put on top of image -->
+                <div class="section mg-rg ">
+                    <br> 
+                    <br>
+                    <div class="row center">
+                        <h5 class="header col s12 light">Looking for your next big move? Let Where to?® help you find the city you are most compatible with based on your occupation and salary requirements lorem ipsum.</h5>
+                    </div>
+                    <div class="row center">
+                        <a href="#" id="find-btn" class="btn-large waves-effect waves-light cyan lighten-3">Find Your City</a>
+                        <a href="#" id="compare-btn" class="btn-large waves-effect waves-light cyan lighten-3">Compare Cities</a>
+                    </div>
+                </div>
+            <ul class="slides">
+                <li>
+                    <img src="assets/images/atx-crop3.jpg">
+                </li>
+                <li>
+                    <img src="assets/images/nycity-crop1.jpg">
+                </li>
+                <li>
+                    <img src="assets/images/chicago-crop.jpg">
+                </li>
+                <li>
+                    <img src="assets/images/sanfrancisco-crop.jpg">
+                </li>
+                <li>
+                    <img src="assets/images/seattle-crop.jpg">
+                </li>
             </ul>
         </div>
-        <img class="mySlides" src="http://cdn.wallpapersafari.com/42/63/m9kVew.jpg" />
-        <img class="mySlides" src="https://s-media-cache-ak0.pinimg.com/originals/8d/f6/ad/8df6ad8b80e57c403fb3c943afe52269.jpg" />
-        <img class="mySlides" src="http://st.gde-fon.com/wallpapers_original/617136_st-louis_missouri_usa_3456x2304_www.Gde-Fon.com.jpg" />
-        <img class="mySlides" src="https://stevencsobotka.files.wordpress.com/2016/11/nashvilleskyline_canstockphoto23302476.jpg" />
-        <img class="mySlides" src="https://s-media-cache-ak0.pinimg.com/originals/4c/77/fb/4c77fbf1504ac68458fc8e6c2681a765.jpg" />
-        <img class="mySlides" src="https://i.ytimg.com/vi/g_sYAVz5iXU/maxresdefault.jpg" />
-        <button class="btn btn-default" id="find-btn">Find Your City</button>
-        <button class="btn btn-default" id="compare-btn">Compare Cities</button>
     </div>
+    <!--CITY BY OCCUPATION -->
     <div class="container" id="find-your-city">
-	    <form action="#">
-	    	<h2 class="text-center">You are just a few clicks from your destiny.</h2>
-	        <div class="form-group">
-	            <label for="occupation">Occupation: </label>
-	            <select class="form-control">
-	                <option>1</option>
-	                <option>2</option>
-	                <option>3</option>
-	                <option>4</option>
-	                <option>5</option>
-	            </select>
-	        </div>
-	        <button id="find-submit" class="btn btn-default">Submit</button>
-            <button class="btn btn-primary scrollUp">Back to Top</button>
-	    </form>
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">work</i>
+                        <input type="text" id="autocomplete-input" class="autocomplete">
+                        <label for="autocomplete-input">Enter Your Occupation</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Submit and Back to Top Buttons-->
+        <button id="find-submit" class="btn waves-effect waves-light cyan lighten-3" type="submit" name="action">Submit<i class="material-icons right">send</i>
+        </button>
+        <a class="waves-effect waves-light btn cyan lighten-3 scroll-up">Back to Top</a>
     </div>
+    <!--COMPARE CITY TO CITY  (icon location_on)-->
     <div class="container" id="compare-cities">
-        <form action="#">
-            <h2 class="text-center">Dare to compare. How does your city stack up?</h2>
-            <div class="form-group">
-                <label for="city1">City One: </label>
-                <input class="form-control" id="city1" placeholder="City #1">
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">location_on</i>
+                        <input type="text" id="autocomplete-input" class="autocomplete">
+                        <label for="autocomplete-input">Enter a City</label>
+                    </div>
+                </div>
             </div>
-            <p>vs</p>
-            <div class="form-group">
-                <label for="city2">City Two: </label>
-                <input class="form-control" id="city2" placeholder="City #2">
+        </div>
+        <br>
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">location_on</i>
+                        <input type="text" id="autocomplete-input" class="autocomplete">
+                        <label for="autocomplete-input">Enter a City</label>
+                    </div>
+                </div>
             </div>
-            <button id="compare-submit" class="btn btn-default">Submit</button>
-            <button class="btn btn-primary scrollUp">Back to Top</button>
-        </form>
+        </div>
+        <!--Submit and Back to Top Buttons-->
+        <button id="compare-submit" class="btn waves-effect waves-light cyan lighten-3" type="submit" name="action">Submit<i class="material-icons right">send</i>
+        </button>
+        <a class="waves-effect waves-light btn cyan lighten-3 scroll-up">Back to Top</a>
     </div>
+    <!--Display area for "Find Your City" Results-->
     <div id="heatmap">
-    <button class="btn btn-primary scrollUp">Start Over</button>
+    <button class="waves-effect waves-light btn cyan lighten-3 scroll-up">Start Over</button>
     </div>
+    <!--Display area for "Compare Two Cities" Results-->
     <div id="comparison">
-    <button class="btn btn-default" id="refresh-btn">Refresh Charts</button>
-    <button class="btn btn-primary scrollUp">Start Over</button>
+    <button class="waves-effect waves-light btn cyan lighten-3">Refresh Charts</button>
+    <button class="waves-effect waves-light btn cyan lighten-3 scroll-up">Start Over</button>
     </div>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="/assets/js/views.js"></script>
+    <!--JS Libraries-->
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!--MATERIALIZE JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="assets/js/views.js"></script>
 </body>
 
 </html>
