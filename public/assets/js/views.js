@@ -10,6 +10,15 @@ $(document).ready(function() {
 
     });
 
+    $.getScript("assets/js/list_of_cities.js", function() {
+
+        $('.city-auto').autocomplete({
+            data,
+            limit: 20,
+        });
+
+    });
+
 
 
     var refresh_btn = $("<button id='refresh' class='waves-effect waves-light btn cyan lighten-3'>Refresh Charts</button>");
@@ -96,7 +105,7 @@ $(document).ready(function() {
 
     //Width and height of map
     var w = 900;
-    var h = 600;
+    var h = 550;
 
     // D3 Projection
     var projection = d3.geo.albersUsa()
