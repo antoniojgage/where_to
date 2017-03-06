@@ -1,4 +1,17 @@
 $(document).ready(function() {
+
+
+    $.getScript("assets/js/list_of_jobs.js", function() {
+
+        $('#occupation-auto').autocomplete({
+            data,
+            limit: 20,
+        });
+
+    });
+
+
+
     var refresh_btn = $("<button id='refresh' class='waves-effect waves-light btn cyan lighten-3'>Refresh Charts</button>");
     var start_over = $("<button class='waves-effect waves-light btn cyan lighten-3 scroll-up start-over'>Start Over</button>");
 
