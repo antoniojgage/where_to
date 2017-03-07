@@ -7,7 +7,6 @@
 .nav-wrapper {
   background-color: white;
   z-index: 997;
-  border-bottom: 1px solid #e6e6e6;
 }
 
 .slider-adjustment {
@@ -93,7 +92,15 @@
   position: absolute;
   top: 153%;
   margin-bottom: 25%;
-  /*how do i center this damn thing... same thing with compare cities ???*/
+  font-family: Roboto;
+}
+
+#compare-cities {
+  display: none;
+  position: absolute;
+  margin-bottom: 25%;
+  top: 153%;
+  font-family: Roboto;
 }
 
 /* label focus color */
@@ -112,14 +119,6 @@
     box-shadow: 0 1px 0 0 #e0e0e0;
 }
 
-#compare-cities {
-  display: none;
-  position: absolute;
-  margin-bottom: 25%;
-  top: 153%;
-  font-family: Roboto;
-}
-
 #heatmap {
 	display: none;
 	width: 80%;
@@ -133,7 +132,7 @@
 	display: none;
 	width: 60%;
 	position: absolute;
-	top: 205%;
+	top: 250%;
 	margin-right: 20%;
 	margin-left: 20%;
   margin-bottom: 20px;
@@ -161,11 +160,32 @@ body {
     font: 11px sans-serif;
 }
 
-.legend {
+#heatmap .legend {
+  position: absolute;
+  top: 50%;
+  right: 5%;
 	margin-top: 100px;
 	overflow: show;
 }
 
 #refresh {
 	margin-right: 3px;
+}
+#find-btn {
+  margin-right: 3px;
+}
+#compare-btn{
+  margin-left: 3px;
+}
+#find-btn, #compare-btn {
+  font-size: 1.5em;
+}
+
+#heatmap .start-over {
+  position: absolute;
+  top: 90%;
+  right: 5%;
+}
+#buffer div{
+  height: 200px;
 }

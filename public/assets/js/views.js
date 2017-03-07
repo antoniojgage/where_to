@@ -104,12 +104,12 @@ $(document).ready(function() {
 
 
     //Width and height of map
-    var w = 900;
-    var h = 550;
+    var x = window.innerWidth * .7;
+    var y = window.innerHeight + 10;
 
     // D3 Projection
     var projection = d3.geo.albersUsa()
-        .translate([w / 2, h / 2]) // translate to center of screen
+        .translate([x / 2, y / 2]) // translate to center of screen
         .scale([1000]); // scale things down so see entire US
 
 
@@ -132,10 +132,8 @@ $(document).ready(function() {
     //Create SVG element and append map to the SVG
     var canvas = d3.select("#heatmap")
         .append("svg")
-        .attr("width", w)
-        .attr("height", h);
-
-
+        .attr("width", x)
+        .attr("height", y);
 
     // Append Div for tooltip to SVG
     var div = d3.select("#heatmap")
@@ -200,29 +198,6 @@ $(document).ready(function() {
                     }
                 });
 
-
-            // /********************************************************************
-
-
-
-            // Instead of cities-cities lived.csv we can get our circles by saving them in a var
-            // like this:
-
-            // var cities;
-            // $('#city1').val("new text message") 
-            // $.get("/api/data", function(res){
-            //     // cities = res;
-
-            // });
-
-            // then se take out the d3.csv wrapper function and just start with 
-
-            // canvas.selectAll("circle")
-            //     .data(cities)
-            //     .enter()
-            //     ...
-
-            // ********************************************************************/
             d3.csv("/assets/geojson/cities-lived.csv", function(data) {
 
 
