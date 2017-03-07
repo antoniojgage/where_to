@@ -49,12 +49,17 @@ module.exports = function (app) {
 		});
 	});
 
-		// put route -> back to index
+	// put route -> back to index
 	app.get("/api/data/:cities", function (req, res) {
+
 		var cities = req.params.cities
+		var city = cities.split(",")[0];
+		var state = cities.split(",")[1]
+		console.log("City: " + city + " State: " + state);
 		db.coordinates.findOne({
 			where: {
-				city: cities
+				city: cities,
+				stateInitial: state
 			}
 		}).then(function (result) {
 			return res.json(result);
