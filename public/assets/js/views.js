@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    //Width and height of map
+    var x = window.innerWidth * .7;
+    var y = window.innerHeight + 10;
 
 
     $.getScript("assets/js/list_of_jobs.js", function() {
@@ -18,7 +21,6 @@ $(document).ready(function() {
         });
 
     });
-
 
 
     var refresh_btn = $("<button id='refresh' class='waves-effect waves-light btn cyan lighten-3'>Refresh Charts</button>");
@@ -74,6 +76,9 @@ $(document).ready(function() {
     $("#find-submit").click(function(e) {
         //add route to search occupation occupation-auto
         e.preventDefault();
+        x = window.innerWidth * .7;
+        y = window.innerHeight + 10;
+        drawMap();
         $("#heatmap").css("display", "block");
         $("#heatmap").append(start_over);
         $('html, body').animate({
@@ -83,22 +88,24 @@ $(document).ready(function() {
 
     $("#compare-submit").click(function(e) {
         e.preventDefault();
-        console.log($('#city1').val()); 
-        console.log($('#city2').val()); 
+        x = window.innerWidth * .7;
+        y = window.innerHeight + 10;
+        console.log($('#city1').val());
+        console.log($('#city2').val());
         //Saving city
-        var city1 =$('#city1').val();
-        var city2 =$('#city2').val();
+        var city1 = $('#city1').val();
+        var city2 = $('#city2').val();
 
-            $.get("/api/data/" + city1, function(res){
-                console.log("get request finished after submit button");
-                console.log(res);
-                //d3 create badass map point.res
-            });
+        $.get("/api/data/" + city1, function(res) {
+            console.log("get request finished after submit button");
+            console.log(res);
+            //d3 create badass map point.res
+        });
 
-             $.get("/api/data/" + city2, function(res){
-                console.log("get request finished after submit button");
-                console.log(res);
-            });
+        $.get("/api/data/" + city2, function(res) {
+            console.log("get request finished after submit button");
+            console.log(res);
+        });
 
 
         $("#comparison").css("display", "block");
@@ -121,11 +128,9 @@ $(document).ready(function() {
         Mike Bostock, Pie Chart Legend
         http://bl.ocks.org/mbostock/3888852      */
 
+function drawMap () {
 
-    //Width and height of map
-    var x = window.innerWidth * .7;
-    var y = window.innerHeight + 10;
-
+    $("#heatmap").empty();
     // D3 Projection
     var projection = d3.geo.albersUsa()
         .translate([x / 2, y / 2]) // translate to center of screen
@@ -286,39 +291,6 @@ $(document).ready(function() {
                 .attr("stroke", "black");
 
 
-            ////////////////////////////////////////////////////////////////////////////////
-            //CODE FOR THE ARC
-            ///////////////////////////////////////////////////////////////////////////////
-            // var curveData = [{ x: 150, y: 300 }, { x: 800, y: 800 }];
-
-            // var edge = d3.select("svg").append('g');
-            // var diagonal = d3.svg.diagonal()
-            //     .source(function(d) {
-            //         return {
-            //             "x": d[0].y,
-            //             "y": d[0].x
-            //         };
-            //     })
-            //     .target(function(d) {
-            //         return {
-            //             "x": d[1].y,
-            //             "y": d[1].x
-            //         };
-            //     })
-            //     .projection(function(d) {
-            //         console.log(d.y, d.x);
-            //         return [d.y, d.x];
-            //     });
-
-            // d3.select("g")
-            //     .datum(curveData)
-            //     .append("path")
-            //     .attr("class", "link")
-            //     .attr("d", diagonal)
-            //     .attr("stroke", "#444")
-            //     .attr("stroke-width", 2)
-            //     .attr("fill", "none");
-
             // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
             var legend = d3.select("#heatmap").append("svg")
                 .attr("class", "legend")
@@ -349,6 +321,7 @@ $(document).ready(function() {
 
     });
 
+};
     /****************************************************************************
         CODE FOR CHARTS
 
