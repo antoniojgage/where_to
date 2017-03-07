@@ -1,0 +1,122 @@
+.body {
+  font-family: Roboto, Arial;
+  position: relative;
+}
+
+.nav-wrapper {
+  background-color: white;
+  z-index: 997;
+  /*border-bottom: 1px solid #e6e6e6;*/
+}
+
+.slider-adjustment {
+  position: fixed;
+  top: 64px;
+  /* as nav bar has height of 64px */
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+}
+
+.slider .slides li img {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+}
+
+.whereto-logo {
+  width: 175px;
+  padding: 10px 0px 0px 30px;
+}
+
+.dropdown-content li a {
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: none;
+  color: #212121;
+  font-kerning: 2px;
+}
+
+
+.dropdown-button {
+  color: #7DCED5;
+}
+
+#menu-icon {
+  font-size: 40px;
+}
+
+.section {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  position: absolute;
+  height: 400px;
+  text-align: center;
+  z-index: 900;
+  pointer-events: none;
+  width: 70%;
+  padding: 20px 40px 20px 40px;  /*added to center text and not be too close to sides*/
+}
+
+.section a {
+  pointer-events: auto;
+  font-family: Roboto;
+}
+
+.mg-rg {
+  margin-right: 15%;
+  margin-left: 15%;
+  margin-top: 5rem;
+}
+
+.section h1 {
+  font-family: Roboto, Arial;
+  font-size: 44px;
+  text-align: center;
+}
+
+.section p {
+  	font-family: Roboto, Arial;
+	font-size: 24px;
+	line-height: 1.5;
+	font-weight: 200;  
+	text-align: center; 
+}
+
+.section p strong {
+	font-weight: bold;
+}
+
+#find-your-city {
+  display: none;
+  position: absolute;
+  margin-bottom: 250px;
+  top: 850px;
+  font-family: Roboto;
+  /*how do i center this damn thing... same thing with compare cities ???*/
+}
+
+/* label focus color */
+.input-field input[type=text]:focus + label {
+     color: #4dd0e1;
+   }
+
+/* icon prefix focus color */
+.input-field .prefix.active {
+     color: #4dd0e1;
+   }
+
+/* label underline focus color */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #4dd0e1;
+    box-shadow: 0 1px 0 0 #e0e0e0;
+   }
+
+#compare-cities {
+  display: none;
+  position: absolute;
+  margin-bottom: 200px;
+  top: 900px;
+  font-family: Roboto;
+}

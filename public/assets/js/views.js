@@ -1,36 +1,49 @@
 $(document).ready(function() {
 
-    var slideIndex = 0;
-    carousel();
-    var burgerState = 0;
 
-    function carousel() {
-        var i;
-        var x = document.getElementsByClassName("mySlides");
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-        }
-        slideIndex++;
-        if (slideIndex > x.length) { slideIndex = 1 }
-        x[slideIndex - 1].style.display = "block";
-        setTimeout(carousel, 3000); // Change image every 2 seconds
-    }
+    $.getScript("assets/js/list_of_jobs.js", function() {
 
-    $(".hamburger i").click(function() {
-        if (burgerState === 0) {
-            burgerState = 1;
-            $(".hamburger ul").css("display", "block");
-            $(".hamburger ul").mouseleave(function() {
-                burgerState = 0;
-                $(".hamburger ul").css("display", "none");
-            });
-        } else {
-            burgerState = 0;
-            $(".hamburger ul").css("display", "none");
-        }
+        $('#occupation-auto').autocomplete({
+            data,
+            limit: 20,
+        });
+
+    });
+
+    $.getScript("assets/js/list_of_cities.js", function() {
+
+        $('.city-auto').autocomplete({
+            data,
+            limit: 20,
+        });
+
+    });
+
+
+
+    var refresh_btn = $("<button id='refresh' class='waves-effect waves-light btn cyan lighten-3'>Refresh Charts</button>");
+    var start_over = $("<button class='waves-effect waves-light btn cyan lighten-3 scroll-up start-over'>Start Over</button>");
+
+    $(".slider").slider({
+        transition: 2000,
+        interval: 4000,
+        indicators: false
+    });
+
+
+    $(".dropdown-button").click(function() {
+        $("#dropdown1").css("display", "block");
+        $("#dropdown1").mouseleave(function() {
+            $("#dropdown1").css("display", "none");
+        });
+    });
+
+    $("#dropdown1").mouseleave(function() {
+        $("#dropdown1").css("display", "none");
     });
 
     $("#find-btn").click(function() {
+        $(".slider-adjustment").css("position", "absolute");
         $("#compare-cities").css("display", "none");
         $("#heatmap").css("display", "none");
         $("#comparison").css("display", "none");
@@ -41,6 +54,7 @@ $(document).ready(function() {
     });
 
     $("#compare-btn").click(function() {
+        $(".slider-adjustment").css("position", "absolute");
         $("#find-your-city").css("display", "none");
         $("#heatmap").css("display", "none");
         $("#comparison").css("display", "none");
@@ -50,35 +64,32 @@ $(document).ready(function() {
         }, 2000);
     });
 
-    $(".scrollUp").click(function(e) {
+    function scrollUp(e) {
         e.preventDefault();
         $('html, body').animate({
-            scrollTop: $(".main").offset().top
-        }, 2000);
-    });
+            scrollTop: $("body").offset().top
+        }, 1500);
+    };
 
     $("#find-submit").click(function(e) {
         e.preventDefault();
         $("#heatmap").css("display", "block");
+        $("#heatmap").append(start_over);
         $('html, body').animate({
             scrollTop: $("#heatmap").offset().top
-        }, 2000);
+        }, 1500);
     });
 
     $("#compare-submit").click(function(e) {
-        console.log($('#city1').val()); 
-        //attempting get requests:
-        var cities=$('#city1').val();
-            $.get("/api/data/" + cities, function(res){
-                console.log("get request finished after submit button");
-                console.log(res);
-            });
         e.preventDefault();
         $("#comparison").css("display", "block");
+        $("#comparison").append(refresh_btn);
+        $("#comparison").append(start_over);
         $('html, body').animate({
             scrollTop: $("#comparison").offset().top
         }, 2000);
     });
+
     //D3 code beyond this point
     /*  This visualization was made possible by modifying code provided by:
 
@@ -94,7 +105,7 @@ $(document).ready(function() {
 
     //Width and height of map
     var w = 900;
-    var h = 600;
+    var h = 550;
 
     // D3 Projection
     var projection = d3.geo.albersUsa()
@@ -203,7 +214,7 @@ $(document).ready(function() {
             //     // cities = res;
 
             // });
-            
+
             // then se take out the d3.csv wrapper function and just start with 
 
             // canvas.selectAll("circle")
@@ -355,12 +366,13 @@ $(document).ready(function() {
         var donuts = new DonutCharts();
         donuts.create(donutData);
 
-        $('#refresh-btn').on('click', function refresh() {
+        function refresh() {
             donuts.update(genData([80, 33, 33, 25, 90]));
-        });
+        }
+
+        $(document).on('click', "#refresh", refresh);
 
     });
-    
 
     function DonutCharts() {
 
@@ -381,20 +393,20 @@ $(document).ready(function() {
 
         var createLegend = function(catNames) {
             var legends = charts.select('.legend')
-                            .selectAll('g')
-                                .data(catNames)
-                            .enter().append('g')
-                                .attr('transform', function(d, i) {
-                                    return 'translate(' + (i * 150 + 50) + ', 10)';
-                                });
-    
+                .selectAll('g')
+                .data(catNames)
+                .enter().append('g')
+                .attr('transform', function(d, i) {
+                    return 'translate(' + (i * 150 + 50) + ', 10)';
+                });
+
             legends.append('circle')
                 .attr('class', 'legend-icon')
                 .attr('r', 6)
                 .style('fill', function(d, i) {
                     return color(i);
                 });
-    
+
             legends.append('text')
                 .attr('dx', '1em')
                 .attr('dy', '.3em')
@@ -435,23 +447,23 @@ $(document).ready(function() {
                 .attr("r", chart_r * 0.6)
                 .style("fill", "#32CD32")
                 .on(eventObj);
-    
+
             donuts.append('text')
-                    .attr('class', 'center-txt type')
-                    .attr('y', chart_r * -0.16)
-                    .attr('text-anchor', 'middle')
-                    .style('font-weight', 'bold')
-                    .text(function(d, i) {
-                        return d.type;
-                    });
+                .attr('class', 'center-txt type')
+                .attr('y', chart_r * -0.16)
+                .attr('text-anchor', 'middle')
+                .style('font-weight', 'bold')
+                .text(function(d, i) {
+                    return d.type;
+                });
             donuts.append('text')
-                    .attr('class', 'center-txt value')
-                    .attr('text-anchor', 'middle');
+                .attr('class', 'center-txt value')
+                .attr('text-anchor', 'middle');
             donuts.append('text')
-                    .attr('class', 'center-txt percentage')
-                    .attr('y', chart_r * 0.16)
-                    .attr('text-anchor', 'middle')
-                    .style('fill', '#A2A2A2');
+                .attr('class', 'center-txt percentage')
+                .attr('y', chart_r * 0.16)
+                .attr('text-anchor', 'middle')
+                .style('fill', '#A2A2A2');
         }
 
         var setCenterText = function(thisDonut) {
@@ -461,13 +473,12 @@ $(document).ready(function() {
 
             thisDonut.select('.value')
                 .text(function(d) {
-                    return (sum)? sum.toFixed(1) + d.unit
-                                : d.total.toFixed(1) + d.unit;
+                    return (sum) ? sum.toFixed(1) + d.unit : d.total.toFixed(1) + d.unit;
                 });
             thisDonut.select('.percentage')
                 .text(function(d) {
                     return (sum)
-                               
+
                 });
         }
 
@@ -481,7 +492,7 @@ $(document).ready(function() {
         }
 
         var pathAnim = function(path, dir) {
-            switch(dir) {
+            switch (dir) {
                 case 0:
                     path.transition()
                         .duration(500)
@@ -514,10 +525,10 @@ $(document).ready(function() {
                         return d.data.val.toFixed(1) + donut_d.unit;
                     });
                     thisDonut.select('.percentage').text(function(donut_d) {
-                        return (d.data.val/donut_d.total*100).toFixed(2) + '%';
+                        return (d.data.val / donut_d.total * 100).toFixed(2) + '%';
                     });
                 },
-                
+
                 'mouseout': function(d, i, j) {
                     var thisPath = d3.select(this);
                     if (!thisPath.classed('clicked')) {
@@ -544,24 +555,23 @@ $(document).ready(function() {
             };
 
             var pie = d3.layout.pie()
-                            .sort(null)
-                            .value(function(d) {
-                                return d.val;
-                            });
+                .sort(null)
+                .value(function(d) {
+                    return d.val;
+                });
 
             var arc = d3.svg.arc()
-                            .innerRadius(chart_r * 0.7)
-                            .outerRadius(function() {
-                                return (d3.select(this).classed('clicked'))? chart_r * 1.08
-                                                                           : chart_r;
-                            });
+                .innerRadius(chart_r * 0.7)
+                .outerRadius(function() {
+                    return (d3.select(this).classed('clicked')) ? chart_r * 1.08 : chart_r;
+                });
 
             // Start joining data with paths
             var paths = charts.selectAll('.donut')
-                            .selectAll('path')
-                            .data(function(d, i) {
-                                return pie(d.data);
-                            });
+                .selectAll('path')
+                .data(function(d, i) {
+                    return pie(d.data);
+                });
 
             paths
                 .transition()
@@ -570,12 +580,12 @@ $(document).ready(function() {
 
             paths.enter()
                 .append('svg:path')
-                    .attr('d', arc)
-                    .style('fill', function(d, i) {
-                        return color(i);
-                    })
-                    .style('stroke', '#FFFFFF')
-                    .on(eventObj)
+                .attr('d', arc)
+                .style('fill', function(d, i) {
+                    return color(i);
+                })
+                .style('stroke', '#FFFFFF')
+                .on(eventObj)
 
             paths.exit().remove();
 
@@ -594,26 +604,26 @@ $(document).ready(function() {
                 .attr('transform', 'translate(0, -100)');
 
             var donut = charts.selectAll('.donut')
-                            .data(dataset)
-                        .enter().append('svg:svg')
-                            .attr('width', (chart_r + chart_m) * 2)
-                            .attr('height', (chart_r + chart_m) * 2)
-                        .append('svg:g')
-                            .attr('class', function(d, i) {
-                                return 'donut type' + i;
-                            })
-                            .attr('transform', 'translate(' + (chart_r+chart_m) + ',' + (chart_r+chart_m) + ')');
+                .data(dataset)
+                .enter().append('svg:svg')
+                .attr('width', (chart_r + chart_m) * 2)
+                .attr('height', (chart_r + chart_m) * 2)
+                .append('svg:g')
+                .attr('class', function(d, i) {
+                    return 'donut type' + i;
+                })
+                .attr('transform', 'translate(' + (chart_r + chart_m) + ',' + (chart_r + chart_m) + ')');
 
             createLegend(getCatNames(dataset));
             createCenter();
 
             updateDonut();
         }
-    
+
         this.update = function(dataset) {
             // Assume no new categ of data enter
             var donut = charts.selectAll(".donut")
-                        .data(dataset);
+                .data(dataset);
 
             updateDonut();
         }
@@ -655,4 +665,5 @@ $(document).ready(function() {
         return dataset;
     }
 
+    $(document).on("click", ".scroll-up", scrollUp);
 });
