@@ -97,7 +97,6 @@ $(document).ready(function() {
         e.preventDefault();
         x = window.innerWidth * .7;
         y = window.innerHeight + 10;
-        drawCharts();
         console.log($('#city1').val());
         console.log($('#city2').val());
         //Saving city
@@ -106,13 +105,15 @@ $(document).ready(function() {
 
         $.get("/api/data/" + city1, function(res) {
             console.log("get request finished after submit button");
-            console.log(res);
+            // console.log(res);
+            drawCharts(res);
             //d3 create badass map point.res
         });
 
         $.get("/api/data/" + city2, function(res) {
             console.log("get request finished after submit button");
-            console.log(res);
+            // console.log(res);
+            drawCharts(res);
         });
 
 
@@ -335,20 +336,30 @@ $(document).ready(function() {
         CODE FOR CHARTS
 
     *******************************************************************************/
-    function drawCharts() {
-        $("#comparison").empty();
-        var donutData = genData([33, 54, 80, 45]);
+    //sample draw charts
+    // function drawCharts() {
+    //     $("#comparison").empty();
+    //     var donutData = genData([33, 54, 80, 45]);
+    //     var donuts = new DonutCharts();
+    //     donuts.create(donutData);
+    //     function refresh() {
+    //         donuts.update(genData([80, 33, 33, 25, 90]));
+    //     }
+    //     $(document).on('click', "#refresh", refresh);
+    // };
 
+    function drawCharts(data) {
+        $("#comparison").empty();
+        var donutData = genData([data.costOfLivingPlusRentIndex, data.cpi, data.restaurantPriceIndex, data.rentIndex]);
         var donuts = new DonutCharts();
         donuts.create(donutData);
-
         function refresh() {
-            donuts.update(genData([80, 33, 33, 25, 90]));
+            donuts.update(genData([data.costOfLivingPlusRentIndex, data.cpi, data.restaurantPriceIndex, data.rentIndex]));
         }
-
         $(document).on('click', "#refresh", refresh);
-
     };
+
+
 
     function DonutCharts() {
 
@@ -610,9 +621,17 @@ $(document).ready(function() {
      * Returns a json-like object.
      */
     function genData(x) {
-        var type = ['Austin', 'New York'];
+        // var type = ['Austin', 'New York'];
+        // var unit = ['cpi', 'cpi'];
+        // var cat = ['Latitude', 'Longitude', 'wut', 'hey'];
+        // var arr = x;
+        // var donutData = genData([data.costOfLivingPlusRentIndex, data.cpi, data.restaurantPriceIndex, data.rentIndex]);
+        console.log("logging gen data!");
+        console.log(x);
+
+        var type = [x.areaName1];
         var unit = ['cpi', 'cpi'];
-        var cat = ['Latitude', 'Longitude', 'wut', 'hey'];
+        var cat = ['Cost of Living + Rent Index', 'CPI', 'Restaurant Price Index', 'Rent Index'];
         var arr = x;
 
         var dataset = new Array();
