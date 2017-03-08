@@ -1,39 +1,60 @@
+/* jshint indent: 2 */
+
 module.exports = function(sequelize, DataTypes) {
-
-    var Cities = sequelize.define("Cities", {
-        city: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                len: [1]
-            }
-        },
-        rank: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        latitude: {
-            type: DataTypes.DECIMAL(10, 4),
-            allowNull: false
-        },
-        state: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        longitude: {
-            type: DataTypes.DECIMAL(10, 4),
-            allowNull: false
-        },
-        growth_from_2000_2013: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        population: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        }
-    });
-
-    return Cities;
+  return sequelize.define('cities', {
+    id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+      field: 'id'
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'city'
+    },
+    rank: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      field: 'rank'
+    },
+    latitude: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      field: 'latitude'
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'state'
+    },
+    longitude: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      field: 'longitude'
+    },
+    growthFrom20002013: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'growth_from_2000_2013'
+    },
+    population: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      field: 'population'
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      field: 'createdAt'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      field: 'updatedAt'
+    }
+  }, {
+    tableName: 'Cities'
+  });
 };
-

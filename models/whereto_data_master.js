@@ -1,16 +1,14 @@
-/* jshint indent: 2 */
-
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('wheretoDataMaster', {
     id: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER(6),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
       field: 'ID'
     },
     primState: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'PRIM_STATE'
     },
@@ -27,45 +25,45 @@ module.exports = function(sequelize, DataTypes) {
     rentIndex: {
       type: "DOUBLE",
       allowNull: true,
-      field: 'Rent Index'
+      field: 'Rent_Index'
     },
     costOfLivingPlusRentIndex: {
       type: "DOUBLE",
       allowNull: true,
-      field: 'Cost of Living Plus Rent Index'
+      field: 'Cost_of_Living_Plus_Rent_Index'
     },
     groceriesIndex: {
       type: "DOUBLE",
       allowNull: true,
-      field: 'Groceries Index'
+      field: 'Groceries_Index'
     },
     restaurantPriceIndex: {
       type: "DOUBLE",
       allowNull: true,
-      field: 'Restaurant Price Index'
+      field: 'Restaurant_Price_Index'
     },
     localPurchasingPowerIndex: {
       type: "DOUBLE",
       allowNull: true,
-      field: 'Local Purchasing Power Index'
+      field: 'Local_Purchasing_Power_Index'
     },
     areaName1: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'AREA_NAME_1'
     },
     areaName2: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'AREA_NAME2'
     },
     areaName3: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'AREA_NAME_3'
     },
     areaName4: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'AREA_NAME_4'
     },
@@ -75,27 +73,27 @@ module.exports = function(sequelize, DataTypes) {
       field: 'AREA'
     },
     areaName: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'AREA_NAME'
     },
     occCode: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'OCC_CODE'
     },
     occTitle: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'OCC_TITLE'
     },
     occGroup: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'OCC_GROUP'
     },
     totEmp: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'TOT_EMP'
     },
@@ -112,15 +110,15 @@ module.exports = function(sequelize, DataTypes) {
     locQuotient: {
       type: "DOUBLE",
       allowNull: true,
-      field: 'LOC QUOTIENT'
+      field: 'LOC_QUOTIENT'
     },
     hMean: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'H_MEAN'
     },
     aMean: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'A_MEAN'
     },
@@ -130,64 +128,79 @@ module.exports = function(sequelize, DataTypes) {
       field: 'MEAN_PRSE'
     },
     hPct10: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'H_PCT10'
     },
     hPct25: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'H_PCT25'
     },
     hMedian: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'H_MEDIAN'
     },
     hPct75: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'H_PCT75'
     },
     hPct90: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'H_PCT90'
     },
     aPct10: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'A_PCT10'
     },
     aPct25: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'A_PCT25'
     },
     aMedian: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'A_MEDIAN'
     },
     aPct75: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'A_PCT75'
     },
     aPct90: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'A_PCT90'
     },
     annual: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'ANNUAL'
     },
     hourly: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
       field: 'HOURLY'
+    },
+    createdAt: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: 'createdAt'
+    },
+    updatedAt: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: 'updatedAt'
+    },
+    stateInitial: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: 'stateInitial'
     }
   }, {
     tableName: 'whereto_data_master'
