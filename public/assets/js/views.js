@@ -1,5 +1,8 @@
 
 $(document).ready(function() {
+    //Width and height of map
+    var x = window.innerWidth * .7;
+    var y = window.innerHeight + 10;
 
 
     $.getScript("assets/js/list_of_jobs.js", function() {
@@ -19,7 +22,6 @@ $(document).ready(function() {
         });
 
     });
-
 
 
     var refresh_btn = $("<button id='refresh' class='waves-effect waves-light btn cyan lighten-3'>Refresh Charts</button>");
@@ -74,6 +76,9 @@ $(document).ready(function() {
 
     $("#find-submit").click(function(e) {
         e.preventDefault();
+        x = window.innerWidth * .7;
+        y = window.innerHeight + 10;
+        drawMap();
         $("#heatmap").css("display", "block");
         $("#heatmap").append(start_over);
         $('html, body').animate({
@@ -83,6 +88,26 @@ $(document).ready(function() {
 
     $("#compare-submit").click(function(e) {
         e.preventDefault();
+
+        x = window.innerWidth * .7;
+        y = window.innerHeight + 10;
+        console.log($('#city1').val());
+        console.log($('#city2').val());
+        //Saving city
+        var city1 = $('#city1').val();
+        var city2 = $('#city2').val();
+
+        $.get("/api/data/" + city1, function(res) {
+            console.log("get request finished after submit button");
+            console.log(res);
+            //d3 create badass map point.res
+        });
+
+        $.get("/api/data/" + city2, function(res) {
+            console.log("get request finished after submit button");
+            console.log(res);
+        });
+
         $("#comparison").css("display", "block");
         $("#comparison").append(refresh_btn);
         $("#comparison").append(start_over);
@@ -103,78 +128,76 @@ $(document).ready(function() {
         Mike Bostock, Pie Chart Legend
         http://bl.ocks.org/mbostock/3888852      */
 
-
-    //Width and height of map
-    var w = 900;
-    var h = 550;
-
-    // D3 Projection
-    var projection = d3.geo.albersUsa()
-        .translate([w / 2, h / 2]) // translate to center of screen
-        .scale([1000]); // scale things down so see entire US
+    function drawMap() {
 
 
-    // Define path generator
-    var path = d3.geo.path() // path generator that will convert GeoJSON to SVG paths
-        .projection(projection); // tell path generator to use albersUsa projection
+        $("#heatmap").empty();
+        // D3 Projection
+        var projection = d3.geo.albersUsa()
+            .translate([x / 2, y / 2]) // translate to center of screen
+            .scale([1000]); // scale things down so see entire US
 
 
-    // Define linear scale for output
-    var color = d3.scale.linear()
-        .range(["rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)"]);
-    //Sets the Heat Map Coloring.  Domain = Low to High Values  Range = Color scale from x-x
-    var coordinateColor = d3.scale.linear()
-        .domain([20, 47])
-        .range(["#6BFF33", "#FF3333"]);
-
-    //Text that will appear in Legend.  
-    var legendText = ["City Rank #1-50", "City Rank #51-100", "City Rank #101-250", "City Rank #251-500", "City Rank #501-1,000"];
-
-    //Create SVG element and append map to the SVG
-    var canvas = d3.select("#heatmap")
-        .append("svg")
-        .attr("width", w)
-        .attr("height", h);
+        // Define path generator
+        var path = d3.geo.path() // path generator that will convert GeoJSON to SVG paths
+            .projection(projection); // tell path generator to use albersUsa projection
 
 
+        // Define linear scale for output
+        var color = d3.scale.linear()
+            .range(["rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)"]);
 
-    // Append Div for tooltip to SVG
-    var div = d3.select("#heatmap")
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
+        var coordinateColor = d3.scale.linear()
+            .domain([20, 47])
+            .range(["#6BFF33", "#FF3333"]);
 
-    // Load in my states data!
-    d3.csv("/assets/geojson/stateslived.csv", function(data) {
-        color.domain([0, 1, 2, 3]); // setting the range of the input data
 
-        // Load GeoJSON data and merge with states data
-        d3.json("/assets/geojson/us-states.json", function(json) {
+        var legendText = ["City Rank #1-50", "City Rank #51-100", "City Rank #101-250", "City Rank #251-500", "City Rank #501-1,000"];
 
-            // Loop through each state data value in the .csv file
-            for (var i = 0; i < data.length; i++) {
+        //Create SVG element and append map to the SVG
+        var canvas = d3.select("#heatmap")
+            .append("svg")
+            .attr("width", x)
+            .attr("height", y);
 
-                // Grab State Name
-                var dataState = data[i].state;
+        // Append Div for tooltip to SVG
+        var div = d3.select("#heatmap")
+            .append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
 
-                // Grab data value 
-                var dataValue = data[i].visited;
 
-                // Find the corresponding state inside the GeoJSON
-                for (var j = 0; j < json.features.length; j++) {
+        // Load in my states data!
+        d3.csv("/assets/geojson/stateslived.csv", function(data) {
+            color.domain([0, 1, 2, 3]); // setting the range of the input data
 
-                    var jsonState = json.features[j].properties.name;
+            // Load GeoJSON data and merge with states data
+            d3.json("/assets/geojson/us-states.json", function(json) {
 
-                    if (dataState == jsonState) {
+                // Loop through each state data value in the .csv file
+                for (var i = 0; i < data.length; i++) {
 
-                        // Copy the data value into the JSON
-                        json.features[j].properties.visited = dataValue;
+                    // Grab State Name
+                    var dataState = data[i].state;
 
-                        // Stop looking through the JSON
-                        break;
+                    // Grab data value 
+                    var dataValue = data[i].visited;
+
+                    // Find the corresponding state inside the GeoJSON
+                    for (var j = 0; j < json.features.length; j++) {
+
+                        var jsonState = json.features[j].properties.name;
+
+                        if (dataState == jsonState) {
+
+                            // Copy the data value into the JSON
+                            json.features[j].properties.visited = dataValue;
+
+                            // Stop looking through the JSON
+                            break;
+                        }
                     }
                 }
-            }
 
 
 
@@ -189,85 +212,35 @@ $(document).ready(function() {
                 .style("stroke-width", "1")
                 .style("fill", function(d) {
 
-                    // Get data value
-                    var value = d.properties.visited;
+                // Bind the data to the canvas and create one path per GeoJSON feature
+                canvas.selectAll("path")
+                    .data(json.features)
+                    .enter()
+                    .append("path")
+                    .attr("d", path)
+                    .style("stroke", "grey")
+                    .style("stroke-width", "1")
+                    .style("fill", function(d) {
 
-                    if (value) {
-                        //If value exists…
-                        return color(value);
-                    } else {
-                        //If value is undefined…
-                        return "rgb(213, 222, 217)";
+                        // Get data value
+                        var value = d.properties.visited;
 
-                    }
-                });
+                        if (value) {
+                            //If value exists…
+                            return color(value);
+                        } else {
+                            //If value is undefined…
+                            return "rgb(213, 222, 217)";
 
+                        }
+                    });
 
-            // /********************************************************************
-
-
-
-            // Instead of cities-cities lived.csv we can get our circles by saving them in a var
-            // like this:
-
-            // var cities;
-            // $('#city1').val("new text message") 
-            // $.get("/api/data", function(res){
-            //     // cities = res;
-
-            // });
-
-            // then se take out the d3.csv wrapper function and just start with 
-
-            // canvas.selectAll("circle")
-            //     .data(cities)
-            //     .enter()
-            //     ...
-
-            // ********************************************************************/
-
-
-            var city = [
-          {
-            city1: {
-                Latitude: -97.00000,
-                Longitude: 30.00032,
-                place: "Austin",
-                years: 1
-          },
-            city2: {
-                Latitude: -80.00000,
-                Longitude: 45.00032,
-                place: "Boston",
-                years: 1
-          }
-      }];
-
-          console.log(city[0])
-
-    //    
-        canvas.selectAll("circle")
-    .data(city[0])
-    console.log(city[0])
-    .enter(city[0])
-    .append("circle")
-    .attr("cx", function(d) { return d.Latitude; })
-    .attr("cy", function(d) { return d.Longitude; }) 
-    .attr("r", 2.5)
-    
-
-
-             
-         
-
-
-
-             
-       
-
+                               
 //************************WORKING CITY PLOT CODE*******************************************
+          var cityData;
           //This function is where Points on the map get created
-            d3.csv("/assets/geojson/cities-lived.csv", function(data) {
+           $.get("/api/cities", function(res) {
+                    cityData = res;
 
 
                     //put circle on the map
@@ -277,17 +250,17 @@ $(document).ready(function() {
                     .append("circle")
                     .attr("cx", function(d) {
                         // return lattitude and longitude
-                        return projection([d.lon, d.lat])[0];
+                        return projection([d.longitude, d.latitude])[0];
                     })
                     .attr("cy", function(d) {
-                        return projection([d.lon, d.lat])[1];
+                        return projection([d.longitude, d.latitude])[1];
                     })
                     .attr("r", function(d) {
                         return Math.sqrt(d.years) * 4;
                     })
                     //produce heat mapping based on latitude
                     .attr("fill", function(d) {
-                        return coordinateColor(d.lat);
+                        return coordinateColor(d.latitude);
                     })
                     // .style("opacity", 0.85) 
 
@@ -306,22 +279,18 @@ $(document).ready(function() {
                         //control blurb popup opacity  
                         .style("opacity", 1);
                     //writes information to the blurb
-                    div.html(d.place + "<br/>" + "Lat: " + d.lat + "<br/>" + "Lon: " + d.lon)
+                    div.html(d.place + "<br/>" + "Lat: " + d.latitude + "<br/>" + "Lon: " + d.longitude)
                         //controls X placement of the blurb - left,right,center
                         .style("left", (d3.event.pageX) + "px")
                         //controls Y placement of the blurb - up,down
                         .style("top", (d3.event.pageY - 28) + "px");
                 })
-
-                // fade out tooltip on mouse out               
-                .on("mouseout", function(d) {
-                    div.transition()
-                        .duration(500)
-                        .style("opacity", 0);
-                });
+             
+           });
 
 
-            });
+
+    
               //variable containing line drawn on map coordinates
             var arcInfo = {
                 type: "LineString",
@@ -338,40 +307,6 @@ $(document).ready(function() {
                 })
                 .attr("stroke-width", "2")
                 .attr("stroke", "black");
-
-
-            ////////////////////////////////////////////////////////////////////////////////
-            //CODE FOR THE ARC
-            ///////////////////////////////////////////////////////////////////////////////
-            // var curveData = [{ x: 150, y: 300 }, { x: 800, y: 800 }];
-
-            // var edge = d3.select("svg").append('g');
-            // var diagonal = d3.svg.diagonal()
-            //     .source(function(d) {
-            //         return {
-            //             "x": d[0].y,
-            //             "y": d[0].x
-            //         };
-            //     })
-            //     .target(function(d) {
-            //         return {
-            //             "x": d[1].y,
-            //             "y": d[1].x
-            //         };
-            //     })
-            //     .projection(function(d) {
-            //         console.log(d.y, d.x);
-            //         return [d.y, d.x];
-            //     });
-
-            // d3.select("g")
-            //     .datum(curveData)
-            //     .append("path")
-            //     .attr("class", "link")
-            //     .attr("d", diagonal)
-            //     .attr("stroke", "#444")
-            //     .attr("stroke-width", 2)
-            //     .attr("fill", "none");
 
             //Variable containing legend info.
             var legend = d3.select("#heatmap").append("svg")
@@ -404,10 +339,10 @@ $(document).ready(function() {
                 .text(function(d) {
                     return d;
                 });
+
         });
 
-    });
-
+    };
     /****************************************************************************
         CODE FOR CHARTS
 

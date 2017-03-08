@@ -25,11 +25,9 @@ module.exports = function (app) {
 	app.get("/api/cities", function (req, res) {
 		console.log("trying to query cities");
 		db.coordinates.findAll({
-			order: "rank ASC",
-			/*db.coordinates.findOne({
 			  where: {
-			    rank: 1
-			  }*/
+			    city: "Portland"
+			  }
 		}).then(function (result) {
 			return res.json(result);
 		});
