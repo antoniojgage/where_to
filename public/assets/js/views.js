@@ -72,6 +72,7 @@ $(document).ready(function() {
     };
 
     $("#find-submit").click(function(e) {
+        //add route to search occupation occupation-auto
         e.preventDefault();
         $("#heatmap").css("display", "block");
         $("#heatmap").append(start_over);
@@ -82,6 +83,24 @@ $(document).ready(function() {
 
     $("#compare-submit").click(function(e) {
         e.preventDefault();
+        console.log($('#city1').val()); 
+        console.log($('#city2').val()); 
+        //Saving city
+        var city1 =$('#city1').val();
+        var city2 =$('#city2').val();
+
+            $.get("/api/data/" + city1, function(res){
+                console.log("get request finished after submit button");
+                console.log(res);
+                //d3 create badass map point.res
+            });
+
+             $.get("/api/data/" + city2, function(res){
+                console.log("get request finished after submit button");
+                console.log(res);
+            });
+
+
         $("#comparison").css("display", "block");
         $("#comparison").append(refresh_btn);
         $("#comparison").append(start_over);
