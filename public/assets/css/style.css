@@ -50,7 +50,6 @@
   background: rgba(0, 0, 0, 0.6);
   color: white;
   position: absolute;
-  height: 400px;
   text-align: center;
   z-index: 900;
   pointer-events: none;
@@ -191,6 +190,7 @@ body {
 }
 
 
+
 /* ===CONTACT PAGE=== */
 .card-image {
   max-width: 300px;
@@ -209,3 +209,17 @@ body {
   color:;
   margin-top: 75px;
 }
+
+@media screen and (max-width: 845px) {
+  #find-btn {
+    margin-bottom: 10px;
+  }
+}
+
+
+@media screen and (max-width: 663px) {
+  #find-submit, #compare-submit {
+    margin-bottom: 10px;
+  }
+}
+

@@ -1,5 +1,8 @@
 $(document).ready(function() {
-
+    //Width and height of map
+    var x = window.innerWidth * .7;
+    var y = window.innerHeight + 10;
+    var occupation;
 
     $.getScript("assets/js/list_of_jobs.js", function() {
 
@@ -18,7 +21,6 @@ $(document).ready(function() {
         });
 
     });
-
 
 
     var refresh_btn = $("<button id='refresh' class='waves-effect waves-light btn cyan lighten-3'>Refresh Charts</button>");
@@ -72,7 +74,13 @@ $(document).ready(function() {
     };
 
     $("#find-submit").click(function(e) {
+        //add route to search occupation occupation-auto
         e.preventDefault();
+        x = window.innerWidth * .7;
+        y = window.innerHeight + 10;
+        drawMap();
+        occupation = $("#occupation-auto").val();
+
         $("#heatmap").css("display", "block");
         $("#heatmap").append(start_over);
         $('html, body').animate({
@@ -82,6 +90,27 @@ $(document).ready(function() {
 
     $("#compare-submit").click(function(e) {
         e.preventDefault();
+        x = window.innerWidth * .7;
+        y = window.innerHeight + 10;
+        drawCharts();
+        console.log($('#city1').val());
+        console.log($('#city2').val());
+        //Saving city
+        var city1 = $('#city1').val();
+        var city2 = $('#city2').val();
+
+        $.get("/api/data/" + city1, function(res) {
+            console.log("get request finished after submit button");
+            console.log(res);
+            //d3 create badass map point.res
+        });
+
+        $.get("/api/data/" + city2, function(res) {
+            console.log("get request finished after submit button");
+            console.log(res);
+        });
+
+
         $("#comparison").css("display", "block");
         $("#comparison").append(refresh_btn);
         $("#comparison").append(start_over);
@@ -102,240 +131,206 @@ $(document).ready(function() {
         Mike Bostock, Pie Chart Legend
         http://bl.ocks.org/mbostock/3888852      */
 
+    function drawMap() {
 
-    //Width and height of map
-    var x = window.innerWidth * .7;
-    var y = window.innerHeight + 10;
-
-    // D3 Projection
-    var projection = d3.geo.albersUsa()
-        .translate([x / 2, y / 2]) // translate to center of screen
-        .scale([1000]); // scale things down so see entire US
+        $("#heatmap").empty();
+        // D3 Projection
+        var projection = d3.geo.albersUsa()
+            .translate([x / 2, y / 2]) // translate to center of screen
+            .scale([1000]); // scale things down so see entire US
 
 
-    // Define path generator
-    var path = d3.geo.path() // path generator that will convert GeoJSON to SVG paths
-        .projection(projection); // tell path generator to use albersUsa projection
+        // Define path generator
+        var path = d3.geo.path() // path generator that will convert GeoJSON to SVG paths
+            .projection(projection); // tell path generator to use albersUsa projection
 
 
-    // Define linear scale for output
-    var color = d3.scale.linear()
-        .range(["rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)"]);
+        // Define linear scale for output
+        var color = d3.scale.linear()
+            .range(["rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)"]);
 
-    var coordinateColor = d3.scale.linear()
-        .domain([20, 47])
-        .range(["#6BFF33", "#FF3333"]);
+        var coordinateColor = d3.scale.linear()
+            .domain([20, 47])
+            .range(["#6BFF33", "#FF3333"]);
 
 
-    var legendText = ["City Rank #1-50", "City Rank #51-100", "City Rank #101-250", "City Rank #251-500", "City Rank #501-1,000"];
+        var legendText = ["City Rank #1-50", "City Rank #51-100", "City Rank #101-250", "City Rank #251-500", "City Rank #501-1,000"];
 
-    //Create SVG element and append map to the SVG
-    var canvas = d3.select("#heatmap")
-        .append("svg")
-        .attr("width", x)
-        .attr("height", y);
+        //Create SVG element and append map to the SVG
+        var canvas = d3.select("#heatmap")
+            .append("svg")
+            .attr("width", x)
+            .attr("height", y);
 
-    // Append Div for tooltip to SVG
-    var div = d3.select("#heatmap")
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
+        // Append Div for tooltip to SVG
+        var div = d3.select("#heatmap")
+            .append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
 
-    // Load in my states data!
-    d3.csv("/assets/geojson/stateslived.csv", function(data) {
-        color.domain([0, 1, 2, 3]); // setting the range of the input data
+        // Load in my states data!
+        d3.csv("/assets/geojson/stateslived.csv", function(data) {
+            color.domain([0, 1, 2, 3]); // setting the range of the input data
 
-        // Load GeoJSON data and merge with states data
-        d3.json("/assets/geojson/us-states.json", function(json) {
+            // Load GeoJSON data and merge with states data
+            d3.json("/assets/geojson/us-states.json", function(json) {
 
-            // Loop through each state data value in the .csv file
-            for (var i = 0; i < data.length; i++) {
+                // Loop through each state data value in the .csv file
+                for (var i = 0; i < data.length; i++) {
 
-                // Grab State Name
-                var dataState = data[i].state;
+                    // Grab State Name
+                    var dataState = data[i].state;
 
-                // Grab data value 
-                var dataValue = data[i].visited;
+                    // Grab data value 
+                    var dataValue = data[i].visited;
 
-                // Find the corresponding state inside the GeoJSON
-                for (var j = 0; j < json.features.length; j++) {
+                    // Find the corresponding state inside the GeoJSON
+                    for (var j = 0; j < json.features.length; j++) {
 
-                    var jsonState = json.features[j].properties.name;
+                        var jsonState = json.features[j].properties.name;
 
-                    if (dataState == jsonState) {
+                        if (dataState == jsonState) {
 
-                        // Copy the data value into the JSON
-                        json.features[j].properties.visited = dataValue;
+                            // Copy the data value into the JSON
+                            json.features[j].properties.visited = dataValue;
 
-                        // Stop looking through the JSON
-                        break;
+                            // Stop looking through the JSON
+                            break;
+                        }
                     }
                 }
-            }
 
 
 
-            // Bind the data to the canvas and create one path per GeoJSON feature
-            canvas.selectAll("path")
-                .data(json.features)
-                .enter()
-                .append("path")
-                .attr("d", path)
-                .style("stroke", "grey")
-                .style("stroke-width", "1")
-                .style("fill", function(d) {
-
-                    // Get data value
-                    var value = d.properties.visited;
-
-                    if (value) {
-                        //If value exists…
-                        return color(value);
-                    } else {
-                        //If value is undefined…
-                        return "rgb(213, 222, 217)";
-
-                    }
-                });
-
-            d3.csv("/assets/geojson/cities-lived.csv", function(data) {
-
-
-
-                canvas.selectAll("circle")
-                    .data(data)
+                // Bind the data to the canvas and create one path per GeoJSON feature
+                canvas.selectAll("path")
+                    .data(json.features)
                     .enter()
-                    .append("circle")
-                    .attr("cx", function(d) {
-                        // console.log(d)
-                        return projection([d.lon, d.lat])[0];
-                    })
-                    .attr("cy", function(d) {
-                        return projection([d.lon, d.lat])[1];
-                    })
-                    .attr("r", function(d) {
-                        return Math.sqrt(d.years) * 4;
-                    })
-                    .attr("fill", function(d) {
-                        return coordinateColor(d.lat);
-                    })
-                    // .style("opacity", 0.85)  
+                    .append("path")
+                    .attr("d", path)
+                    .style("stroke", "grey")
+                    .style("stroke-width", "1")
+                    .style("fill", function(d) {
 
+                        // Get data value
+                        var value = d.properties.visited;
 
+                        if (value) {
+                            //If value exists…
+                            return color(value);
+                        } else {
+                            //If value is undefined…
+                            return "rgb(213, 222, 217)";
 
-                // Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
-                // http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
-                //STYLE CONTROLLED BY DIV.TOOLTIPS ABOVE
-                .on("mouseover", function(d) {
-                    div.transition()
-                        //when mouse over controls how fast blurb populates        
-                        .duration(200)
-                        //control blurb popup opacity  
-                        .style("opacity", 1);
-                    //writes information to the blurb
-                    div.html(d.place + "<br/>" + "Lat: " + d.lat + "<br/>" + "Lon: " + d.lon)
-                        //controls X placement of the blurb - left,right,center
-                        .style("left", (d3.event.pageX) + "px")
-                        //controls Y placement of the blurb - up,down
-                        .style("top", (d3.event.pageY - 28) + "px");
-                })
+                        }
+                    });
 
-                // fade out tooltip on mouse out               
-                .on("mouseout", function(d) {
-                    div.transition()
-                        .duration(500)
-                        .style("opacity", 0);
+                var cityData;
+
+                $.get("/api/whereto/" + occupation, function(res) {
+                    cityData = res;
+                    console.log(cityData);
+                    canvas.selectAll("circle")
+                        .data(cityData)
+                        .enter()
+                        .append("circle")
+                        .attr("cx", function(d) {
+                            // console.log(d)
+                            return projection([d.longitude, d.latitude])[0];
+                        })
+                        .attr("cy", function(d) {
+                            return projection([d.longitude, d.latitude])[1];
+                        })
+                        .attr("r", 6)
+                        .attr("fill", function(d) {
+                            return coordinateColor(d.latitude);
+                        })
+                        // .style("opacity", 0.85)  
+
+                    // Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
+                    // http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
+                    //STYLE CONTROLLED BY DIV.TOOLTIPS ABOVE
+                    .on("mouseover", function(d) {
+                        div.transition()
+                            //when mouse over controls how fast blurb populates        
+                            .duration(200)
+                            //control blurb popup opacity  
+                            .style("opacity", 1);
+                        //writes information to the blurb
+                        div.html(d.place + "<br/>" + "Lat: " + d.latitude + "<br/>" + "Lon: " + d.longitude)
+                            //controls X placement of the blurb - left,right,center
+                            .style("left", (d3.event.pageX) + "px")
+                            //controls Y placement of the blurb - up,down
+                            .style("top", (d3.event.pageY - 28) + "px");
+                    })
+
+                    // fade out tooltip on mouse out               
+                    .on("mouseout", function(d) {
+                        div.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                    });
                 });
 
 
+
+
+
+
+                var arcInfo = {
+                    type: "LineString",
+                    coordinates: [
+                        [-74.0059413, 40.7127837],
+                        [-97.7430608, 30.267153]
+
+                    ]
+                };
+
+                canvas.append("path")
+                    .attr("d", function() {
+                        return path(arcInfo);
+                    })
+                    .attr("stroke-width", "2")
+                    .attr("stroke", "black");
+
+
+                // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
+                var legend = d3.select("#heatmap").append("svg")
+                    .attr("class", "legend")
+                    .attr("width", 140)
+                    .attr("height", 200)
+                    .selectAll("g")
+                    .data(coordinateColor.domain().slice().reverse())
+                    .enter()
+                    .append("g")
+                    .attr("transform", function(d, i) {
+                        return "translate(0," + i * 20 + ")";
+                    });
+
+                legend.append("rect")
+                    .attr("width", 18)
+                    .attr("height", 18)
+                    .style("fill", coordinateColor);
+
+                legend.append("text")
+                    .data(legendText)
+                    .attr("x", 24)
+                    .attr("y", 9)
+                    .attr("dy", ".35em")
+                    .text(function(d) {
+                        return d;
+                    });
             });
 
-            var arcInfo = {
-                type: "LineString",
-                coordinates: [
-                    [-74.0059413, 40.7127837],
-                    [-97.7430608, 30.267153]
-
-                ]
-            };
-
-            canvas.append("path")
-                .attr("d", function() {
-                    return path(arcInfo);
-                })
-                .attr("stroke-width", "2")
-                .attr("stroke", "black");
-
-
-            ////////////////////////////////////////////////////////////////////////////////
-            //CODE FOR THE ARC
-            ///////////////////////////////////////////////////////////////////////////////
-            // var curveData = [{ x: 150, y: 300 }, { x: 800, y: 800 }];
-
-            // var edge = d3.select("svg").append('g');
-            // var diagonal = d3.svg.diagonal()
-            //     .source(function(d) {
-            //         return {
-            //             "x": d[0].y,
-            //             "y": d[0].x
-            //         };
-            //     })
-            //     .target(function(d) {
-            //         return {
-            //             "x": d[1].y,
-            //             "y": d[1].x
-            //         };
-            //     })
-            //     .projection(function(d) {
-            //         console.log(d.y, d.x);
-            //         return [d.y, d.x];
-            //     });
-
-            // d3.select("g")
-            //     .datum(curveData)
-            //     .append("path")
-            //     .attr("class", "link")
-            //     .attr("d", diagonal)
-            //     .attr("stroke", "#444")
-            //     .attr("stroke-width", 2)
-            //     .attr("fill", "none");
-
-            // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
-            var legend = d3.select("#heatmap").append("svg")
-                .attr("class", "legend")
-                .attr("width", 140)
-                .attr("height", 200)
-                .selectAll("g")
-                .data(coordinateColor.domain().slice().reverse())
-                .enter()
-                .append("g")
-                .attr("transform", function(d, i) {
-                    return "translate(0," + i * 20 + ")";
-                });
-
-            legend.append("rect")
-                .attr("width", 18)
-                .attr("height", 18)
-                .style("fill", coordinateColor);
-
-            legend.append("text")
-                .data(legendText)
-                .attr("x", 24)
-                .attr("y", 9)
-                .attr("dy", ".35em")
-                .text(function(d) {
-                    return d;
-                });
         });
 
-    });
-
+    };
     /****************************************************************************
         CODE FOR CHARTS
 
     *******************************************************************************/
-    $(function() {
-
+    function drawCharts() {
+        $("#comparison").empty();
         var donutData = genData([33, 54, 80, 45]);
 
         var donuts = new DonutCharts();
@@ -347,7 +342,7 @@ $(document).ready(function() {
 
         $(document).on('click', "#refresh", refresh);
 
-    });
+    };
 
     function DonutCharts() {
 
