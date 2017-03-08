@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     //Width and height of map
     var x = window.innerWidth * .7;
@@ -74,7 +75,6 @@ $(document).ready(function() {
     };
 
     $("#find-submit").click(function(e) {
-        //add route to search occupation occupation-auto
         e.preventDefault();
         x = window.innerWidth * .7;
         y = window.innerHeight + 10;
@@ -88,6 +88,7 @@ $(document).ready(function() {
 
     $("#compare-submit").click(function(e) {
         e.preventDefault();
+
         x = window.innerWidth * .7;
         y = window.innerHeight + 10;
         console.log($('#city1').val());
@@ -106,7 +107,6 @@ $(document).ready(function() {
             console.log("get request finished after submit button");
             console.log(res);
         });
-
 
         $("#comparison").css("display", "block");
         $("#comparison").append(refresh_btn);
@@ -129,6 +129,7 @@ $(document).ready(function() {
         http://bl.ocks.org/mbostock/3888852      */
 
     function drawMap() {
+
 
         $("#heatmap").empty();
         // D3 Projection
@@ -165,6 +166,7 @@ $(document).ready(function() {
             .attr("class", "tooltip")
             .style("opacity", 0);
 
+
         // Load in my states data!
         d3.csv("/assets/geojson/stateslived.csv", function(data) {
             color.domain([0, 1, 2, 3]); // setting the range of the input data
@@ -199,6 +201,17 @@ $(document).ready(function() {
 
 
 
+            // Bind the data to the canvas and create one path per GeoJSON feature
+            canvas.selectAll("path")
+                .data(json.features)
+                .enter()
+                .append("path")
+                .attr("d", path)
+                //state outline border color
+                .style("stroke", "grey")
+                .style("stroke-width", "1")
+                .style("fill", function(d) {
+
                 // Bind the data to the canvas and create one path per GeoJSON feature
                 canvas.selectAll("path")
                     .data(json.features)
@@ -222,102 +235,110 @@ $(document).ready(function() {
                         }
                     });
 
-                var cityData;
-                
-                $.get("/api/cities", function(res) {
+                               
+//************************WORKING CITY PLOT CODE*******************************************
+          var cityData;
+          //This function is where Points on the map get created
+           $.get("/api/cities", function(res) {
                     cityData = res;
-                    console.log(cityData);
-                    canvas.selectAll("circle")
-                        .data(cityData)
-                        .enter()
-                        .append("circle")
-                        .attr("cx", function(d) {
-                            // console.log(d)
-                            return projection([d.longitude, d.latitude])[0];
-                        })
-                        .attr("cy", function(d) {
-                            return projection([d.longitude, d.latitude])[1];
-                        })
-                        .attr("r", 6)
-                        .attr("fill", function(d) {
-                            return coordinateColor(d.latitude);
-                        })
-                        // .style("opacity", 0.85)  
-
-                    // Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
-                    // http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
-                    //STYLE CONTROLLED BY DIV.TOOLTIPS ABOVE
-                    .on("mouseover", function(d) {
-                        div.transition()
-                            //when mouse over controls how fast blurb populates        
-                            .duration(200)
-                            //control blurb popup opacity  
-                            .style("opacity", 1);
-                        //writes information to the blurb
-                        div.html(d.place + "<br/>" + "Lat: " + d.latitude + "<br/>" + "Lon: " + d.longitude)
-                            //controls X placement of the blurb - left,right,center
-                            .style("left", (d3.event.pageX) + "px")
-                            //controls Y placement of the blurb - up,down
-                            .style("top", (d3.event.pageY - 28) + "px");
-                    })
-
-                    // fade out tooltip on mouse out               
-                    .on("mouseout", function(d) {
-                        div.transition()
-                            .duration(500)
-                            .style("opacity", 0);
-                    });
-                });
 
 
-
-
-
-
-                var arcInfo = {
-                    type: "LineString",
-                    coordinates: [
-                        [-74.0059413, 40.7127837],
-                        [-97.7430608, 30.267153]
-
-                    ]
-                };
-
-                canvas.append("path")
-                    .attr("d", function() {
-                        return path(arcInfo);
-                    })
-                    .attr("stroke-width", "2")
-                    .attr("stroke", "black");
-
-
-                // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
-                var legend = d3.select("#heatmap").append("svg")
-                    .attr("class", "legend")
-                    .attr("width", 140)
-                    .attr("height", 200)
-                    .selectAll("g")
-                    .data(coordinateColor.domain().slice().reverse())
+                    //put circle on the map
+                canvas.selectAll("circle")
+                    .data(data)
                     .enter()
-                    .append("g")
-                    .attr("transform", function(d, i) {
-                        return "translate(0," + i * 20 + ")";
-                    });
+                    .append("circle")
+                    .attr("cx", function(d) {
+                        // return lattitude and longitude
+                        return projection([d.longitude, d.latitude])[0];
+                    })
+                    .attr("cy", function(d) {
+                        return projection([d.longitude, d.latitude])[1];
+                    })
+                    .attr("r", function(d) {
+                        return Math.sqrt(d.years) * 4;
+                    })
+                    //produce heat mapping based on latitude
+                    .attr("fill", function(d) {
+                        return coordinateColor(d.latitude);
+                    })
+                    // .style("opacity", 0.85) 
 
-                legend.append("rect")
-                    .attr("width", 18)
-                    .attr("height", 18)
-                    .style("fill", coordinateColor);
 
-                legend.append("text")
-                    .data(legendText)
-                    .attr("x", 24)
-                    .attr("y", 9)
-                    .attr("dy", ".35em")
-                    .text(function(d) {
-                        return d;
-                    });
-            });
+//****************END WORKING CITY PLOT CODE****************************************************
+
+
+
+                
+                //STYLE CONTROLLED BY DIV.TOOLTIPS ABOVE
+                
+                .on("mouseover", function(d) {
+                    div.transition()
+                        //when mouse over controls how fast blurb populates        
+                        .duration(200)
+                        //control blurb popup opacity  
+                        .style("opacity", 1);
+                    //writes information to the blurb
+                    div.html(d.place + "<br/>" + "Lat: " + d.latitude + "<br/>" + "Lon: " + d.longitude)
+                        //controls X placement of the blurb - left,right,center
+                        .style("left", (d3.event.pageX) + "px")
+                        //controls Y placement of the blurb - up,down
+                        .style("top", (d3.event.pageY - 28) + "px");
+                })
+             
+           });
+
+
+
+    
+              //variable containing line drawn on map coordinates
+            var arcInfo = {
+                type: "LineString",
+                coordinates: [
+                    [-74.0059413, 40.7127837],
+                    [-97.7430608, 30.267153]
+
+                ]
+            };
+              //Append to canvas the line drawing info from arcInfo.  Stroke color and width set
+            canvas.append("path")
+                .attr("d", function() {
+                    return path(arcInfo);
+                })
+                .attr("stroke-width", "2")
+                .attr("stroke", "black");
+
+            //Variable containing legend info.
+            var legend = d3.select("#heatmap").append("svg")
+                 //class pertains to the css class "legend"
+                .attr("class", "legend")
+                //width and height of blubs
+                .attr("width", 140)
+                .attr("height", 200)
+                //"g" refers to groups
+                .selectAll("g")
+                //data.coordinateColor makes the legend the same color as the heat map
+                .data(coordinateColor.domain().slice().reverse())
+                .enter()
+                //append to the group
+                .append("g")
+                .attr("transform", function(d, i) {
+                    return "translate(0," + i * 20 + ")";
+                });
+               //append the legend rectangle to the screen
+            legend.append("rect")
+                .attr("width", 18)
+                .attr("height", 18)
+                .style("fill", coordinateColor);
+                 //text that goes into the legend
+            legend.append("text")
+                .data(legendText)
+                .attr("x", 24)
+                .attr("y", 9)
+                .attr("dy", ".35em")
+                .text(function(d) {
+                    return d;
+                });
 
         });
 
