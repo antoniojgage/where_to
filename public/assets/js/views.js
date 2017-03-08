@@ -2,7 +2,7 @@ $(document).ready(function() {
     //Width and height of map
     var x = window.innerWidth * .7;
     var y = window.innerHeight + 10;
-
+    var occupation;
 
     $.getScript("assets/js/list_of_jobs.js", function() {
 
@@ -79,6 +79,8 @@ $(document).ready(function() {
         x = window.innerWidth * .7;
         y = window.innerHeight + 10;
         drawMap();
+        occupation = $("#occupation-auto").val();
+
         $("#heatmap").css("display", "block");
         $("#heatmap").append(start_over);
         $('html, body').animate({
@@ -90,6 +92,7 @@ $(document).ready(function() {
         e.preventDefault();
         x = window.innerWidth * .7;
         y = window.innerHeight + 10;
+        drawCharts();
         console.log($('#city1').val());
         console.log($('#city2').val());
         //Saving city
@@ -223,8 +226,8 @@ $(document).ready(function() {
                     });
 
                 var cityData;
-                
-                $.get("/api/cities", function(res) {
+
+                $.get("/api/whereto/" + occupation, function(res) {
                     cityData = res;
                     console.log(cityData);
                     canvas.selectAll("circle")
@@ -326,8 +329,8 @@ $(document).ready(function() {
         CODE FOR CHARTS
 
     *******************************************************************************/
-    $(function() {
-
+    function drawCharts() {
+        $("#comparison").empty();
         var donutData = genData([33, 54, 80, 45]);
 
         var donuts = new DonutCharts();
@@ -339,7 +342,7 @@ $(document).ready(function() {
 
         $(document).on('click', "#refresh", refresh);
 
-    });
+    };
 
     function DonutCharts() {
 
