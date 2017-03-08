@@ -106,6 +106,7 @@ $(document).ready(function() {
             $.get("/api/data/" + city2, function(res) {
                 //d3 create badass map point.res
                 cityArr.push(res);
+                console.log(cityArr);
                 drawCharts(cityArr);
                 $("#comparison").css("display", "block");
                 $("#comparison").append(refresh_btn);
@@ -347,15 +348,25 @@ $(document).ready(function() {
         for (var i = 0; i < data.length; i++){
             cityNames.push(data[i].areaName1);
         }
-        console.log(cityNames);
-        var donutData = genData(cityNames);
+        var cpiValues = [[],[]];
+        
+        for (var i = 0; i < data.length; i++){
+            cpiValues[i].push(data[i].costOfLivingPlusRentIndex);
+            cpiValues[i].push(data[i].cpi);
+            cpiValues[i].push(data[i].restaurantPriceIndex);
+            cpiValues[i].push(data[i].rentIndex);
+            cpiValues[i].push(data[i].groceriesIndex);
+            cpiValues[i].push(data[i].localPurchasingPowerIndex);
+        }
+        console.log(cpiValues);
+        var donutData = genData(cityNames, cpiValues);
         var donuts = new DonutCharts();
         donuts.create(donutData);
-
-        function refresh() {
-            donuts.update(genData([data.costOfLivingPlusRentIndex, data.cpi, data.restaurantPriceIndex, data.rentIndex]));
-        }
-        $(document).on('click', "#refresh", refresh);
+        //This might have to be a bonus feature
+        // function refresh() {
+        //     donuts.update(genData([data.costOfLivingPlusRentIndex, data.cpi, data.restaurantPriceIndex, data.rentIndex]));
+        // }
+        // $(document).on('click', "#refresh", refresh);
     };
 
 
@@ -620,27 +631,20 @@ $(document).ready(function() {
      * Returns a json-like object.
      */
     function genData(x, y, z) {
-        // var type = ['Austin', 'New York'];
-        // var unit = ['cpi', 'cpi'];
-        // var cat = ['Latitude', 'Longitude', 'wut', 'hey'];
-        // var arr = x;
-        // var donutData = genData([data.costOfLivingPlusRentIndex, data.cpi, data.restaurantPriceIndex, data.rentIndex]);
-        // console.log("logging gen data!");
-        // console.log(x);
 
-        var type = x;
+        var cityNames = x;
         var unit = ['cpi', 'cpi'];
-        var cat = ['Cost of Living + Rent Index', 'CPI', 'Restaurant Price Index', 'Rent Index'];
-        var arr = [25, 25, 25, 25];
+        var cat = ['Cost of Living + Rent Index', 'CPI', 'Restaurant Price Index', 'Rent Index', 'Groceries Index', 'Local Purchasing Power'];
+        var cpiValues = y;
 
         var dataset = new Array();
 
-        for (var i = 0; i < type.length; i++) {
+        for (var i = 0; i < cityNames.length; i++) {
             var data = new Array();
             var total = 0;
 
             for (var j = 0; j < cat.length; j++) {
-                var value = arr[j]
+                var value = cpiValues[i][j]
                 total += value;
                 data.push({
                     "cat": cat[j],
@@ -649,7 +653,7 @@ $(document).ready(function() {
             }
 
             dataset.push({
-                "type": type[i],
+                "type": cityNames[i],
                 "unit": unit[i],
                 "data": data,
                 "total": total
