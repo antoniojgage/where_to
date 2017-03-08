@@ -189,11 +189,22 @@ body {
   height: 200px;
 }
 
+/* ===ABOUT PAGE=== */
+.about-title h1 {
+  text-align: center;
+  font-size: 38px;
+  font-weight: bold;
+  color: #1A5D8F;
+  margin-top: 75px;
+}
+
+
 
 
 /* ===CONTACT PAGE=== */
 .card-image {
-  max-width: 300px;
+  width: 300px;
+  height: 300px;
 }
 
 .card {
@@ -202,11 +213,11 @@ body {
   margin: 50px 30px 30px 0px; 
 }
 
-.about-title h1 {
+.contact-title h1 {
   text-align: center;
-  font-size: 28px;
-  font-weight: medium;
-  color:;
+  font-size: 38px;
+  font-weight: bold;
+  color: #1A5D8F;
   margin-top: 75px;
 }
 
@@ -222,4 +233,5 @@ body {
     margin-bottom: 10px;
   }
 }
+
 
