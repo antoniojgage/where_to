@@ -150,8 +150,8 @@ $(document).ready(function() {
             .range(["rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)"]);
 
         var coordinateColor = d3.scale.linear()
-            .domain([20, 47])
-            .range(["#6BFF33", "#FF3333"]);
+            .domain([0.024459626 * 1000, 0.511643836 * 1000])
+            .range(["white", "black"]);
 
 
         var legendText = ["City Rank #1-50", "City Rank #51-100", "City Rank #101-250", "City Rank #251-500", "City Rank #501-1,000"];
@@ -244,7 +244,8 @@ $(document).ready(function() {
                         })
                         .attr("r", 6)
                         .attr("fill", function(d) {
-                            return coordinateColor(d.latitude);
+                            console.log(d.bang4Yabuk);
+                            return coordinateColor(d.bang4Yabuk * 1000);
                         })
                         // .style("opacity", 0.85)  
 
@@ -274,25 +275,21 @@ $(document).ready(function() {
                 });
 
 
+                // var arcInfo = {
+                //     type: "LineString",
+                //     coordinates: [
+                //         [-74.0059413, 40.7127837],
+                //         [-97.7430608, 30.267153]
 
+                //     ]
+                // };
 
-
-
-                var arcInfo = {
-                    type: "LineString",
-                    coordinates: [
-                        [-74.0059413, 40.7127837],
-                        [-97.7430608, 30.267153]
-
-                    ]
-                };
-
-                canvas.append("path")
-                    .attr("d", function() {
-                        return path(arcInfo);
-                    })
-                    .attr("stroke-width", "2")
-                    .attr("stroke", "black");
+                // canvas.append("path")
+                //     .attr("d", function() {
+                //         return path(arcInfo);
+                //     })
+                //     .attr("stroke-width", "2")
+                //     .attr("stroke", "black");
 
 
                 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
@@ -330,17 +327,6 @@ $(document).ready(function() {
         CODE FOR CHARTS
 
     *******************************************************************************/
-    //sample draw charts
-    // function drawCharts() {
-    //     $("#comparison").empty();
-    //     var donutData = genData([33, 54, 80, 45]);
-    //     var donuts = new DonutCharts();
-    //     donuts.create(donutData);
-    //     function refresh() {
-    //         donuts.update(genData([80, 33, 33, 25, 90]));
-    //     }
-    //     $(document).on('click', "#refresh", refresh);
-    // };
 
     function drawCharts(data) {
         $("#comparison").empty();
@@ -351,8 +337,8 @@ $(document).ready(function() {
         var cpiValues = [[],[]];
         
         for (var i = 0; i < data.length; i++){
-            cpiValues[i].push(data[i].costOfLivingPlusRentIndex);
             cpiValues[i].push(data[i].cpi);
+            cpiValues[i].push(data[i].costOfLivingPlusRentIndex);
             cpiValues[i].push(data[i].restaurantPriceIndex);
             cpiValues[i].push(data[i].rentIndex);
             cpiValues[i].push(data[i].groceriesIndex);
@@ -394,7 +380,9 @@ $(document).ready(function() {
                 .data(catNames)
                 .enter().append('g')
                 .attr('transform', function(d, i) {
-                    return 'translate(' + (i * 150 + 50) + ', 10)';
+                    console.log(d.length);
+                    return 'translate(' + (i * 175 + 50) + ', 20)';
+                    // return 'translate(' + (i * 150 + d[i-1].length) + ', 20)';
                 });
 
             legends.append('circle')
@@ -408,6 +396,7 @@ $(document).ready(function() {
                 .attr('dx', '1em')
                 .attr('dy', '.3em')
                 .text(function(d) {
+
                     return d;
                 });
         }
@@ -634,7 +623,7 @@ $(document).ready(function() {
 
         var cityNames = x;
         var unit = ['cpi', 'cpi'];
-        var cat = ['Cost of Living + Rent Index', 'CPI', 'Restaurant Price Index', 'Rent Index', 'Groceries Index', 'Local Purchasing Power'];
+        var cat = ['Consumer Price Index', 'Cost of Living + Rent Index', 'Restaurant Price Index', 'Rent Index', 'Groceries Index', 'Local Purchasing Power'];
         var cpiValues = y;
 
         var dataset = new Array();

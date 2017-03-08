@@ -11,7 +11,6 @@ var data = {
 		"Memphis, TN": null,
 		"Indianapolis, IN": null,
 		"Phoenix, AZ": null,
-		"Louisville/Jefferson County, KY": null,
 		"New Orleans, LA": null,
 		"San Antonio, TX": null,
 		"Detroit, MI": null,
