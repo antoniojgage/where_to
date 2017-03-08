@@ -81,6 +81,11 @@ $(document).ready(function() {
         drawMap();
         occupation = $("#occupation-auto").val();
 
+         $.get("/api/whereto/" + occupation, function(res) {
+            console.log("Submitting " + occupation + "to route");
+            console.log(res);
+            //d3 create badass map point.res
+        });
         $("#heatmap").css("display", "block");
         $("#heatmap").append(start_over);
         $('html, body').animate({
@@ -228,6 +233,7 @@ $(document).ready(function() {
                 var cityData;
 
                 $.get("/api/whereto/" + occupation, function(res) {
+                    // $.get("/api/whereto/occupation", function(res) {
                     cityData = res;
                     console.log(cityData);
                     canvas.selectAll("circle")
