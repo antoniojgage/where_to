@@ -81,9 +81,7 @@ $(document).ready(function() {
         drawMap();
         occupation = $("#occupation-auto").val();
 
-         $.get("/api/whereto/" + occupation, function(res) {
-            console.log("Submitting " + occupation + "to route");
-            console.log(res);
+        $.get("/api/whereto/" + occupation, function(res) {
             //d3 create badass map point.res
         });
         $("#heatmap").css("display", "block");
@@ -97,32 +95,27 @@ $(document).ready(function() {
         e.preventDefault();
         x = window.innerWidth * .7;
         y = window.innerHeight + 10;
-        console.log($('#city1').val());
-        console.log($('#city2').val());
+
         //Saving city
         var city1 = $('#city1').val();
         var city2 = $('#city2').val();
+        var cityArr = [];
 
         $.get("/api/data/" + city1, function(res) {
-            console.log("get request finished after submit button");
-            // console.log(res);
-            drawCharts(res);
-            //d3 create badass map point.res
+            cityArr.push(res);
+            $.get("/api/data/" + city2, function(res) {
+                //d3 create badass map point.res
+                cityArr.push(res);
+                drawCharts(cityArr);
+                $("#comparison").css("display", "block");
+                $("#comparison").append(refresh_btn);
+                $("#comparison").append(start_over);
+                $('html, body').animate({
+                    scrollTop: $("#comparison").offset().top
+                }, 2000); //this is async so it is happening after the button and therefore deleting the button
+            });
+
         });
-
-        $.get("/api/data/" + city2, function(res) {
-            console.log("get request finished after submit button");
-            // console.log(res);
-            drawCharts(res);
-        });
-
-
-        $("#comparison").css("display", "block");
-        $("#comparison").append(refresh_btn);
-        $("#comparison").append(start_over);
-        $('html, body').animate({
-            scrollTop: $("#comparison").offset().top
-        }, 2000);
     });
 
     //D3 code beyond this point
@@ -236,13 +229,13 @@ $(document).ready(function() {
                 $.get("/api/whereto/" + occupation, function(res) {
                     // $.get("/api/whereto/occupation", function(res) {
                     cityData = res;
-                    console.log(cityData);
+
                     canvas.selectAll("circle")
                         .data(cityData)
                         .enter()
                         .append("circle")
                         .attr("cx", function(d) {
-                            // console.log(d)
+
                             return projection([d.longitude, d.latitude])[0];
                         })
                         .attr("cy", function(d) {
@@ -350,9 +343,15 @@ $(document).ready(function() {
 
     function drawCharts(data) {
         $("#comparison").empty();
-        var donutData = genData([data.costOfLivingPlusRentIndex, data.cpi, data.restaurantPriceIndex, data.rentIndex]);
+        var cityNames = [];
+        for (var i = 0; i < data.length; i++){
+            cityNames.push(data[i].areaName1);
+        }
+        console.log(cityNames);
+        var donutData = genData(cityNames);
         var donuts = new DonutCharts();
         donuts.create(donutData);
+
         function refresh() {
             donuts.update(genData([data.costOfLivingPlusRentIndex, data.cpi, data.restaurantPriceIndex, data.rentIndex]));
         }
@@ -620,19 +619,19 @@ $(document).ready(function() {
     /*
      * Returns a json-like object.
      */
-    function genData(x) {
+    function genData(x, y, z) {
         // var type = ['Austin', 'New York'];
         // var unit = ['cpi', 'cpi'];
         // var cat = ['Latitude', 'Longitude', 'wut', 'hey'];
         // var arr = x;
         // var donutData = genData([data.costOfLivingPlusRentIndex, data.cpi, data.restaurantPriceIndex, data.rentIndex]);
-        console.log("logging gen data!");
-        console.log(x);
+        // console.log("logging gen data!");
+        // console.log(x);
 
-        var type = [x.areaName1];
+        var type = x;
         var unit = ['cpi', 'cpi'];
         var cat = ['Cost of Living + Rent Index', 'CPI', 'Restaurant Price Index', 'Rent Index'];
-        var arr = x;
+        var arr = [25, 25, 25, 25];
 
         var dataset = new Array();
 
@@ -656,7 +655,6 @@ $(document).ready(function() {
                 "total": total
             });
         }
-        console.log(dataset);
         return dataset;
     }
 
