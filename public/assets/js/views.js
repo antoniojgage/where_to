@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 
 
@@ -72,7 +73,6 @@ $(document).ready(function() {
     };
 
     $("#find-submit").click(function(e) {
-        //add route to search occupation occupation-auto
         e.preventDefault();
         $("#heatmap").css("display", "block");
         $("#heatmap").append(start_over);
@@ -83,24 +83,6 @@ $(document).ready(function() {
 
     $("#compare-submit").click(function(e) {
         e.preventDefault();
-        console.log($('#city1').val()); 
-        console.log($('#city2').val()); 
-        //Saving city
-        var city1 =$('#city1').val();
-        var city2 =$('#city2').val();
-
-            $.get("/api/data/" + city1, function(res){
-                console.log("get request finished after submit button");
-                console.log(res);
-                //d3 create badass map point.res
-            });
-
-             $.get("/api/data/" + city2, function(res){
-                console.log("get request finished after submit button");
-                console.log(res);
-            });
-
-
         $("#comparison").css("display", "block");
         $("#comparison").append(refresh_btn);
         $("#comparison").append(start_over);
@@ -123,12 +105,12 @@ $(document).ready(function() {
 
 
     //Width and height of map
-    var x = window.innerWidth * .7;
-    var y = window.innerHeight + 10;
+    var w = 900;
+    var h = 550;
 
     // D3 Projection
     var projection = d3.geo.albersUsa()
-        .translate([x / 2, y / 2]) // translate to center of screen
+        .translate([w / 2, h / 2]) // translate to center of screen
         .scale([1000]); // scale things down so see entire US
 
 
@@ -140,19 +122,21 @@ $(document).ready(function() {
     // Define linear scale for output
     var color = d3.scale.linear()
         .range(["rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)"]);
-
+    //Sets the Heat Map Coloring.  Domain = Low to High Values  Range = Color scale from x-x
     var coordinateColor = d3.scale.linear()
         .domain([20, 47])
         .range(["#6BFF33", "#FF3333"]);
 
-
+    //Text that will appear in Legend.  
     var legendText = ["City Rank #1-50", "City Rank #51-100", "City Rank #101-250", "City Rank #251-500", "City Rank #501-1,000"];
 
     //Create SVG element and append map to the SVG
     var canvas = d3.select("#heatmap")
         .append("svg")
-        .attr("width", x)
-        .attr("height", y);
+        .attr("width", w)
+        .attr("height", h);
+
+
 
     // Append Div for tooltip to SVG
     var div = d3.select("#heatmap")
@@ -200,6 +184,7 @@ $(document).ready(function() {
                 .enter()
                 .append("path")
                 .attr("d", path)
+                //state outline border color
                 .style("stroke", "grey")
                 .style("stroke-width", "1")
                 .style("fill", function(d) {
@@ -217,16 +202,81 @@ $(document).ready(function() {
                     }
                 });
 
+
+            // /********************************************************************
+
+
+
+            // Instead of cities-cities lived.csv we can get our circles by saving them in a var
+            // like this:
+
+            // var cities;
+            // $('#city1').val("new text message") 
+            // $.get("/api/data", function(res){
+            //     // cities = res;
+
+            // });
+
+            // then se take out the d3.csv wrapper function and just start with 
+
+            // canvas.selectAll("circle")
+            //     .data(cities)
+            //     .enter()
+            //     ...
+
+            // ********************************************************************/
+
+
+            var city = [
+          {
+            city1: {
+                Latitude: -97.00000,
+                Longitude: 30.00032,
+                place: "Austin",
+                years: 1
+          },
+            city2: {
+                Latitude: -80.00000,
+                Longitude: 45.00032,
+                place: "Boston",
+                years: 1
+          }
+      }];
+
+          console.log(city[0])
+
+    //    
+        canvas.selectAll("circle")
+    .data(city[0])
+    console.log(city[0])
+    .enter(city[0])
+    .append("circle")
+    .attr("cx", function(d) { return d.Latitude; })
+    .attr("cy", function(d) { return d.Longitude; }) 
+    .attr("r", 2.5)
+    
+
+
+             
+         
+
+
+
+             
+       
+
+//************************WORKING CITY PLOT CODE*******************************************
+          //This function is where Points on the map get created
             d3.csv("/assets/geojson/cities-lived.csv", function(data) {
 
 
-
+                    //put circle on the map
                 canvas.selectAll("circle")
                     .data(data)
                     .enter()
                     .append("circle")
                     .attr("cx", function(d) {
-                        // console.log(d)
+                        // return lattitude and longitude
                         return projection([d.lon, d.lat])[0];
                     })
                     .attr("cy", function(d) {
@@ -235,16 +285,20 @@ $(document).ready(function() {
                     .attr("r", function(d) {
                         return Math.sqrt(d.years) * 4;
                     })
+                    //produce heat mapping based on latitude
                     .attr("fill", function(d) {
                         return coordinateColor(d.lat);
                     })
-                    // .style("opacity", 0.85)  
+                    // .style("opacity", 0.85) 
+
+
+//****************END WORKING CITY PLOT CODE****************************************************
 
 
 
-                // Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
-                // http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
+                
                 //STYLE CONTROLLED BY DIV.TOOLTIPS ABOVE
+                
                 .on("mouseover", function(d) {
                     div.transition()
                         //when mouse over controls how fast blurb populates        
@@ -268,7 +322,7 @@ $(document).ready(function() {
 
 
             });
-
+              //variable containing line drawn on map coordinates
             var arcInfo = {
                 type: "LineString",
                 coordinates: [
@@ -277,7 +331,7 @@ $(document).ready(function() {
 
                 ]
             };
-
+              //Append to canvas the line drawing info from arcInfo.  Stroke color and width set
             canvas.append("path")
                 .attr("d", function() {
                     return path(arcInfo);
@@ -319,24 +373,29 @@ $(document).ready(function() {
             //     .attr("stroke-width", 2)
             //     .attr("fill", "none");
 
-            // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
+            //Variable containing legend info.
             var legend = d3.select("#heatmap").append("svg")
+                 //class pertains to the css class "legend"
                 .attr("class", "legend")
+                //width and height of blubs
                 .attr("width", 140)
                 .attr("height", 200)
+                //"g" refers to groups
                 .selectAll("g")
+                //data.coordinateColor makes the legend the same color as the heat map
                 .data(coordinateColor.domain().slice().reverse())
                 .enter()
+                //append to the group
                 .append("g")
                 .attr("transform", function(d, i) {
                     return "translate(0," + i * 20 + ")";
                 });
-
+               //append the legend rectangle to the screen
             legend.append("rect")
                 .attr("width", 18)
                 .attr("height", 18)
                 .style("fill", coordinateColor);
-
+                 //text that goes into the legend
             legend.append("text")
                 .data(legendText)
                 .attr("x", 24)
