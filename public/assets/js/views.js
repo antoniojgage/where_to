@@ -150,7 +150,7 @@ $(document).ready(function() {
             .range(["rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)"]);
 
         var coordinateColor = d3.scale.linear()
-            .domain([0.024459626 * 1000, 0.511643836 * 1000])
+            .domain([90, 160])
             .range(["white", "black"]);
 
 
@@ -244,8 +244,8 @@ $(document).ready(function() {
                         })
                         .attr("r", 6)
                         .attr("fill", function(d) {
-                            console.log(d.bang4Yabuk);
-                            return coordinateColor(d.bang4Yabuk * 1000);
+                            console.log(Math.floor(d.bang4Yabuk *1000));
+                            return coordinateColor(Math.floor(d.bang4Yabuk * 1000));
                         })
                         // .style("opacity", 0.85)  
 
