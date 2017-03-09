@@ -1,7 +1,7 @@
 
-.body {
+body {
   font-family: Roboto, Arial;
-  position: relative;
+  font-size: 11px;
 }
 
 .nav-wrapper {
@@ -152,11 +152,6 @@ div.tooltip {
     border: 0px;
     border-radius: 8px;
     pointer-events: none;
-    display: none;
-}
-
-body {
-    font: 11px sans-serif;
 }
 
 #heatmap .legend {
@@ -233,5 +228,3 @@ body {
     margin-bottom: 10px;
   }
 }
-
-
