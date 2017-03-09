@@ -3,6 +3,8 @@ $(document).ready(function() {
     var x = window.innerWidth * .7;
     var y = window.innerHeight + 10;
     var occupation;
+    var domainMin;
+    var domainMax;
 
     $.getScript("assets/js/list_of_jobs.js", function() {
 
@@ -81,9 +83,10 @@ $(document).ready(function() {
         drawMap();
         occupation = $("#occupation-auto").val();
 
-        $.get("/api/whereto/" + occupation, function(res) {
-            //d3 create badass map point.res
-        });
+        // $.get("/api/whereto/" + occupation, function(res) {
+        //     domainMin = res[0].bang4Yabuk;
+        //     domainMax = res[-1].bang4Yabuk;
+        // });
         $("#heatmap").css("display", "block");
         $("#heatmap").append(start_over);
         $('html, body').animate({
@@ -106,7 +109,6 @@ $(document).ready(function() {
             $.get("/api/data/" + city2, function(res) {
                 //d3 create badass map point.res
                 cityArr.push(res);
-                console.log(cityArr);
                 drawCharts(cityArr);
                 $("#comparison").css("display", "block");
                 $("#comparison").append(refresh_btn);
@@ -144,17 +146,7 @@ $(document).ready(function() {
         var path = d3.geo.path() // path generator that will convert GeoJSON to SVG paths
             .projection(projection); // tell path generator to use albersUsa projection
 
-
-        // Define linear scale for output
-        var color = d3.scale.linear()
-            .range(["rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)", "rgb(227,228,229)"]);
-
-        var coordinateColor = d3.scale.linear()
-            .domain([90, 160])
-            .range(["white", "black"]);
-
-
-        var legendText = ["City Rank #1-50", "City Rank #51-100", "City Rank #101-250", "City Rank #251-500", "City Rank #501-1,000"];
+        var legendText = ["Worst", "Best"];
 
         //Create SVG element and append map to the SVG
         var canvas = d3.select("#heatmap")
@@ -168,129 +160,102 @@ $(document).ready(function() {
             .attr("class", "tooltip")
             .style("opacity", 0);
 
-        // Load in my states data!
-        d3.csv("/assets/geojson/stateslived.csv", function(data) {
-            color.domain([0, 1, 2, 3]); // setting the range of the input data
+        // Load GeoJSON data and merge with states data
+        d3.json("/assets/geojson/us-states.json", function(json) {
 
-            // Load GeoJSON data and merge with states data
-            d3.json("/assets/geojson/us-states.json", function(json) {
+            // Loop through each state data value in the .csv file
+            for (var i = 0; i < data.length; i++) {
 
-                // Loop through each state data value in the .csv file
-                for (var i = 0; i < data.length; i++) {
+                // Grab State Name
+                var dataState = data[i].state;
 
-                    // Grab State Name
-                    var dataState = data[i].state;
+                // Grab data value 
+                var dataValue = data[i].visited;
 
-                    // Grab data value 
-                    var dataValue = data[i].visited;
+                // Find the corresponding state inside the GeoJSON
+                for (var j = 0; j < json.features.length; j++) {
 
-                    // Find the corresponding state inside the GeoJSON
-                    for (var j = 0; j < json.features.length; j++) {
+                    var jsonState = json.features[j].properties.name;
 
-                        var jsonState = json.features[j].properties.name;
+                    if (dataState == jsonState) {
 
-                        if (dataState == jsonState) {
+                        // Copy the data value into the JSON
+                        json.features[j].properties.visited = dataValue;
 
-                            // Copy the data value into the JSON
-                            json.features[j].properties.visited = dataValue;
-
-                            // Stop looking through the JSON
-                            break;
-                        }
+                        // Stop looking through the JSON
+                        break;
                     }
                 }
+            }
 
 
 
-                // Bind the data to the canvas and create one path per GeoJSON feature
-                canvas.selectAll("path")
-                    .data(json.features)
+            // Bind the data to the canvas and create one path per GeoJSON feature
+            canvas.selectAll("path")
+                .data(json.features)
+                .enter()
+                .append("path")
+                .attr("d", path)
+                .style("stroke", "grey")
+                .style("stroke-width", "1")
+                .style("fill", "#f5f5f5");
+
+            var cityData;
+
+            $.get("/api/whereto/" + occupation, function(res) {
+
+                cityData = res;
+                var last = res.length - 1;
+                domainMin = Math.floor(res[0].bang4Yabuk * 1000);
+                domainMax = Math.floor(res[last].bang4Yabuk * 1000);
+                console.log("domainMin: " + domainMin);
+                console.log("domainMax: " + domainMax);
+
+                var coordinateColor = d3.scale.linear()
+                    .domain([domainMin, domainMax])
+                    .range(["#3DC6EF", "#F9DC70"]);
+
+                canvas.selectAll("circle")
+                    .data(cityData)
                     .enter()
-                    .append("path")
-                    .attr("d", path)
-                    .style("stroke", "grey")
-                    .style("stroke-width", "1")
-                    .style("fill", function(d) {
+                    .append("circle")
+                    .attr("cx", function(d) {
 
-                        // Get data value
-                        var value = d.properties.visited;
-
-                        if (value) {
-                            //If value exists…
-                            return color(value);
-                        } else {
-                            //If value is undefined…
-                            return "rgb(213, 222, 217)";
-
-                        }
-                    });
-
-                var cityData;
-
-                $.get("/api/whereto/" + occupation, function(res) {
-                    // $.get("/api/whereto/occupation", function(res) {
-                    cityData = res;
-
-                    canvas.selectAll("circle")
-                        .data(cityData)
-                        .enter()
-                        .append("circle")
-                        .attr("cx", function(d) {
-
-                            return projection([d.longitude, d.latitude])[0];
-                        })
-                        .attr("cy", function(d) {
-                            return projection([d.longitude, d.latitude])[1];
-                        })
-                        .attr("r", 6)
-                        .attr("fill", function(d) {
-                            console.log(Math.floor(d.bang4Yabuk *1000));
-                            return coordinateColor(Math.floor(d.bang4Yabuk * 1000));
-                        })
-                        // .style("opacity", 0.85)  
-
-                    // Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
-                    // http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
-                    //STYLE CONTROLLED BY DIV.TOOLTIPS ABOVE
-                    .on("mouseover", function(d) {
-                        div.transition()
-                            //when mouse over controls how fast blurb populates        
-                            .duration(200)
-                            //control blurb popup opacity  
-                            .style("opacity", 1);
-                        //writes information to the blurb
-                        div.html(d.place + "<br/>" + "Lat: " + d.latitude + "<br/>" + "Lon: " + d.longitude)
-                            //controls X placement of the blurb - left,right,center
-                            .style("left", (d3.event.pageX) + "px")
-                            //controls Y placement of the blurb - up,down
-                            .style("top", (d3.event.pageY - 28) + "px");
+                        return projection([d.longitude, d.latitude])[0];
                     })
+                    .attr("cy", function(d) {
+                        return projection([d.longitude, d.latitude])[1];
+                    })
+                    .attr("r", 6)
+                    .attr("fill", function(d) {
+                        console.log(Math.floor(d.bang4Yabuk * 1000));
+                        return coordinateColor(Math.floor(d.bang4Yabuk * 1000));
+                    })
+                    // .style("opacity", 0.85)  
 
-                    // fade out tooltip on mouse out               
-                    .on("mouseout", function(d) {
-                        div.transition()
-                            .duration(500)
-                            .style("opacity", 0);
-                    });
+                // Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
+                // http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
+                //STYLE CONTROLLED BY DIV.TOOLTIPS ABOVE
+                .on("mouseover", function(d) {
+                    div.transition()
+                        //when mouse over controls how fast blurb populates        
+                        .duration(200)
+                        //control blurb popup opacity  
+                        .style("opacity", 1);
+                    //writes information to the blurb
+                    div.html(d.place + "<br/>" + "Lat: " + d.latitude + "<br/>" + "Lon: " + d.longitude)
+                        //controls X placement of the blurb - left,right,center
+                        .style("left", (d3.event.pageX) + "px")
+                        //controls Y placement of the blurb - up,down
+                        .style("top", (d3.event.pageY - 28) + "px");
+                })
+
+                // fade out tooltip on mouse out               
+                .on("mouseout", function(d) {
+                    div.transition()
+                        .duration(500)
+                        .style("opacity", 0);
                 });
-
-
-                // var arcInfo = {
-                //     type: "LineString",
-                //     coordinates: [
-                //         [-74.0059413, 40.7127837],
-                //         [-97.7430608, 30.267153]
-
-                //     ]
-                // };
-
-                // canvas.append("path")
-                //     .attr("d", function() {
-                //         return path(arcInfo);
-                //     })
-                //     .attr("stroke-width", "2")
-                //     .attr("stroke", "black");
-
 
                 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
                 var legend = d3.select("#heatmap").append("svg")
@@ -320,6 +285,23 @@ $(document).ready(function() {
                     });
             });
 
+            //Might have to be a bonus feature
+            // var arcInfo = {
+            //     type: "LineString",
+            //     coordinates: [
+            //         [-74.0059413, 40.7127837],
+            //         [-97.7430608, 30.267153]
+
+            //     ]
+            // };
+
+            // canvas.append("path")
+            //     .attr("d", function() {
+            //         return path(arcInfo);
+            //     })
+            //     .attr("stroke-width", "2")
+            //     .attr("stroke", "black");
+
         });
 
     };
@@ -331,12 +313,15 @@ $(document).ready(function() {
     function drawCharts(data) {
         $("#comparison").empty();
         var cityNames = [];
-        for (var i = 0; i < data.length; i++){
+        for (var i = 0; i < data.length; i++) {
             cityNames.push(data[i].areaName1);
         }
-        var cpiValues = [[],[]];
-        
-        for (var i = 0; i < data.length; i++){
+        var cpiValues = [
+            [],
+            []
+        ];
+
+        for (var i = 0; i < data.length; i++) {
             cpiValues[i].push(data[i].cpi);
             cpiValues[i].push(data[i].costOfLivingPlusRentIndex);
             cpiValues[i].push(data[i].restaurantPriceIndex);
@@ -344,7 +329,6 @@ $(document).ready(function() {
             cpiValues[i].push(data[i].groceriesIndex);
             cpiValues[i].push(data[i].localPurchasingPowerIndex);
         }
-        console.log(cpiValues);
         var donutData = genData(cityNames, cpiValues);
         var donuts = new DonutCharts();
         donuts.create(donutData);
@@ -361,8 +345,7 @@ $(document).ready(function() {
 
         var charts = d3.select('#comparison');
         var chart_m,
-            chart_r,
-            color = d3.scale.category20();
+            chart_r;
 
         var getCatNames = function(dataset) {
             var catNames = new Array();
@@ -380,7 +363,6 @@ $(document).ready(function() {
                 .data(catNames)
                 .enter().append('g')
                 .attr('transform', function(d, i) {
-                    console.log(d.length);
                     return 'translate(' + (i * 175 + 50) + ', 20)';
                     // return 'translate(' + (i * 150 + d[i-1].length) + ', 20)';
                 });
@@ -389,7 +371,8 @@ $(document).ready(function() {
                 .attr('class', 'legend-icon')
                 .attr('r', 6)
                 .style('fill', function(d, i) {
-                    return color(i);
+                    var arr = ['#F9DC70', '#C2F970', '#3DC6EF', '#7DCED5', '#1A5D8F', '#EF1C2A']
+                    return arr[i];
                 });
 
             legends.append('text')
@@ -431,7 +414,7 @@ $(document).ready(function() {
             // The circle displaying total data.
             donuts.append("svg:circle")
                 .attr("r", chart_r * 0.6)
-                .style("fill", "#32CD32")
+                .style("fill", "#f5f5f5")
                 .on(eventObj);
 
             donuts.append('text')
@@ -568,7 +551,8 @@ $(document).ready(function() {
                 .append('svg:path')
                 .attr('d', arc)
                 .style('fill', function(d, i) {
-                    return color(i);
+                    var arr = ['#F9DC70', '#C2F970', '#3DC6EF', '#7DCED5', '#1A5D8F', '#EF1C2A']
+                    return arr[i];
                 })
                 .style('stroke', '#FFFFFF')
                 .on(eventObj)
