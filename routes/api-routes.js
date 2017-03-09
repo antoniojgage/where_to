@@ -9,7 +9,8 @@ module.exports = function (app) {
 		db.jointTableThree.findAll({
 			where: {
 				occTitle: occupation
-			}
+			}, 
+			order: "bang4Yabuk ASC"
 		// db.coordinates.findOne({
 		// 	where: {
 		// 		city: 'houston'
