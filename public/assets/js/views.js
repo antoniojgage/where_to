@@ -409,12 +409,36 @@ $(document).ready(function() {
                 }
             }
 
+            var config = {
+                "img_size": 450
+            }
+            var body = d3.select("body");
+            var svg = body.append("svg")
+                .attr("width", 500)
+                .attr("height", 500);
+
+            var defs = svg.append("svg:defs");
+            defs.append("svg:pattern")
+                .attr("id", "Austin")
+                .attr("width", 1)
+                .attr("height", 1)
+                .attr("x", 0)
+                .attr("y", 0)
+                .append("svg:image")
+                .attr("xlink:href", 'http://placekitten.com/g/450/450')
+                .attr("width", config.img_size)
+                .attr("height", config.img_size)
+                .attr("x", 0)
+                .attr("y", 0);
+
+
             var donuts = d3.selectAll('.donut');
 
             // The circle displaying total data.
             donuts.append("svg:circle")
                 .attr("r", chart_r * 0.6)
-                .style("fill", "#f5f5f5")
+                .attr("fill", "#fff")
+                .attr("fill", "url(#Austin)")
                 .on(eventObj);
 
             donuts.append('text')
