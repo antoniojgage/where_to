@@ -1,7 +1,7 @@
 
-.body {
+body {
   font-family: Roboto, Arial;
-  position: relative;
+  font-size: 11px;
 }
 
 .nav-wrapper {
@@ -141,23 +141,20 @@ path:hover {
     fill-opacity: .7;
 }
 
-   div.tooltip {
-        position: absolute;
-        text-align: center;
-        width: 186px;
-        height: 58px;
-        padding: 5px;
-        font: 12px sans-serif;
-        background: white;
-        border: 4px;
-        border-radius: 8px;
-        border-color: black;
-        border-style: solid;
-        pointer-events: none;
-    }
 
-body {
-    font: 11px sans-serif;
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 186px;
+    height: 58px;
+    padding: 5px;
+    font: 12px sans-serif;
+    background: white;
+    border: 4px;
+    border-radius: 8px;
+    border-color: black;
+    border-style: solid;
+    pointer-events: none;
 }
 
 #heatmap .legend {
@@ -234,5 +231,3 @@ body {
     margin-bottom: 10px;
   }
 }
-
-
