@@ -251,12 +251,12 @@ $(document).ready(function() {
                     console.log(d.city)
                 })
 
-                //fade out tooltip on mouse out               
-                // .on("mouseout", function(d) {
-                //     div.transition()
-                //         .duration(500)
-                //         .style("opacity", 0);
-                // });
+                // fade out tooltip on mouse out               
+                .on("mouseout", function(d) {
+                    div.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
 
                 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
                 var legend = d3.select("#heatmap").append("svg")
