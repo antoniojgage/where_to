@@ -411,7 +411,7 @@ $(document).ready(function() {
             }
 
             var config = {
-                "img_size": 450
+                "img_size": 700
             }
             var body = d3.select("body");
             var svg = body.append("svg")
@@ -426,11 +426,11 @@ $(document).ready(function() {
                 .attr("x", 0)
                 .attr("y", 0)
                 .append("svg:image")
-                .attr("xlink:href", 'http://placekitten.com/g/450/450')
+                .attr("xlink:href", 'assets/images/cityimages/LosAngelesCopy.jpg')
                 .attr("width", config.img_size)
                 .attr("height", config.img_size)
                 .attr("x", 0)
-                .attr("y", 0);
+                .attr("y", -160);
 
 
             var donuts = d3.selectAll('.donut');
@@ -447,17 +447,19 @@ $(document).ready(function() {
                 .attr('y', chart_r * -0.16)
                 .attr('text-anchor', 'middle')
                 .style('font-weight', 'bold')
+                .style("fill", "white")
                 .text(function(d, i) {
                     return d.type;
                 });
             donuts.append('text')
                 .attr('class', 'center-txt value')
-                .attr('text-anchor', 'middle');
+                .attr('text-anchor', 'middle')
+                .style("fill", "white");
             donuts.append('text')
                 .attr('class', 'center-txt percentage')
                 .attr('y', chart_r * 0.16)
                 .attr('text-anchor', 'middle')
-                .style('fill', '#A2A2A2');
+                .style('fill', 'white');
         }
 
         var setCenterText = function(thisDonut) {
