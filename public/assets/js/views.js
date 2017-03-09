@@ -243,15 +243,15 @@ $(document).ready(function() {
                         //control blurb popup opacity  
                         .style("opacity", 1);
                     //writes information to the blurb
-                    div.html(d.city+","+d.stateInitial + "<br/>" + "Avg. Median Salary: $" + d.aMean + "<br/>" + "CPI: " + d.cpi)
+                    div.html(d.city + "," + d.stateInitial + "<br/>" + "Avg. Median Salary: $" + d.aMean + "<br/>" + "CPI: " + d.cpi)
                         //controls X placement of the blurb - left,right,center
                         .style("left", (d3.event.pageX) + "px")
                         //controls Y placement of the blurb - up,down
-                        .style("top", (d3.event.pageY-28) + "px");
-                        console.log(d.city)
+                        .style("top", (d3.event.pageY - 28) + "px");
+                    console.log(d.city)
                 })
 
-                fade out tooltip on mouse out               
+                //fade out tooltip on mouse out               
                 .on("mouseout", function(d) {
                     div.transition()
                         .duration(500)
