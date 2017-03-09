@@ -155,7 +155,7 @@ $(document).ready(function() {
             .attr("height", y);
 
         // Append Div for tooltip to SVG
-        var div = d3.select("#heatmap")
+        var div = d3.select("body")
             .append("div")
             .attr("class", "tooltip")
             .style("opacity", 0);
@@ -243,14 +243,15 @@ $(document).ready(function() {
                         //control blurb popup opacity  
                         .style("opacity", 1);
                     //writes information to the blurb
-                    div.html(d.place + "<br/>" + "Lat: " + d.latitude + "<br/>" + "Lon: " + d.longitude)
+                    div.html(d.city+","+d.stateInitial + "<br/>" + "Avg. Median Salary: $" + d.aMean + "<br/>" + "CPI: " + d.cpi)
                         //controls X placement of the blurb - left,right,center
                         .style("left", (d3.event.pageX) + "px")
                         //controls Y placement of the blurb - up,down
-                        .style("top", (d3.event.pageY - 28) + "px");
+                        .style("top", (d3.event.pageY-28) + "px");
+                        console.log(d.city)
                 })
 
-                // fade out tooltip on mouse out               
+                fade out tooltip on mouse out               
                 .on("mouseout", function(d) {
                     div.transition()
                         .duration(500)
@@ -414,7 +415,7 @@ $(document).ready(function() {
             // The circle displaying total data.
             donuts.append("svg:circle")
                 .attr("r", chart_r * 0.6)
-                .style("fill", "#f5f5f5")
+                .style("fill", "red")
                 .on(eventObj);
 
             donuts.append('text')
