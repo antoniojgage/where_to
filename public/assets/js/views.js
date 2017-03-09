@@ -155,7 +155,7 @@ $(document).ready(function() {
             .attr("height", y);
 
         // Append Div for tooltip to SVG
-        var div = d3.select("#heatmap")
+        var div = d3.select("body")
             .append("div")
             .attr("class", "tooltip")
             .style("opacity", 0);
@@ -243,14 +243,15 @@ $(document).ready(function() {
                         //control blurb popup opacity  
                         .style("opacity", 1);
                     //writes information to the blurb
-                    div.html(d.place + "<br/>" + "Lat: " + d.latitude + "<br/>" + "Lon: " + d.longitude)
+                    div.html(d.city + "," + d.stateInitial + "<br/>" + "Avg. Median Salary: $" + d.aMean + "<br/>" + "CPI: " + d.cpi)
                         //controls X placement of the blurb - left,right,center
                         .style("left", (d3.event.pageX) + "px")
                         //controls Y placement of the blurb - up,down
                         .style("top", (d3.event.pageY - 28) + "px");
+                    console.log(d.city)
                 })
 
-                // fade out tooltip on mouse out               
+                //fade out tooltip on mouse out               
                 .on("mouseout", function(d) {
                     div.transition()
                         .duration(500)
@@ -409,12 +410,36 @@ $(document).ready(function() {
                 }
             }
 
+            var config = {
+                "img_size": 450
+            }
+            var body = d3.select("body");
+            var svg = body.append("svg")
+                .attr("width", 500)
+                .attr("height", 500);
+
+            var defs = svg.append("svg:defs");
+            defs.append("svg:pattern")
+                .attr("id", "Austin")
+                .attr("width", 1)
+                .attr("height", 1)
+                .attr("x", 0)
+                .attr("y", 0)
+                .append("svg:image")
+                .attr("xlink:href", 'http://placekitten.com/g/450/450')
+                .attr("width", config.img_size)
+                .attr("height", config.img_size)
+                .attr("x", 0)
+                .attr("y", 0);
+
+
             var donuts = d3.selectAll('.donut');
 
             // The circle displaying total data.
             donuts.append("svg:circle")
                 .attr("r", chart_r * 0.6)
-                .style("fill", "#f5f5f5")
+                .attr("fill", "#fff")
+                .attr("fill", "url(#Austin)")
                 .on(eventObj);
 
             donuts.append('text')

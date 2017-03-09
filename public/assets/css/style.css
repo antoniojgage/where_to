@@ -141,16 +141,19 @@ path:hover {
     fill-opacity: .7;
 }
 
+
 div.tooltip {
     position: absolute;
     text-align: center;
-    width: 100px;
-    height: 45px;
-    padding: 10px;
+    width: 186px;
+    height: 58px;
+    padding: 5px;
     font: 12px sans-serif;
-    background: red;
-    border: 0px;
+    background: white;
+    border: 4px;
     border-radius: 8px;
+    border-color: black;
+    border-style: solid;
     pointer-events: none;
 }
 
