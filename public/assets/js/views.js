@@ -3,6 +3,11 @@ $(document).ready(function() {
     var x = window.innerWidth * .7;
     var y = window.innerHeight + 10;
     var occupation;
+    //why aren't these being added
+    var domainMin;
+    var domainMax;
+    var cityImages;
+
 
     $.getScript("assets/js/list_of_jobs.js", function() {
 
