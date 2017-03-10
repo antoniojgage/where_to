@@ -1,14 +1,13 @@
 var data = {
 		"Omaha, NE" : null,
-		"Boise City, ID": null,
 		"Los Angeles, CA": null,
 		"Salt Lake City, UT": null,
 		"Oklahoma City, OK": null,
 		"Albuquerque, NM": null,
-		"Portland, ME": null,
-		"Portland, OR": null,
+		//These ones are not working right now
+		// "Portland, ME": null,
+		// "Portland, OR": null,
 		"Milwaukee, WI": null,
-		"Memphis, TN": null,
 		"Phoenix, AZ": null,
 		"New Orleans, LA": null,
 		"San Antonio, TX": null,

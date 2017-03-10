@@ -429,10 +429,10 @@ $(document).ready(function() {
                 .attr("xlink:href", function(d, i) {
                     return images[0]
                 })
-                .attr("width", chart_r * 2.5)
-                .attr("height", chart_r * 2)
+                .attr("width", chart_r * 3)
+                .attr("height", chart_r * 2.5)
                 .attr("x", 0)
-                .attr("y", (chart_r / 2.3) * -1);
+                .attr("y", (chart_r / 1.6) * -1);
 
 
             var circle2 = defs.append("svg:pattern")
@@ -445,10 +445,10 @@ $(document).ready(function() {
                 .attr("xlink:href", function(d, i) {
                     return images[1]
                 })
-                .attr("width", chart_r * 2.5)
-                .attr("height", chart_r * 2)
+                .attr("width", chart_r * 3)
+                .attr("height", chart_r * 2.5)
                 .attr("x", 0)
-                .attr("y", (chart_r / 2.3) * -1);
+                .attr("y", (chart_r / 1.6) * -1);
 
             var donuts = d3.selectAll('.donut');
 
