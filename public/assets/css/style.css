@@ -214,15 +214,32 @@ div.tooltip {
 
 /* ===ABOUT PAGE=== */
 
+.about-body p, li {
+    font-size: 2em;
+}
+
 .about-title h1 {
     text-align: center;
-    font-size: 38px;
-  font-weight: light;
-  color: #7DCED5;
+    font-size: 5em;
+    font-weight: light;
+    color: #7DCED5;
     margin-top: 75px;
 }
 
+.concept, .motivation, .design, .technologies, .future {
+    margin: 40px 0px;
+}
+.future ul {
+    list-style-type: circle;
+}
 
+.concept img {
+    margin: 2%;
+}
+
+#d3examples a {
+    font-size: 2em;
+}
 /* ===CONTACT PAGE=== */
 
 .contact-title {
@@ -271,6 +288,8 @@ div.tooltip {
   border-width: 1px;
   border-color: #1A5D8F; */ 
 }
+
+/* MEDIA QUERIES */
 
 @media screen and (max-width: 845px) {
     #find-btn {
