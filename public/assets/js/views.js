@@ -6,6 +6,7 @@ $(document).ready(function() {
     var domainMin;
     var domainMax;
     var cityImages;
+    var cityValidation;
 
     $.getScript("assets/js/list_of_jobs.js", function() {
 
@@ -17,7 +18,7 @@ $(document).ready(function() {
     });
 
     $.getScript("assets/js/list_of_cities.js", function() {
-
+        cityValidation = data;
         $('.city-auto').autocomplete({
             data,
             limit: 20,
@@ -96,21 +97,32 @@ $(document).ready(function() {
     });
 
     $("#compare-submit").click(function(e) {
+        console.log("submit pressed")
         e.preventDefault();
         x = window.innerWidth * .7;
         y = window.innerHeight + 10;
+        
+        
 
         //Saving city
         var city1 = $('#city1').val();
         var city2 = $('#city2').val();
         var cityArr = [];
+    //     if (city1.split(",")[0] || city1.split(",")[1] || city2.split(",")[0] || city2.split(",")[1]) {
+    //     alert("Please enter a city");
+    // };
 
+
+
+    if(cityValidation.hasOwnProperty(city1) && cityValidation.hasOwnProperty(city2)){
+      console.log("Two Cities Entered:" + cityValidation);
         $.get("/api/data/" + city1, function(res) {
             cityArr.push(res);
             $.get("/api/data/" + city2, function(res) {
                 //d3 create badass map point.res
                 cityArr.push(res);
                 drawCharts(cityArr);
+
                 $("#comparison").css("display", "block");
                 $("#comparison").append(refresh_btn);
                 $("#comparison").append(start_over);
@@ -120,6 +132,13 @@ $(document).ready(function() {
             });
 
         });
+
+
+
+
+}
+
+            
     });
 
     //D3 code beyond this point
