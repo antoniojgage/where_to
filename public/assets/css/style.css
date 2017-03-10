@@ -1,207 +1,232 @@
 
 body {
   font-family: Roboto, Arial;
+  font-size: 11px;
 }
 
 .nav-wrapper {
-  background-color: white;
-  z-index: 997;
+    background-color: white;
+    z-index: 997;
 }
 
 .slider-adjustment {
-  position: fixed;
-  top: 64px;
-  /* as nav bar has height of 64px */
-  left: 0;
-  bottom: 0;
-  right: 0;
-  overflow: auto;
+    position: fixed;
+    top: 64px;
+    /* as nav bar has height of 64px */
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
 }
 
 .slider .slides li img {
-  height: 100%;
-  width: 100%;
-  background-size: cover;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
 }
 
 .whereto-logo {
-  width: 175px;
-  padding: 10px 0px 0px 30px;
+    width: 175px;
+    padding: 10px 0px 0px 30px;
 }
 
 .dropdown-content li a {
-  font-family: Roboto;
-  font-size: 12px;
-  font-weight: none;
-  color: #212121;
-  font-kerning: 2px;
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: none;
+    color: #212121;
+    font-kerning: 2px;
 }
 
 .dropdown-button {
-  color: #7DCED5;
+    color: #7DCED5;
 }
 
 #menu-icon {
-  font-size: 40px;
+    font-size: 40px;
 }
 
 .section {
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  position: absolute;
-  text-align: center;
-  z-index: 900;
-  pointer-events: none;
-  width: 70%;
-  padding: 20px 40px 20px 40px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    position: absolute;
+    text-align: center;
+    z-index: 900;
+    pointer-events: none;
+    width: 70%;
+    padding: 20px 40px 20px 40px;
 }
 
 .section a {
-  pointer-events: auto;
-  font-family: Roboto;
+    pointer-events: auto;
+    font-family: Roboto;
 }
 
 .mg-rg {
-  margin-right: 15%;
-  margin-left: 15%;
-  margin-top: 5rem;
+    margin-right: 15%;
+    margin-left: 15%;
+    margin-top: 5rem;
 }
 
 .section h1 {
-  font-family: Roboto, Arial;
-  font-size: 44px;
-  text-align: center;
+    font-family: Roboto, Arial;
+    font-size: 44px;
+    text-align: center;
 }
 
 .section p {
-  font-family: Roboto, Arial;
-  font-size: 24px;
-  line-height: 1.5;
-  font-weight: 200;  
-  text-align: center; 
+    font-family: Roboto, Arial;
+    font-size: 24px;
+    line-height: 1.5;
+    font-weight: 200;
+    text-align: center;
 }
 
 .section p strong {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 #find-your-city {
-  display: none;
-  position: absolute;
-  top: 153%;
-  margin-bottom: 25%;
-  font-family: Roboto;
+    display: none;
+    position: absolute;
+    top: 153%;
+    margin-bottom: 25%;
+    font-family: Roboto;
 }
 
 #compare-cities {
-  display: none;
-  position: absolute;
-  margin-bottom: 25%;
-  top: 153%;
-  font-family: Roboto;
+    display: none;
+    position: absolute;
+    margin-bottom: 25%;
+    top: 153%;
+    font-family: Roboto;
 }
+
+.donut {
+    font-size: 25px;
+}
+
+.donut .type {
+    font-size: 30px;
+}
+
 
 /* label focus color */
-.input-field input[type=text]:focus + label {
-     color: #4dd0e1;
+
+.input-field input[type=text]:focus+label {
+    color: #4dd0e1;
 }
+
 
 /* icon prefix focus color */
+
 .input-field .prefix.active {
-     color: #4dd0e1;
+    color: #4dd0e1;
 }
 
+
 /* label underline focus color */
+
 .input-field input[type=text]:focus {
     border-bottom: 1px solid #4dd0e1;
     box-shadow: 0 1px 0 0 #e0e0e0;
 }
 
 #heatmap {
-	display: none;
-	width: 80%;
-	position: absolute;
-	top: 205%;
-	margin-right: 10%;
-	margin-left: 10%;
-	margin-bottom: 20px;
+    display: none;
+    width: 80%;
+    position: absolute;
+    top: 205%;
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-bottom: 20px;
 }
+
 #comparison {
-	display: none;
-	width: 60%;
-	position: absolute;
-	top: 250%;
-	margin-right: 20%;
-	margin-left: 20%;
-  margin-bottom: 20px;
+    display: none;
+    width: 80%;
+    position: absolute;
+    top: 250%;
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-bottom: 20px;
 }
 
 path:hover {
     fill-opacity: .7;
 }
 
+
 div.tooltip {
     position: absolute;
     text-align: center;
-    width: 100px;
-    height: 45px;
-    padding: 10px;
+    width: 186px;
+    height: 75px;
+    padding: 6px;
     font: 12px sans-serif;
-    background: red;
-    border: 0px;
+    background: #7dced5;
+    border: 2px;
     border-radius: 8px;
+    border-color: #1a5d8f;
+    border-style: solid;
     pointer-events: none;
-    display: none;
-}
-
-body {
-    font: 11px sans-serif;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    pointer-events: none;
 }
 
 #heatmap .legend {
-  position: absolute;
-  top: 50%;
-  right: 5%;
-	margin-top: 100px;
-	overflow: show;
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    margin-top: 100px;
+    overflow: show;
 }
 
 #refresh {
-	margin-right: 3px;
+    margin-right: 3px;
 }
+
 #find-btn {
-  margin-right: 3px;
+    margin-right: 3px;
 }
-#compare-btn{
-  margin-left: 3px;
+
+#compare-btn {
+    margin-left: 3px;
 }
-#find-btn, #compare-btn {
-  font-size: 1.5em;
+
+#find-btn,
+#compare-btn {
+    font-size: 1.5em;
 }
 
 #heatmap .start-over {
-  position: absolute;
-  top: 90%;
-  right: 5%;
+    position: absolute;
+    top: 90%;
+    right: 5%;
 }
-#buffer div{
-  height: 200px;
+
+#buffer div {
+    height: 200px;
 }
+
 
 /* ===ABOUT PAGE=== */
+
 .about-title h1 {
-  text-align: center;
-  font-size: 38px;
-  font-weight: light;
-  color: #7DCED5;
-  margin-top: 75px;
+/*<<<<<<< .merge_file_O0cj42*/
+  /*color: #7DCED5;*/
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+    color: #1A5D8F;
+    margin-top: 75px;
 }
-
-
 
 
 /* ===CONTACT PAGE=== */
 
+/*<<<<<<< .merge_file_O0cj42
 .contact-title {
   margin-top: 70px;
   position: fixed;
@@ -229,9 +254,11 @@ body {
   padding-bottom: 30px; 
 }
 
+=======
+>>>>>>> .merge_file_uG4tgo*/
 .card-image {
-  width: 300px;
-  height: 300px;
+    width: 300px;
+    height: 300px;
 }
 
 .card {
@@ -247,22 +274,31 @@ body {
   border-style: solid;
   border-width: 1px;
   border-color: #1A5D8F; */ 
+    float: left;
+    max-width: 300px;
+    margin: 50px 30px 30px 0px;
+}
+
+.contact-title h1 {
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+    color: #1A5D8F;
+    margin-top: 75px;
 }
 
 
 
 
 @media screen and (max-width: 845px) {
-  #find-btn {
-    margin-bottom: 10px;
-  }
+    #find-btn {
+        margin-bottom: 10px;
+    }
 }
 
-
 @media screen and (max-width: 663px) {
+
   #find-submit, #compare-submit {
     margin-bottom: 10px;
   }
 }
-
-
