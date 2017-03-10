@@ -7,7 +7,6 @@ $(document).ready(function() {
     var domainMax;
     var cityImages;
 
-
     $.getScript("assets/js/list_of_jobs.js", function() {
 
         $('#occupation-auto').autocomplete({
@@ -497,8 +496,6 @@ $(document).ready(function() {
 
                 });
         }
-
-        
 
         var resetAllCenterText = function() {
             charts.selectAll('.value')
