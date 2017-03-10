@@ -12,8 +12,8 @@ app.use(express.static(process.cwd() + "/public"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-require("./routes/html-routes.js")(app);
-var data = require("./routes/api-routes.js")(app);
+require("./controller/html-routes.js")(app);
+var data = require("./controller/api-routes.js")(app);
 
 db.sequelize.sync().then(function() {
 	app.listen(port);
