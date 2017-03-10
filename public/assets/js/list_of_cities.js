@@ -1,6 +1,5 @@
 var data = {
 		"Omaha, NE" : null,
-		"Boise City, ID": null,
 		"Los Angeles, CA": null,
 		"Salt Lake City, UT": null,
 		"Oklahoma City, OK": null,
