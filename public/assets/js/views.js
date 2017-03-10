@@ -497,6 +497,8 @@ $(document).ready(function() {
                 });
         }
 
+        
+
         var resetAllCenterText = function() {
             charts.selectAll('.value')
                 .text(function(d) {
