@@ -26,7 +26,7 @@ module.exports = function (app) {
 		var city = cities.split(",")[0];
 		var state = cities.split(",")[1].trim();
 		console.log("City: " + city + " State: " + state);
-		db.jointTableThree.findOne({
+		db.tableWithEverything.findOne({
 			where: {
 				city: city,
 				stateInitial: state

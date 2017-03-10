@@ -9,7 +9,6 @@ var data = {
 		"Portland, OR": null,
 		"Milwaukee, WI": null,
 		"Memphis, TN": null,
-		"Indianapolis, IN": null,
 		"Phoenix, AZ": null,
 		"New Orleans, LA": null,
 		"San Antonio, TX": null,
@@ -60,5 +59,4 @@ var data = {
 		"San Francisco, CA": null,
 		"Anchorage, AK": null,
 		"New York, NY": null,
-		"Urban Honolulu, HI": null,
 };
