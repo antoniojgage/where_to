@@ -5,6 +5,7 @@ $(document).ready(function() {
     var occupation;
     var domainMin;
     var domainMax;
+    var cityImages;
 
     $.getScript("assets/js/list_of_jobs.js", function() {
 
@@ -146,7 +147,7 @@ $(document).ready(function() {
         var path = d3.geo.path() // path generator that will convert GeoJSON to SVG paths
             .projection(projection); // tell path generator to use albersUsa projection
 
-        var legendText = ["Worst", "Best"];
+        var legendText = ["Nope!", "Your Destiny is Calling!"];
 
         //Create SVG element and append map to the SVG
         var canvas = d3.select("#heatmap")
@@ -243,7 +244,7 @@ $(document).ready(function() {
                         //control blurb popup opacity  
                         .style("opacity", 1);
                     //writes information to the blurb
-                    div.html(d.city + "," + d.stateInitial + "<br/>" + "Avg. Median Salary: $" + d.aMean + "<br/>" + "CPI: " + d.cpi)
+                    div.html(d.city + "," + d.stateInitial + "<br/>" + "Average Salary: $" + d.aMean + "<br/>" + "CPI: " + d.cpi)
                         //controls X placement of the blurb - left,right,center
                         .style("left", (d3.event.pageX) + "px")
                         //controls Y placement of the blurb - up,down
@@ -321,7 +322,7 @@ $(document).ready(function() {
             [],
             []
         ];
-
+        cityImages = [data[0].imageLink, data[1].imageLink];
         for (var i = 0; i < data.length; i++) {
             cpiValues[i].push(data[i].cpi);
             cpiValues[i].push(data[i].costOfLivingPlusRentIndex);
@@ -330,7 +331,8 @@ $(document).ready(function() {
             cpiValues[i].push(data[i].groceriesIndex);
             cpiValues[i].push(data[i].localPurchasingPowerIndex);
         }
-        var donutData = genData(cityNames, cpiValues);
+        
+        var donutData = genData(cityNames, cpiValues, cityImages);
         var donuts = new DonutCharts();
         donuts.create(donutData);
         //This might have to be a bonus feature
@@ -385,7 +387,7 @@ $(document).ready(function() {
                 });
         }
 
-        var createCenter = function(pie) {
+        var createCenter = function(images) {
 
             var eventObj = {
                 'mouseover': function(d, i) {
@@ -410,28 +412,43 @@ $(document).ready(function() {
                 }
             }
 
-            var config = {
-                "img_size": 700
-            }
             var body = d3.select("body");
             var svg = body.append("svg")
                 .attr("width", 500)
                 .attr("height", 500);
 
             var defs = svg.append("svg:defs");
-            defs.append("svg:pattern")
-                .attr("id", "Austin")
+            //TODO need to make the pictures scale better
+            var circle1 = defs.append("svg:pattern")
+                .attr("id", "city0")
                 .attr("width", 1)
                 .attr("height", 1)
                 .attr("x", 0)
                 .attr("y", 0)
                 .append("svg:image")
-                .attr("xlink:href", 'assets/images/cityimages/LosAngelesCopy.jpg')
-                .attr("width", config.img_size)
-                .attr("height", config.img_size)
+                .attr("xlink:href", function(d, i) {
+                    return images[0]
+                })
+                .attr("width", chart_r * 2.5)
+                .attr("height", chart_r * 2)
                 .attr("x", 0)
-                .attr("y", -160);
+                .attr("y", (chart_r / 2.3) * -1);
 
+
+            var circle2 = defs.append("svg:pattern")
+                .attr("id", "city1")
+                .attr("width", 1)
+                .attr("height", 1)
+                .attr("x", 0)
+                .attr("y", 0)
+                .append("svg:image")
+                .attr("xlink:href", function(d, i) {
+                    return images[1]
+                })
+                .attr("width", chart_r * 2.5)
+                .attr("height", chart_r * 2)
+                .attr("x", 0)
+                .attr("y", (chart_r / 2.3) * -1);
 
             var donuts = d3.selectAll('.donut');
 
@@ -439,7 +456,9 @@ $(document).ready(function() {
             donuts.append("svg:circle")
                 .attr("r", chart_r * 0.6)
                 .attr("fill", "#fff")
-                .attr("fill", "url(#Austin)")
+                .attr("fill", function(d, i){
+                    return "url(#city" + i + ")"
+                })
                 .on(eventObj);
 
             donuts.append('text')
@@ -612,7 +631,7 @@ $(document).ready(function() {
                 .attr('transform', 'translate(' + (chart_r + chart_m) + ',' + (chart_r + chart_m) + ')');
 
             createLegend(getCatNames(dataset));
-            createCenter();
+            createCenter(cityImages);
 
             updateDonut();
         }
@@ -630,7 +649,7 @@ $(document).ready(function() {
     /*
      * Returns a json-like object.
      */
-    function genData(x, y, z) {
+    function genData(x, y) {
 
         var cityNames = x;
         var unit = ['cpi', 'cpi'];
