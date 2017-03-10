@@ -1,12 +1,13 @@
-$(document).ready(function () {
+$(document).ready(function() {
     //Width and height of map
     var x = window.innerWidth * .7;
     var y = window.innerHeight + 10;
     var occupation;
     var domainMin;
     var domainMax;
+    var cityImages;
 
-    $.getScript("assets/js/list_of_jobs.js", function () {
+    $.getScript("assets/js/list_of_jobs.js", function() {
 
         $('#occupation-auto').autocomplete({
             data,
@@ -15,7 +16,7 @@ $(document).ready(function () {
 
     });
 
-    $.getScript("assets/js/list_of_cities.js", function () {
+    $.getScript("assets/js/list_of_cities.js", function() {
 
         $('.city-auto').autocomplete({
             data,
@@ -35,18 +36,18 @@ $(document).ready(function () {
     });
 
 
-    $(".dropdown-button").click(function () {
+    $(".dropdown-button").click(function() {
         $("#dropdown1").css("display", "block");
-        $("#dropdown1").mouseleave(function () {
+        $("#dropdown1").mouseleave(function() {
             $("#dropdown1").css("display", "none");
         });
     });
 
-    $("#dropdown1").mouseleave(function () {
+    $("#dropdown1").mouseleave(function() {
         $("#dropdown1").css("display", "none");
     });
 
-    $("#find-btn").click(function () {
+    $("#find-btn").click(function() {
         $(".slider-adjustment").css("position", "absolute");
         $("#compare-cities").css("display", "none");
         $("#heatmap").css("display", "none");
@@ -57,7 +58,7 @@ $(document).ready(function () {
         }, 2000);
     });
 
-    $("#compare-btn").click(function () {
+    $("#compare-btn").click(function() {
         $(".slider-adjustment").css("position", "absolute");
         $("#find-your-city").css("display", "none");
         $("#heatmap").css("display", "none");
@@ -75,7 +76,7 @@ $(document).ready(function () {
         }, 1500);
     };
 
-    $("#find-submit").click(function (e) {
+    $("#find-submit").click(function(e) {
         //add route to search occupation occupation-auto
         e.preventDefault();
         x = window.innerWidth * .7;
@@ -94,7 +95,7 @@ $(document).ready(function () {
         }, 1500);
     });
 
-    $("#compare-submit").click(function (e) {
+    $("#compare-submit").click(function(e) {
         e.preventDefault();
         x = window.innerWidth * .7;
         y = window.innerHeight + 10;
@@ -102,27 +103,24 @@ $(document).ready(function () {
         //Saving city
         var city1 = $('#city1').val();
         var city2 = $('#city2').val();
-       
-            var cityArr = [];
-            $.get("/api/data/" + city1, function (res) {
+        var cityArr = [];
+
+        $.get("/api/data/" + city1, function(res) {
+            cityArr.push(res);
+            $.get("/api/data/" + city2, function(res) {
+                //d3 create badass map point.res
                 cityArr.push(res);
-                $.get("/api/data/" + city2, function (res) {
-                    //d3 create badass map point.res
-                    cityArr.push(res);
-                    drawCharts(cityArr);
-                    $("#comparison").css("display", "block");
-                    $("#comparison").append(refresh_btn);
-                    $("#comparison").append(start_over);
-                    $('html, body').animate({
-                        scrollTop: $("#comparison").offset().top
-                    }, 2000); //this is async so it is happening after the button and therefore deleting the button
-                });
-
+                drawCharts(cityArr);
+                $("#comparison").css("display", "block");
+                $("#comparison").append(refresh_btn);
+                $("#comparison").append(start_over);
+                $('html, body').animate({
+                    scrollTop: $("#comparison").offset().top
+                }, 2000); //this is async so it is happening after the button and therefore deleting the button
             });
-        
 
+        });
     });
-
 
     //D3 code beyond this point
     /*  This visualization was made possible by modifying code provided by:
@@ -149,7 +147,7 @@ $(document).ready(function () {
         var path = d3.geo.path() // path generator that will convert GeoJSON to SVG paths
             .projection(projection); // tell path generator to use albersUsa projection
 
-        var legendText = ["Worst", "Best"];
+        var legendText = ["Nope!", "Your Destiny is Calling!"];
 
         //Create SVG element and append map to the SVG
         var canvas = d3.select("#heatmap")
@@ -164,7 +162,7 @@ $(document).ready(function () {
             .style("opacity", 0);
 
         // Load GeoJSON data and merge with states data
-        d3.json("/assets/geojson/us-states.json", function (json) {
+        d3.json("/assets/geojson/us-states.json", function(json) {
 
             // Loop through each state data value in the .csv file
             for (var i = 0; i < data.length; i++) {
@@ -205,7 +203,7 @@ $(document).ready(function () {
 
             var cityData;
 
-            $.get("/api/whereto/" + occupation, function (res) {
+            $.get("/api/whereto/" + occupation, function(res) {
 
                 cityData = res;
                 var last = res.length - 1;
@@ -222,44 +220,44 @@ $(document).ready(function () {
                     .data(cityData)
                     .enter()
                     .append("circle")
-                    .attr("cx", function (d) {
+                    .attr("cx", function(d) {
 
                         return projection([d.longitude, d.latitude])[0];
                     })
-                    .attr("cy", function (d) {
+                    .attr("cy", function(d) {
                         return projection([d.longitude, d.latitude])[1];
                     })
                     .attr("r", 6)
-                    .attr("fill", function (d) {
+                    .attr("fill", function(d) {
                         console.log(Math.floor(d.bang4Yabuk * 1000));
                         return coordinateColor(Math.floor(d.bang4Yabuk * 1000));
                     })
                     // .style("opacity", 0.85)  
 
-                    // Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
-                    // http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
-                    //STYLE CONTROLLED BY DIV.TOOLTIPS ABOVE
-                    .on("mouseover", function (d) {
-                        div.transition()
-                            //when mouse over controls how fast blurb populates        
-                            .duration(200)
-                            //control blurb popup opacity  
-                            .style("opacity", 1);
-                        //writes information to the blurb
-                        div.html(d.city + "," + d.stateInitial + "<br/>" + "Avg. Median Salary: $" + d.aMean + "<br/>" + "CPI: " + d.cpi)
-                            //controls X placement of the blurb - left,right,center
-                            .style("left", (d3.event.pageX) + "px")
-                            //controls Y placement of the blurb - up,down
-                            .style("top", (d3.event.pageY - 28) + "px");
-                        console.log(d.city)
-                    })
+                // Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
+                // http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
+                //STYLE CONTROLLED BY DIV.TOOLTIPS ABOVE
+                .on("mouseover", function(d) {
+                    div.transition()
+                        //when mouse over controls how fast blurb populates        
+                        .duration(200)
+                        //control blurb popup opacity  
+                        .style("opacity", 1);
+                    //writes information to the blurb
+                    div.html(d.city + "," + d.stateInitial + "<br/>" + "Average Salary: $" + d.aMean + "<br/>" + "CPI: " + d.cpi)
+                        //controls X placement of the blurb - left,right,center
+                        .style("left", (d3.event.pageX) + "px")
+                        //controls Y placement of the blurb - up,down
+                        .style("top", (d3.event.pageY - 28) + "px");
+                    console.log(d.city)
+                })
 
-                    // fade out tooltip on mouse out               
-                    .on("mouseout", function (d) {
-                        div.transition()
-                            .duration(500)
-                            .style("opacity", 0);
-                    });
+                // fade out tooltip on mouse out               
+                .on("mouseout", function(d) {
+                    div.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
 
                 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
                 var legend = d3.select("#heatmap").append("svg")
@@ -270,7 +268,7 @@ $(document).ready(function () {
                     .data(coordinateColor.domain().slice().reverse())
                     .enter()
                     .append("g")
-                    .attr("transform", function (d, i) {
+                    .attr("transform", function(d, i) {
                         return "translate(0," + i * 20 + ")";
                     });
 
@@ -284,7 +282,7 @@ $(document).ready(function () {
                     .attr("x", 24)
                     .attr("y", 9)
                     .attr("dy", ".35em")
-                    .text(function (d) {
+                    .text(function(d) {
                         return d;
                     });
             });
@@ -324,7 +322,7 @@ $(document).ready(function () {
             [],
             []
         ];
-
+        cityImages = [data[0].imageLink, data[1].imageLink];
         for (var i = 0; i < data.length; i++) {
             cpiValues[i].push(data[i].cpi);
             cpiValues[i].push(data[i].costOfLivingPlusRentIndex);
@@ -333,7 +331,8 @@ $(document).ready(function () {
             cpiValues[i].push(data[i].groceriesIndex);
             cpiValues[i].push(data[i].localPurchasingPowerIndex);
         }
-        var donutData = genData(cityNames, cpiValues);
+        
+        var donutData = genData(cityNames, cpiValues, cityImages);
         var donuts = new DonutCharts();
         donuts.create(donutData);
         //This might have to be a bonus feature
@@ -351,7 +350,7 @@ $(document).ready(function () {
         var chart_m,
             chart_r;
 
-        var getCatNames = function (dataset) {
+        var getCatNames = function(dataset) {
             var catNames = new Array();
 
             for (var i = 0; i < dataset[0].data.length; i++) {
@@ -361,12 +360,12 @@ $(document).ready(function () {
             return catNames;
         }
 
-        var createLegend = function (catNames) {
+        var createLegend = function(catNames) {
             var legends = charts.select('.legend')
                 .selectAll('g')
                 .data(catNames)
                 .enter().append('g')
-                .attr('transform', function (d, i) {
+                .attr('transform', function(d, i) {
                     return 'translate(' + (i * 175 + 50) + ', 20)';
                     // return 'translate(' + (i * 150 + d[i-1].length) + ', 20)';
                 });
@@ -374,7 +373,7 @@ $(document).ready(function () {
             legends.append('circle')
                 .attr('class', 'legend-icon')
                 .attr('r', 6)
-                .style('fill', function (d, i) {
+                .style('fill', function(d, i) {
                     var arr = ['#F9DC70', '#C2F970', '#3DC6EF', '#7DCED5', '#1A5D8F', '#EF1C2A']
                     return arr[i];
                 });
@@ -382,22 +381,22 @@ $(document).ready(function () {
             legends.append('text')
                 .attr('dx', '1em')
                 .attr('dy', '.3em')
-                .text(function (d) {
+                .text(function(d) {
 
                     return d;
                 });
         }
 
-        var createCenter = function (pie) {
+        var createCenter = function(images) {
 
             var eventObj = {
-                'mouseover': function (d, i) {
+                'mouseover': function(d, i) {
                     d3.select(this)
                         .transition()
                         .attr("r", chart_r * 0.65);
                 },
 
-                'mouseout': function (d, i) {
+                'mouseout': function(d, i) {
                     d3.select(this)
                         .transition()
                         .duration(500)
@@ -405,7 +404,7 @@ $(document).ready(function () {
                         .attr("r", chart_r * 0.6);
                 },
 
-                'click': function (d, i) {
+                'click': function(d, i) {
                     var paths = charts.selectAll('.clicked');
                     pathAnim(paths, 0);
                     paths.classed('clicked', false);
@@ -413,28 +412,43 @@ $(document).ready(function () {
                 }
             }
 
-            var config = {
-                "img_size": 700
-            }
             var body = d3.select("body");
             var svg = body.append("svg")
                 .attr("width", 500)
                 .attr("height", 500);
 
             var defs = svg.append("svg:defs");
-            defs.append("svg:pattern")
-                .attr("id", "Austin")
+            //TODO need to make the pictures scale better
+            var circle1 = defs.append("svg:pattern")
+                .attr("id", "city0")
                 .attr("width", 1)
                 .attr("height", 1)
                 .attr("x", 0)
                 .attr("y", 0)
                 .append("svg:image")
-                .attr("xlink:href", 'assets/images/cityimages/LosAngelesCopy.jpg')
-                .attr("width", config.img_size)
-                .attr("height", config.img_size)
+                .attr("xlink:href", function(d, i) {
+                    return images[0]
+                })
+                .attr("width", chart_r * 2.5)
+                .attr("height", chart_r * 2)
                 .attr("x", 0)
-                .attr("y", -160);
+                .attr("y", (chart_r / 2.3) * -1);
 
+
+            var circle2 = defs.append("svg:pattern")
+                .attr("id", "city1")
+                .attr("width", 1)
+                .attr("height", 1)
+                .attr("x", 0)
+                .attr("y", 0)
+                .append("svg:image")
+                .attr("xlink:href", function(d, i) {
+                    return images[1]
+                })
+                .attr("width", chart_r * 2.5)
+                .attr("height", chart_r * 2)
+                .attr("x", 0)
+                .attr("y", (chart_r / 2.3) * -1);
 
             var donuts = d3.selectAll('.donut');
 
@@ -442,7 +456,9 @@ $(document).ready(function () {
             donuts.append("svg:circle")
                 .attr("r", chart_r * 0.6)
                 .attr("fill", "#fff")
-                .attr("fill", "url(#Austin)")
+                .attr("fill", function(d, i){
+                    return "url(#city" + i + ")"
+                })
                 .on(eventObj);
 
             donuts.append('text')
@@ -451,7 +467,7 @@ $(document).ready(function () {
                 .attr('text-anchor', 'middle')
                 .style('font-weight', 'bold')
                 .style("fill", "white")
-                .text(function (d, i) {
+                .text(function(d, i) {
                     return d.type;
                 });
             donuts.append('text')
@@ -465,32 +481,32 @@ $(document).ready(function () {
                 .style('fill', 'white');
         }
 
-        var setCenterText = function (thisDonut) {
-            var sum = d3.sum(thisDonut.selectAll('.clicked').data(), function (d) {
+        var setCenterText = function(thisDonut) {
+            var sum = d3.sum(thisDonut.selectAll('.clicked').data(), function(d) {
                 return d.data.val;
             });
 
             thisDonut.select('.value')
-                .text(function (d) {
+                .text(function(d) {
                     return (sum) ? sum.toFixed(1) + d.unit : d.total.toFixed(1) + d.unit;
                 });
             thisDonut.select('.percentage')
-                .text(function (d) {
+                .text(function(d) {
                     return (sum)
 
                 });
         }
 
-        var resetAllCenterText = function () {
+        var resetAllCenterText = function() {
             charts.selectAll('.value')
-                .text(function (d) {
+                .text(function(d) {
                     return d.total.toFixed(1) + d.unit;
                 });
             charts.selectAll('.percentage')
                 .text('');
         }
 
-        var pathAnim = function (path, dir) {
+        var pathAnim = function(path, dir) {
             switch (dir) {
                 case 0:
                     path.transition()
@@ -512,23 +528,23 @@ $(document).ready(function () {
             }
         }
 
-        var updateDonut = function () {
+        var updateDonut = function() {
 
             var eventObj = {
 
-                'mouseover': function (d, i, j) {
+                'mouseover': function(d, i, j) {
                     pathAnim(d3.select(this), 1);
 
                     var thisDonut = charts.select('.type' + j);
-                    thisDonut.select('.value').text(function (donut_d) {
+                    thisDonut.select('.value').text(function(donut_d) {
                         return d.data.val.toFixed(1) + donut_d.unit;
                     });
-                    thisDonut.select('.percentage').text(function (donut_d) {
+                    thisDonut.select('.percentage').text(function(donut_d) {
                         return (d.data.val / donut_d.total * 100).toFixed(2) + '%';
                     });
                 },
 
-                'mouseout': function (d, i, j) {
+                'mouseout': function(d, i, j) {
                     var thisPath = d3.select(this);
                     if (!thisPath.classed('clicked')) {
                         pathAnim(thisPath, 0);
@@ -537,7 +553,7 @@ $(document).ready(function () {
                     setCenterText(thisDonut);
                 },
 
-                'click': function (d, i, j) {
+                'click': function(d, i, j) {
                     var thisDonut = charts.select('.type' + j);
 
                     if (0 === thisDonut.selectAll('.clicked')[0].length) {
@@ -555,20 +571,20 @@ $(document).ready(function () {
 
             var pie = d3.layout.pie()
                 .sort(null)
-                .value(function (d) {
+                .value(function(d) {
                     return d.val;
                 });
 
             var arc = d3.svg.arc()
                 .innerRadius(chart_r * 0.7)
-                .outerRadius(function () {
+                .outerRadius(function() {
                     return (d3.select(this).classed('clicked')) ? chart_r * 1.08 : chart_r;
                 });
 
             // Start joining data with paths
             var paths = charts.selectAll('.donut')
                 .selectAll('path')
-                .data(function (d, i) {
+                .data(function(d, i) {
                     return pie(d.data);
                 });
 
@@ -580,7 +596,7 @@ $(document).ready(function () {
             paths.enter()
                 .append('svg:path')
                 .attr('d', arc)
-                .style('fill', function (d, i) {
+                .style('fill', function(d, i) {
                     var arr = ['#F9DC70', '#C2F970', '#3DC6EF', '#7DCED5', '#1A5D8F', '#EF1C2A']
                     return arr[i];
                 })
@@ -592,7 +608,7 @@ $(document).ready(function () {
             resetAllCenterText();
         }
 
-        this.create = function (dataset) {
+        this.create = function(dataset) {
             var $charts = $('#comparison');
             chart_m = $charts.innerWidth() / dataset.length / 2 * 0.14;
             chart_r = $charts.innerWidth() / dataset.length / 2 * 0.85;
@@ -609,18 +625,18 @@ $(document).ready(function () {
                 .attr('width', (chart_r + chart_m) * 2)
                 .attr('height', (chart_r + chart_m) * 2)
                 .append('svg:g')
-                .attr('class', function (d, i) {
+                .attr('class', function(d, i) {
                     return 'donut type' + i;
                 })
                 .attr('transform', 'translate(' + (chart_r + chart_m) + ',' + (chart_r + chart_m) + ')');
 
             createLegend(getCatNames(dataset));
-            createCenter();
+            createCenter(cityImages);
 
             updateDonut();
         }
 
-        this.update = function (dataset) {
+        this.update = function(dataset) {
             // Assume no new categ of data enter
             var donut = charts.selectAll(".donut")
                 .data(dataset);
@@ -633,7 +649,7 @@ $(document).ready(function () {
     /*
      * Returns a json-like object.
      */
-    function genData(x, y, z) {
+    function genData(x, y) {
 
         var cityNames = x;
         var unit = ['cpi', 'cpi'];

@@ -15,6 +15,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+    <style>
+        p, li {
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,7 +32,7 @@
         <li><a href="https://shrouded-beyond-34634.herokuapp.com/">I'm here! Now what?</a></li>
     </ul>
     <div class="navbar-fixed">
-        <nav >
+        <nav>
             <div class="nav-wrapper white">
                 <a id="logo-container" href="/" class="brand-logo"><img class="whereto-logo" src="assets/images/whereToLogo-small.png"></a>
                 <ul class="right hide-on-med-and-down">
@@ -37,47 +42,61 @@
             </div>
         </nav>
     </div>
-
-<!-- ========= BODY  =========  -->
-
-<!-- TECHNOLOGIES USED -->
-<div class="container">
-    <div class="about-body">
-        <div class="about-title">
-            <h1>technologies used</h1>
+    <!-- ========= BODY  =========  -->
+    <!-- TECHNOLOGIES USED -->
+    <div class="container">
+        <div class="about-body">
+            <div class="about-title">
+                <h1>An Overview of the Project</h1>
+            </div>
+            <div class="concept">
+                <h2>Application Concept</h2>
+                <p>We use data from the Bureau of Labor Statistics to give users some insight into which cities might be the best fit for them. The first functionality of our application compares the average salary of the user's occupation in each city to the cost of living in that city. We display this "bang for your buck" ratio with a heatmap. </p>
+                <br />
+                <p>The second functionality of our application lets the user compare the cost of living categories between two cities. These cost of living indexes are displayed in an interactive donut chart"</p>
+                <br />
+                <p>screen shots here</p>
+            </div>
+            <div class="motivation">
+                <h2>Motivation Behind It</h2>
+                <p>D3 is a popular data visualization library that is used by comapnies like The New York Times. Plus it looked like a lot of fun. We wanted to challenge ourselves to learn this powerful framework well enough to make something useful.</p>
+            </div>
+            <div class="design">
+                <h2>Design Process</h2>
+                <p>?????????????????????????????????????????????????????????????????????????????????????</p>
+            </div>
+            <div class="technologies">
+                <h2>Technologies Used</h2>
+                <div class="tech-logos">
+                    <a><img class="d3-logo" src="assets/images/d3.png"></a>
+                </div>
+                <h3>D3</h3>
+                <h3>MySQL/ Amazon Web Services</h3>
+                <p>Data pulled from U.S. Bureau of Labor Statistics: https://www.bls.gov/developers/</p>
+                <h3>Sequelize and Sequelize-Auto </h3>
+                <p>We used sequelize orm, but our tables were created before the application. Sequelize-Auto made it easy to create our models based on our already existing tables.</p>
+                <h3>Design</h3>
+                <p>Materialize, Photoshop and Illustrator</p>
+                <p>Images courtesy of unsplash.com</p>
+            </div>
+            <div class="future">
+                <h2>Future Development</h2>
+                <ul>
+                    <li>something</li>
+                    <li>something else</li>
+                    <li>more stuff</li>
+                    <li>some more</li>
+                    <li>and then...</li>
+                </ul>
+            </div>
         </div>
-
-        <div class="tech-logos">
-          <a><img class="d3-logo" src="assets/images/d3.png"></a>
-        </div>
-
-        <h1>D3</h1>
-        <h1>SQL</h1>
-        <p>Data pulled from U.S. Bureau of Labor Statistics: https://www.bls.gov/developers/</p>
-        <h1>Sequelize</h1>
-        <h1>Design</h1>
-        <p>Materialize, Photoshop and Illustrator</p>
-        <p>Images courtesy of unsplash.com </p>
     </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-  <!--JS Libraries-->
-
+    <!--JS Libraries-->
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-   <!--MATERIALIZE JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script> 
+    <!--MATERIALIZE JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
     <script src="assets/js/views.js"></script>
-
 </body>
+
 </html>
