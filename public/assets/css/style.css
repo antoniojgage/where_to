@@ -240,6 +240,17 @@ div.tooltip {
     margin-left: 20px;
 }
 
+.concept ul {
+    list-style-type: circle;
+    margin-left: 20px;
+}
+
+
+.design ul {
+    list-style-type: circle;
+    margin-left: 20px;
+}
+
 .concept img {
     margin: 1%;
 }
