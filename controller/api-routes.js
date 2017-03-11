@@ -9,12 +9,12 @@ module.exports = function (app) {
 		db.jointTableThree.findAll({
 			where: {
 				occTitle: occupation
-			}, 
+			},
 			order: "bang4Yabuk ASC"
-		// db.coordinates.findOne({
-		// 	where: {
-		// 		city: 'houston'
-		// 	}
+			// db.coordinates.findOne({
+			// 	where: {
+			// 		city: 'houston'
+			// 	}
 		}).then(function (result) {
 			return res.json(result);
 		});
@@ -31,6 +31,16 @@ module.exports = function (app) {
 				city: city,
 				stateInitial: state
 			}
+		}).then(function (result) {
+			return res.json(result);
+		});
+	});
+
+	app.post("/api/logs/:city", function (req, res) {
+		var city = req.params.city;
+		console.log(city)
+		db.loginfo.create({
+				city1: city
 		}).then(function (result) {
 			return res.json(result);
 		});
