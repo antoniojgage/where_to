@@ -46,9 +46,23 @@
             </div>
             <div class="concept">
                 <h3>Application Concept</h3>
-                <p>We use data from the Bureau of Labor Statistics to give users some insight into which cities might be the best fit for them. The first functionality of our application compares the average salary of the user's occupation in each city to the cost of living in that city. We display this "bang for your buck" ratio with a heatmap. </p>
+                <p><strong>where to?</strong> allows the user to view the average salary of their occupation (or desired occupation) in major cities throughout the US. The user will also be able to view how these salaries compare to each city’s cost of living. This “bang for your buck” ratio is displayed on a heatmap, allowing the user to make an informed and strategic decision about where to move.</p>
                 <br />
-                <p>The second functionality of our application lets the user compare the cost of living categories between two cities. These cost of living indexes are displayed in an interactive donut chart"</p>
+                <p>In addition to finding your next home base  based on your occupation, <strong>where to?</strong> will allow users to compare the following data for two cities of their choice:</p>
+                <br>
+                <ul>
+                    <li>Consumer Price Index</li>
+                    <br />
+                    <li>Cost of Living + Rent Index</li>
+                    <br />
+                    <li>Restaurant Price Index</li>
+                    <br />
+                    <li>Rent Index</li>
+                    <br />
+                    <li>Groceries Index</li>
+                    <br />
+                    <li>Local Purchasing Power</li>
+                </ul>
                 <br />
                 <br />
                 <img src="assets/images/homepage.PNG" height="200" width="400" />
@@ -59,7 +73,7 @@
             <hr>
             <div class="motivation">
                 <h3>Motivation Behind It</h3>
-                <p>D3 is a popular data visualization library that is used by comapnies like The New York Times. Plus, it looked like a lot of fun. We wanted to challenge ourselves to learn this powerful framework well enough to make something useful.</p>
+                <p>D3 is a popular data visualization library that is used by companies such as The New York Times. Plus, it looked like a lot of fun! We wanted to challenge ourselves to learn this powerful framework well enough to make something useful.</p>
                 <br>
                 <p>Here are some examples of what D3 can do:</p>
                 <br>
@@ -76,9 +90,15 @@
             <hr>
             <div class="design">
                 <h3>Design Process</h3>
-                <p>Materialize, Photoshop and Illustrator</p>
+                <p><strong>where to?</strong> uses the MVC design structure.</p>
                 <br>
-                <p>Images courtesy of unsplash.com</p>
+                <p>It uses three different tables and left joins them to get all of the data needed.</p>
+                <br>
+                <p>Materialize was used for the grid and sleek components.</p>
+                <br>
+                <p>Photoshop and Illustrator were used to create our logo and edit photos of the cities to use in the center of the donut charts</p>
+                <br>
+                <p>The images courtesy of unsplash.com.</p>
             </div>
             <hr>
             <div class="technologies">
@@ -87,12 +107,13 @@
                     <a><img class="d3-logo" src="assets/images/d3.png" height="200" width="200"></a>
                 </div>
                 <h4>D3</h4>
+                <p>"D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then apply data-driven transformations to the document."</p>
                 <h4>MySQL/ Amazon Web Services</h4>
                 <p>2015 salary data pulled from U.S. Bureau of Labor Statistics: https://www.bls.gov/developers/</p>
                 <br>
                 <p>2015 CPI data pulled from Numbeo: https://www.numbeo.com/cost-of-living/rankings.jsp</p>
                 <h4>Sequelize and Sequelize-Auto </h4>
-                <p>We used sequelize orm, but our tables were created before the application. Sequelize-Auto made it easy to create our models based on our already existing tables.</p>
+                <p>We used sequelize orm, but our tables were created before the application. Sequelize-Auto made it easy to generate our models based on our already existing tables.</p>
             </div>
             <hr>
             <div class="future">
