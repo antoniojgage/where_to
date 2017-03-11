@@ -104,8 +104,11 @@ $(document).ready(function () {
             e.preventDefault();
             x = window.innerWidth * .7;
             y = window.innerHeight + 10;
-            $.post("/api/logs/:city", function (res) {
-                console.log("Sending cities: " + city1 + " " + city2);
+            $.post("/api/logs/" + city1, function (res) {
+                console.log("Sending city: " + city1);
+            });
+            $.post("/api/logs/" + city2, function (res) {
+                console.log("Sending city: " + city2);
             });
             $.get("/api/data/" + city1, function (res) {
                 cityArr.push(res);

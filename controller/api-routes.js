@@ -38,7 +38,7 @@ module.exports = function (app) {
 
 	app.post("/api/logs/:city", function (req, res) {
 		var city = req.params.city;
-		console.log("hey")
+		console.log(city)
 		db.loginfo.create({
 				city1: city
 		}).then(function (result) {
