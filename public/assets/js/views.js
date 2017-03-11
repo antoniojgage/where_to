@@ -104,7 +104,9 @@ $(document).ready(function() {
         var city1 = $('#city1').val();
         var city2 = $('#city2').val();
         var cityArr = [];
-
+        $.post("/api/logs/:city", function (res) {
+                console.log("Sending " + occupation + "to the logs");
+            });
         $.get("/api/data/" + city1, function(res) {
             cityArr.push(res);
             $.get("/api/data/" + city2, function(res) {
