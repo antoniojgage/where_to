@@ -4,6 +4,7 @@
 <head>
     <title>where to?</title>
     <meta charset="UTF-8" />
+    <meta name="google-site-verification" content="1up_0NLXLf4DFxm34CbnKlBedGQfA6VjOvkiSkY6oWw" />
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--Import Google Icon Font-->
@@ -14,11 +15,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
-    <style>
-        p, li {
-            font-size: 16px;
-        }
-    </style>
 </head>
 
 <body>
@@ -54,38 +50,63 @@
                 <br />
                 <p>The second functionality of our application lets the user compare the cost of living categories between two cities. These cost of living indexes are displayed in an interactive donut chart"</p>
                 <br />
-                <p>screen shots here</p>
+                <br />
+                <img src="assets/images/homepage.PNG" height="200" width="400" />
+                <img src="assets/images/map.PNG" height="200" width="400"/>
+                <img src="assets/images/charts.PNG" height="200" width="400"/>
+                <img src="assets/images/formula.PNG" height="200" width="400"/>
             </div>
+            <hr>
             <div class="motivation">
                 <h2>Motivation Behind It</h2>
-                <p>D3 is a popular data visualization library that is used by comapnies like The New York Times. Plus it looked like a lot of fun. We wanted to challenge ourselves to learn this powerful framework well enough to make something useful.</p>
+                <p>D3 is a popular data visualization library that is used by comapnies like The New York Times. Plus, it looked like a lot of fun. We wanted to challenge ourselves to learn this powerful framework well enough to make something useful.</p>
+                <br>
+                <p>Here are some examples of what D3 can do:</p>
+                <br>
+                <div id="d3examples">
+                    <a href="http://www.nytimes.com/interactive/2013/02/20/movies/among-the-oscar-contenders-a-host-of-connections.html?_r=0">Connections Among Oscar Contenders</a>
+                    <br>
+                    <br>
+                    <a href="https://piratepeel.github.io/sportskills.html">Sports Statistics</a>
+                    <br>
+                    <br>
+                    <a href="http://bl.ocks.org/mbostock/1153292">Mobile Patent Lawsuits</a>
+                </div>
             </div>
+            <hr>
             <div class="design">
                 <h2>Design Process</h2>
-                <p>?????????????????????????????????????????????????????????????????????????????????????</p>
-            </div>
-            <div class="technologies">
-                <h2>Technologies Used</h2>
-                <div class="tech-logos">
-                    <a><img class="d3-logo" src="assets/images/d3.png"></a>
-                </div>
-                <h3>D3</h3>
-                <h3>MySQL/ Amazon Web Services</h3>
-                <p>Data pulled from U.S. Bureau of Labor Statistics: https://www.bls.gov/developers/</p>
-                <h3>Sequelize and Sequelize-Auto </h3>
-                <p>We used sequelize orm, but our tables were created before the application. Sequelize-Auto made it easy to create our models based on our already existing tables.</p>
-                <h3>Design</h3>
                 <p>Materialize, Photoshop and Illustrator</p>
+                <br>
                 <p>Images courtesy of unsplash.com</p>
             </div>
+            <hr>
+            <div class="technologies">
+                <h2>Technologies Used</h2>
+                <h3>D3</h3>
+                <div class="tech-logos">
+                    <a><img class="d3-logo" src="assets/images/d3.png" height="200" width="200"></a>
+                </div>
+                <h3>MySQL/ Amazon Web Services</h3>
+                <p>2015 salary data pulled from U.S. Bureau of Labor Statistics: https://www.bls.gov/developers/</p>
+                <br>
+                <p>2015 CPI data pulled from Numbeo: https://www.numbeo.com/cost-of-living/rankings.jsp</p>
+                <h3>Sequelize and Sequelize-Auto </h3>
+                <p>We used sequelize orm, but our tables were created before the application. Sequelize-Auto made it easy to create our models based on our already existing tables.</p>
+            </div>
+            <hr>
             <div class="future">
                 <h2>Future Development</h2>
-                <ul>
-                    <li>something</li>
-                    <li>something else</li>
-                    <li>more stuff</li>
-                    <li>some more</li>
-                    <li>and then...</li>
+                <ul class="browser-default">
+                    <li>Implement the "I'm feeling lucky" button</li>
+                    <br>
+                    <li>Make the app compatible with and scalable on mobile devices</li>
+                    <br>
+                    <li>We need to expand the amount of data in the database (e.g. more cities included)</li>
+                    <br>
+                    <li>Need to come up with a more efficient system of database management</li>
+                    <br>
+                    <li>Add an api link to Bureau of Labor Statistics to automatically update the data</li>
                 </ul>
             </div>
         </div>

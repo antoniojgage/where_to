@@ -28,7 +28,7 @@ $(document).ready(function() {
     });
 
 
-    var refresh_btn = $("<button id='refresh' class='waves-effect waves-light btn cyan lighten-3'>Refresh Charts</button>");
+    var refresh_btn = $("<button id='refresh' class='waves-effect waves-light btn cyan lighten-3'>I'm Feeling Lucky</button>");
     var start_over = $("<button class='waves-effect waves-light btn cyan lighten-3 scroll-up start-over'>Start Over</button>");
 
     $(".slider").slider({
