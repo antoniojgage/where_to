@@ -7,9 +7,10 @@ $(document).ready(function() {
     var domainMax;
     var cityImages;
     var cityValidation;
+    var occupationValidation;
 
     $.getScript("assets/js/list_of_jobs.js", function() {
-
+        occupationValidation = data
         $('#occupation-auto').autocomplete({
             data,
             limit: 20,
@@ -78,67 +79,47 @@ $(document).ready(function() {
     };
 
     $("#find-submit").click(function(e) {
-        //add route to search occupation occupation-auto
-        e.preventDefault();
-        x = window.innerWidth * .7;
-        y = window.innerHeight + 10;
-        drawMap();
         occupation = $("#occupation-auto").val();
 
-        // $.get("/api/whereto/" + occupation, function(res) {
-        //     domainMin = res[0].bang4Yabuk;
-        //     domainMax = res[-1].bang4Yabuk;
-        // });
-        $("#heatmap").css("display", "block");
-        $("#heatmap").append(start_over);
-        $('html, body').animate({
-            scrollTop: $("#heatmap").offset().top
-        }, 1500);
+        if (occupationValidation.hasOwnProperty(occupation)) {
+            console.log("Occupation:" + occupationValidation);
+            e.preventDefault();
+            x = window.innerWidth * .7;
+            y = window.innerHeight + 10;
+            drawMap();
+            $("#heatmap").css("display", "block");
+            $("#heatmap").append(start_over);
+            $('html, body').animate({
+                scrollTop: $("#heatmap").offset().top
+            }, 1500);
+        }
+
     });
 
     $("#compare-submit").click(function(e) {
-        console.log("submit pressed")
-        e.preventDefault();
-        x = window.innerWidth * .7;
-        y = window.innerHeight + 10;
-        
-        
-
-        //Saving city
         var city1 = $('#city1').val();
         var city2 = $('#city2').val();
         var cityArr = [];
-    //     if (city1.split(",")[0] || city1.split(",")[1] || city2.split(",")[0] || city2.split(",")[1]) {
-    //     alert("Please enter a city");
-    // };
-
-
-
-    if(cityValidation.hasOwnProperty(city1) && cityValidation.hasOwnProperty(city2)){
-      console.log("Two Cities Entered:" + cityValidation);
-        $.get("/api/data/" + city1, function(res) {
-            cityArr.push(res);
-            $.get("/api/data/" + city2, function(res) {
-                //d3 create badass map point.res
+        if (cityValidation.hasOwnProperty(city1) && cityValidation.hasOwnProperty(city2)) {
+            e.preventDefault();
+            x = window.innerWidth * .7;
+            y = window.innerHeight + 10;
+            $.get("/api/data/" + city1, function(res) {
                 cityArr.push(res);
-                drawCharts(cityArr);
+                $.get("/api/data/" + city2, function(res) {
+                    //d3 create badass map point.res
+                    cityArr.push(res);
+                    drawCharts(cityArr);
+                    $("#comparison").css("display", "block");
+                    $("#comparison").append(refresh_btn);
+                    $("#comparison").append(start_over);
+                    $('html, body').animate({
+                        scrollTop: $("#comparison").offset().top
+                    }, 2000); //this is async so it is happening after the button and therefore deleting the button
+                });
 
-                $("#comparison").css("display", "block");
-                $("#comparison").append(refresh_btn);
-                $("#comparison").append(start_over);
-                $('html, body').animate({
-                    scrollTop: $("#comparison").offset().top
-                }, 2000); //this is async so it is happening after the button and therefore deleting the button
             });
-
-        });
-
-
-
-
-}
-
-            
+        }
     });
 
     //D3 code beyond this point
@@ -222,14 +203,14 @@ $(document).ready(function() {
 
             var cityData;
 
-            $.get("/api/whereto/" + occupation, function(res) {
 
+            $.get("/api/whereto/" + occupation, function(res) {
+                console.log(occupation);
                 cityData = res;
                 var last = res.length - 1;
                 domainMin = Math.floor(res[0].bang4Yabuk * 1000);
                 domainMax = Math.floor(res[last].bang4Yabuk * 1000);
-                console.log("domainMin: " + domainMin);
-                console.log("domainMax: " + domainMax);
+
 
                 var coordinateColor = d3.scale.linear()
                     .domain([domainMin, domainMax])
@@ -248,7 +229,7 @@ $(document).ready(function() {
                     })
                     .attr("r", 6)
                     .attr("fill", function(d) {
-                        console.log(Math.floor(d.bang4Yabuk * 1000));
+                        // console.log(Math.floor(d.bang4Yabuk * 1000));
                         return coordinateColor(Math.floor(d.bang4Yabuk * 1000));
                     })
                     // .style("opacity", 0.85)  
@@ -306,6 +287,8 @@ $(document).ready(function() {
                     });
             });
 
+
+
             //Might have to be a bonus feature
             // var arcInfo = {
             //     type: "LineString",
@@ -350,7 +333,7 @@ $(document).ready(function() {
             cpiValues[i].push(data[i].groceriesIndex);
             cpiValues[i].push(data[i].localPurchasingPowerIndex);
         }
-        
+
         var donutData = genData(cityNames, cpiValues, cityImages);
         var donuts = new DonutCharts();
         donuts.create(donutData);
@@ -475,7 +458,7 @@ $(document).ready(function() {
             donuts.append("svg:circle")
                 .attr("r", chart_r * 0.6)
                 .attr("fill", "#fff")
-                .attr("fill", function(d, i){
+                .attr("fill", function(d, i) {
                     return "url(#city" + i + ")"
                 })
                 .on(eventObj);
