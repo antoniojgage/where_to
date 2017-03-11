@@ -6,9 +6,12 @@ $(document).ready(function () {
     var domainMin;
     var domainMax;
     var cityImages;
+    var cityValidation;
+    var occupationValidation;
+
 
     $.getScript("assets/js/list_of_jobs.js", function () {
-
+        occupationValidation = data
         $('#occupation-auto').autocomplete({
             data,
             limit: 20,
@@ -17,7 +20,7 @@ $(document).ready(function () {
     });
 
     $.getScript("assets/js/list_of_cities.js", function () {
-
+        cityValidation = data;
         $('.city-auto').autocomplete({
             data,
             limit: 20,
@@ -26,7 +29,7 @@ $(document).ready(function () {
     });
 
 
-    var refresh_btn = $("<button id='refresh' class='waves-effect waves-light btn cyan lighten-3'>Refresh Charts</button>");
+    var refresh_btn = $("<button id='refresh' class='waves-effect waves-light btn cyan lighten-3'>I'm Feeling Lucky</button>");
     var start_over = $("<button class='waves-effect waves-light btn cyan lighten-3 scroll-up start-over'>Start Over</button>");
 
     $(".slider").slider({
@@ -77,51 +80,49 @@ $(document).ready(function () {
     };
 
     $("#find-submit").click(function (e) {
-        //add route to search occupation occupation-auto
-        e.preventDefault();
-        x = window.innerWidth * .7;
-        y = window.innerHeight + 10;
-        drawMap();
         occupation = $("#occupation-auto").val();
 
-        // $.get("/api/whereto/" + occupation, function(res) {
-        //     domainMin = res[0].bang4Yabuk;
-        //     domainMax = res[-1].bang4Yabuk;
-        // });
-        $("#heatmap").css("display", "block");
-        $("#heatmap").append(start_over);
-        $('html, body').animate({
-            scrollTop: $("#heatmap").offset().top
-        }, 1500);
+        if (occupationValidation.hasOwnProperty(occupation)) {
+            console.log("Occupation:" + occupationValidation);
+            e.preventDefault();
+            x = window.innerWidth * .7;
+            y = window.innerHeight + 10;
+            drawMap();
+            $("#heatmap").css("display", "block");
+            $("#heatmap").append(start_over);
+            $('html, body').animate({
+                scrollTop: $("#heatmap").offset().top
+            }, 1500);
+        }
+
     });
-
     $("#compare-submit").click(function (e) {
-        e.preventDefault();
-        x = window.innerWidth * .7;
-        y = window.innerHeight + 10;
-
-        //Saving city
         var city1 = $('#city1').val();
         var city2 = $('#city2').val();
         var cityArr = [];
-        $.post("/api/logs/:city", function (res) {
-            console.log("Sending cities: " + city1 + " " + city2);
-        });
-        $.get("/api/data/" + city1, function (res) {
-            cityArr.push(res);
-            $.get("/api/data/" + city2, function (res) {
-                //d3 create badass map point.res
-                cityArr.push(res);
-                drawCharts(cityArr);
-                $("#comparison").css("display", "block");
-                $("#comparison").append(refresh_btn);
-                $("#comparison").append(start_over);
-                $('html, body').animate({
-                    scrollTop: $("#comparison").offset().top
-                }, 2000); //this is async so it is happening after the button and therefore deleting the button
+        if (cityValidation.hasOwnProperty(city1) && cityValidation.hasOwnProperty(city2)) {
+            e.preventDefault();
+            x = window.innerWidth * .7;
+            y = window.innerHeight + 10;
+            $.post("/api/logs/:city", function (res) {
+                console.log("Sending cities: " + city1 + " " + city2);
             });
+            $.get("/api/data/" + city1, function (res) {
+                cityArr.push(res);
+                $.get("/api/data/" + city2, function (res) {
+                    //d3 create badass map point.res
+                    cityArr.push(res);
+                    drawCharts(cityArr);
+                    $("#comparison").css("display", "block");
+                    $("#comparison").append(refresh_btn);
+                    $("#comparison").append(start_over);
+                    $('html, body').animate({
+                        scrollTop: $("#comparison").offset().top
+                    }, 2000); //this is async so it is happening after the button and therefore deleting the button
+                });
 
-        });
+            });
+        }
     });
 
     //D3 code beyond this point
@@ -206,13 +207,12 @@ $(document).ready(function () {
             var cityData;
 
             $.get("/api/whereto/" + occupation, function (res) {
-
+                console.log(occupation);
                 cityData = res;
                 var last = res.length - 1;
                 domainMin = Math.floor(res[0].bang4Yabuk * 1000);
                 domainMax = Math.floor(res[last].bang4Yabuk * 1000);
-                console.log("domainMin: " + domainMin);
-                console.log("domainMax: " + domainMax);
+
 
                 var coordinateColor = d3.scale.linear()
                     .domain([domainMin, domainMax])
@@ -230,8 +230,9 @@ $(document).ready(function () {
                         return projection([d.longitude, d.latitude])[1];
                     })
                     .attr("r", 6)
+
                     .attr("fill", function (d) {
-                        console.log(Math.floor(d.bang4Yabuk * 1000));
+                        // console.log(Math.floor(d.bang4Yabuk * 1000));
                         return coordinateColor(Math.floor(d.bang4Yabuk * 1000));
                     })
                     // .style("opacity", 0.85)  
@@ -288,6 +289,8 @@ $(document).ready(function () {
                         return d;
                     });
             });
+
+
 
             //Might have to be a bonus feature
             // var arcInfo = {
@@ -458,6 +461,7 @@ $(document).ready(function () {
             donuts.append("svg:circle")
                 .attr("r", chart_r * 0.6)
                 .attr("fill", "#fff")
+
                 .attr("fill", function (d, i) {
                     return "url(#city" + i + ")"
                 })
